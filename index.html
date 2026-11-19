@@ -332,52 +332,19 @@ function unlock(){
   try{
     if(!AUD.length)for(let i=0;i<4;i++){const a=new Audio();a.preload='auto';AUD.push(a)}
     AUD.forEach(a=>{if(a._u)return;a.src=wavURL(1,.1,0);const p=a.play();if(p&&p.then)p.then(()=>{a.pause();a._u=true}).catch(()=>{})});
-    if(!TRKS.length)for(let i=0;i<2;i++){const a=new Audio();a.preload='auto';TRKS.push(a)}
-    TRKS.forEach(a=>{if(a._u||a._busy)return;const sil=wavURL(1,.1,0);a.src=sil;const p=a.play();if(p&&p.then)p.then(()=>{if(!a._busy&&a.src===sil)a.pause();a._u=true}).catch(()=>{})});
   }catch(e){}
 }
 document.addEventListener('click',unlock,true);document.addEventListener('touchstart',unlock,true);
-function beep(n=1,len=.18,f=880,force){
-  // Läuft gerade eine Tonspur, enthält sie diesen Ton schon: dann nicht doppelt spielen
-  if(!force){const now=Date.now();if(trk&&trk.playing&&now<trk.end)return;if(trk&&now<quietUntil)return}
+// Töne mischen sich mit Musik (Spotify & Co. laufen weiter). Dafür gilt auf dem iPad der Stummschalter.
+try{if(navigator.audioSession)navigator.audioSession.type='ambient'}catch(e){}
+function beep(n=1,len=.18,f=880){
   try{unlock();const a=AUD[audI++%AUD.length];a.src=wavURL(n,len,f);const p=a.play();if(p&&p.catch)p.catch(()=>{});if(navigator.vibrate)navigator.vibrate(n*150)}catch(e){}
 }
-// Tonspur: Stille + Pieptöne an den richtigen Stellen. Sie läuft wie Musik weiter, auch wenn der Bildschirm aus ist.
-const TRKS=[];let trk=null,quietUntil=0;
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')quietUntil=Date.now()+1500});
-function trackURL(ev,dur){
-  const sr=8000,N=Math.ceil(sr*dur),b=new Uint8Array(44+N),v=new DataView(b.buffer),wr=(o,t)=>{for(let i=0;i<t.length;i++)b[o+i]=t.charCodeAt(i)};
-  wr(0,'RIFF');v.setUint32(4,36+N,true);wr(8,'WAVE');wr(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,sr,true);v.setUint32(28,sr,true);v.setUint16(32,1,true);v.setUint16(34,8,true);wr(36,'data');v.setUint32(40,N,true);
-  b.fill(128,44);
-  ev.forEach(e=>{for(let k=0;k<e.n;k++){const s0=Math.floor((e.t+k*(e.len+.12))*sr),L=Math.floor(e.len*sr);for(let j=0;j<L&&s0+j<N;j++){const u=j/sr,x=Math.sin(2*Math.PI*e.f*u)*Math.min(1,u/.01)*Math.exp(-u*6/e.len)*.75;b[44+s0+j]=Math.max(0,Math.min(255,Math.round(128+x*127)))}}});
-  return URL.createObjectURL(new Blob([b],{type:'audio/wav'}));
-}
-function playTrack(list){
-  try{
-    const now=Date.now(),old=trk,tail=old&&now>=old.lastAt-150;
-    if(old&&!tail)stopTrack(true);
-    const ev=list.filter(e=>e.at>now+150).map(e=>({t:(e.at-now)/1000,n:e.n||1,len:e.len||.18,f:e.f||880}));if(!ev.length)return false;
-    const last=Math.max(...ev.map(e=>e.t+e.n*(e.len+.12)));if(last>2700)return false;
-    unlock();if(!TRKS.length)return false;
-    const el=(old&&tail&&old.el===TRKS[0])?TRKS[1]:TRKS[0],url=trackURL(ev,last+.3);
-    const me={el,url,ev,end:now+(last+.3)*1000,lastAt:now+Math.max(...ev.map(e=>e.t))*1000,playing:false};trk=me;
-    el._busy=true;el.src=url;const p=el.play();
-    if(p&&p.then)p.then(()=>{if(trk===me)me.playing=true}).catch(()=>{el._busy=false;if(trk===me)trk=null});else me.playing=true;
-    el.onended=()=>{el._busy=false};
-    try{if('mediaSession' in navigator&&window.MediaMetadata)navigator.mediaSession.metadata=new MediaMetadata({title:'Training läuft',artist:'Pausen- und Intervalltöne'})}catch(e){}
-    return true;
-  }catch(e){trk=null;return false}
-}
-function stopTrack(force){if(!trk)return;if(!force&&Date.now()>=trk.lastAt-150)return;const t=trk;trk=null;try{t.el.pause();t.el._busy=false}catch(e){}setTimeout(()=>{try{URL.revokeObjectURL(t.url)}catch(e){}},1000)}
-function ivTrack(){if(!iv)return;const S=iv.start,pr=(iv.pr||0)*1000,w=iv.w*1000,r=iv.r*1000,cyc=w+r,ev=[];
-  if(pr>0)ev.push({at:S+pr,n:2});
-  for(let rd=0;rd<iv.n;rd++){const ws=S+pr+rd*cyc;if(rd>0)ev.push({at:ws,n:2});if(r>0&&rd<iv.n-1)ev.push({at:ws+w,n:1})}
-  ev.push({at:S+pr+cyc*iv.n-r,n:3,len:.3,f:660});playTrack(ev)}
-// Rückfall ohne Tonspur: Timer, die den Ton zum richtigen Zeitpunkt auslösen (zu spät ausgelöste Töne werden verworfen)
+// Geplante Pausentöne: Timer, die den Ton zum richtigen Zeitpunkt auslösen
 let bpNodes=[],bpSch=false,bpBeeped=null,lpFor=null;
 function sched(at,n=3,len=.18,f=880){bpNodes.push(setTimeout(()=>{if(Date.now()-at<2000)beep(n,len,f)},Math.max(0,at-Date.now())));return true}
-function cancelSched(){bpNodes.forEach(id=>clearTimeout(id));bpNodes=[];stopTrack()}
-function startMp(){mpause={start:Date.now(),beeped:false,sch:false};cancelSched();if(cfg.mbeep>0){mpause.sch=sched(mpause.start+cfg.mbeep*1000);playTrack([{at:mpause.start+cfg.mbeep*1000,n:3}])}}
+function cancelSched(){bpNodes.forEach(id=>clearTimeout(id));bpNodes=[]}
+function startMp(){mpause={start:Date.now(),beeped:false,sch:false};cancelSched();if(cfg.mbeep>0)mpause.sch=sched(mpause.start+cfg.mbeep*1000)}
 let lock=null,lockReq=false;
 async function wl(on){try{if(on){if(lock||lockReq||!navigator.wakeLock)return;lockReq=true;lock=await navigator.wakeLock.request('screen');lockReq=false;lock.addEventListener('release',()=>{lock=null})}else if(lock){const l=lock;lock=null;await l.release()}}catch(e){lockReq=false}}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&curK())wl(true)});
@@ -545,7 +512,7 @@ function tickBody(mark){
       if(d.ls&&d.lp>0&&lpFor!==d.ls&&now>=d.ls+d.lp*1000){lpFor=d.ls;if(now<d.ls+d.lp*1000+10000)beep(2,.3,1175)}
       if(d.le&&!d.ls&&cfg.beep>0&&tmode==='man'){
         const th=cfg.beep*1000,el=now-d.le;
-        if(bpFor!==d.le){bpFor=d.le;bpSch=false;cancelSched();if(el<th){bpSch=sched(d.le+th);playTrack([{at:d.le+th,n:3}])}}
+        if(bpFor!==d.le){bpFor=d.le;bpSch=false;cancelSched();if(el<th)bpSch=sched(d.le+th)}
         if(!bpSch&&el>=th&&el<th+10000&&bpBeeped!==d.le){bpBeeped=d.le;beep(3)}
       }
       // Anzeige übernimmt updPhase()
@@ -873,10 +840,10 @@ document.addEventListener('click',e=>{
   if(b.id==='ecn2'){editK=null;renderCal()}
   if(b.id==='eadd')$('#esets').insertAdjacentHTML('beforeend',setRow(null,''));
   if(D.mm){mmode=D.mm;cfg.mmode=mmode;saveC();iv=null;mpause=null;cd=null;cancelSched();render()}
-  if(D.tm){tmode=D.tm;cfg.tmode=tmode;saveC();iv=null;cancelSched();const k=curK(),d=days[k];if(d&&d.ls){d.ls=null;d.pr=null;save(k)}render()}
+  if(D.tm){tmode=D.tm;cfg.tmode=tmode;saveC();iv=null;const k=curK(),d=days[k];if(d&&d.ls){d.ls=null;d.pr=null;save(k)}render()}
   if(D.ip){const P={emom:[60,0,10],'3030':[30,30,10],tab:[20,10,8]}[D.ip];cfg.iw=P[0];cfg.ir=P[1];cfg.irn=P[2];saveC();render()}
   if(D.px!=null){const d=days[curK()],x=d&&tpl[d.tp]&&tpl[d.tp].ex[+D.px];if(x){$('#ex').value=x.n;prefill();if(x.kg)$('#kg').value=x.kg;setUm(x.u==='t'?'t':'r');if(x.r)$('#rp').value=x.r}}
-  if(D.mt!=null){const d=days[curK()],it=d&&mobItems(d)[+D.mt];if(it&&it.x.h>0){const st=Date.now()+(cfg.ipr||0)*1000;cd={n:itemPlain(it),key:it.key,hs:st,hb:!(cfg.ipr>0),end:st+it.x.h*1000};mpause=null;cancelSched();playTrack([...(cfg.ipr>0?[{at:st,n:1,len:.3,f:1175}]:[]),{at:st+it.x.h*1000,n:2,len:.3}]);render()}}
+  if(D.mt!=null){const d=days[curK()],it=d&&mobItems(d)[+D.mt];if(it&&it.x.h>0){const st=Date.now()+(cfg.ipr||0)*1000;cd={n:itemPlain(it),key:it.key,hs:st,hb:!(cfg.ipr>0),end:st+it.x.h*1000};mpause=null;cancelSched();render()}}
   if(D.mx!=null){const k=curK(),d=days[k],it=mobItems(d)[+D.mx],has=(d.dn||[]).includes(it.key);d.dn=has?d.dn.filter(x=>x!==it.key):[...(d.dn||[]),it.key];if(!has&&mmode==='man'){startMp();cd=null}save(k);render()}
   if(D.i!=null&&b.closest('#list'))arm(b,'Löschen',()=>{const k=curK();days[k].sets.splice(+D.i,1);selSet=null;save(k);render()});
   if(D.m){cmo.setMonth(cmo.getMonth()+ +D.m);renderCal()}
@@ -915,10 +882,10 @@ $('#ex').addEventListener('input',()=>{updLast();markCur()});
 $('#note').addEventListener('blur',()=>{if(nEdit){nEdit=false;setTimeout(renderTrain,0)}});
 $('#bw').addEventListener('change',()=>{cfg.bw=num($('#bw').value);saveC();render()});
 $('#bp').addEventListener('change',()=>{cfg.beep=parseInt($('#bp').value)||0;saveC();bpFor=null;setLbl()});
-$('#bt').onclick=()=>beep(3,.18,880,true);
-$('#mbp').addEventListener('change',()=>{cfg.mbeep=parseInt($('#mbp').value)||0;saveC();setLbl();if(mpause){mpause.beeped=false;cancelSched();mpause.sch=cfg.mbeep>0&&sched(mpause.start+cfg.mbeep*1000);if(cfg.mbeep>0)playTrack([{at:mpause.start+cfg.mbeep*1000,n:3}])}});
+$('#bt').onclick=()=>beep(3);
+$('#mbp').addEventListener('change',()=>{cfg.mbeep=parseInt($('#mbp').value)||0;saveC();setLbl();if(mpause){mpause.beeped=false;cancelSched();mpause.sch=cfg.mbeep>0&&sched(mpause.start+cfg.mbeep*1000)}});
 ['#ip','#ip2','#ip3'].forEach(s=>{const el=$(s);el.addEventListener('input',()=>{cfg.ipr=parseInt(el.value)||0});el.addEventListener('change',()=>{cfg.ipr=parseInt(el.value)||0;saveC();setLbl();['#ip','#ip2','#ip3'].forEach(o=>{if(o!==s)setVal(o,cfg.ipr||'')})})});
-$('#mbt').onclick=()=>beep(3,.18,880,true);
+$('#mbt').onclick=()=>beep(3);
 ['#iw','#ir','#irn'].forEach(s=>$(s).addEventListener('change',()=>{cfg.iw=parseInt($('#iw').value)||0;cfg.ir=parseInt($('#ir').value)||0;cfg.irn=parseInt($('#irn').value)||0;saveC();setLbl()}));
 function meta(){const k=curK(),d=days[k];if(!d)return;d.title=$('#ttl').value.trim();d.note=$('#note').value.trim();save(k)}
 function metaLive(){const d=days[curK()];if(!d)return;d.title=$('#ttl').value.trim();d.note=$('#note').value.trim();L()}
@@ -951,20 +918,20 @@ $('#sb').onclick=()=>{
 };
 $('#sx').onclick=()=>{const k=curK(),d=days[k];if(!d)return;d.ls=null;d.pr=null;save(k);render()};
 $('#ig').onclick=()=>{
-  if(iv){iv=null;cancelSched();stopTrack(true);render();return}
+  if(iv){iv=null;render();return}
   const k=curK(),d=days[k],mob=!!d&&d.type==='mob',w=parseInt($('#iw').value)||0,r=parseInt($('#ir').value)||0;let n=parseInt($('#irn').value)||0;
   if(mob){n=mobItems(d).length;if(!n){$('#is').textContent='Füge zuerst Übungen hinzu.';return}}
   if(w<=0||n<=0){$('#is').textContent=mob?'Bitte die Arbeitszeit (Sek.) eingeben.':'Bitte Arbeit (Sek.) und Runden eingeben.';return}
   cfg.iw=w;cfg.ir=r;if(!mob)cfg.irn=n;saveC();
   if(mob){d.dn=[];save(k)}
   const pr=cfg.ipr||0;
-  iv={start:Date.now(),w,r,n,pr,key:-1,mob,m:0};mpause=null;cd=null;cancelSched();beep(1,.3,1175,true);ivTrack();render();
+  iv={start:Date.now(),w,r,n,pr,key:-1,mob,m:0};mpause=null;cd=null;cancelSched();beep(1,.3,1175);render();
 };
 $('#madd').onclick=()=>{
   const k=curK(),d=days[k],n=$('#mn').value.trim();if(!d||!n)return;
   (d.mx=d.mx||[]).push({n,s:parseInt($('#ms').value)||0,r:parseInt($('#mr').value)||0,h:parseInt($('#mh').value)||0,dm:$('#mdm').value,sd:$('#msd').value==='LR'?1:0});save(k);['#mn','#ms','#mr','#mh'].forEach(x=>{$(x).value=''});$('#maddw').hidden=true;render();
 };
-$('#cdx').onclick=()=>{cd=null;cancelSched();render()};
+$('#cdx').onclick=()=>{cd=null;render()};
 $('#mtog').onclick=()=>{$('#maddw').hidden=!$('#maddw').hidden};
 function endTraining(){
   try{
