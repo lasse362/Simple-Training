@@ -34,6 +34,8 @@ input,textarea,select{width:100%;padding:11px;font:inherit;color:var(--fg);backg
 .end{width:100%;padding:12px;margin-top:8px;border:1px solid var(--bd);background:var(--bg);color:var(--fg);border-radius:12px;font:inherit}
 .mono{font:600 34px ui-monospace,Menlo,monospace;text-align:center}
 .mut{color:var(--mut)}.sm{font-size:13px}
+.sts{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:2px}.st{display:inline-flex;flex-direction:column;align-items:center;line-height:1.2}.st small{font-size:11px;color:var(--mut);font-variant-numeric:tabular-nums}
+.pzb{display:inline-block;min-width:38px;font-size:11px;color:var(--mut);border:1px solid var(--bd);border-radius:6px;padding:0 4px;margin-right:6px;text-align:center;font-variant-numeric:tabular-nums}
 ul{list-style:none;margin:0;padding:0}
 li{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--bd)}
 li>button:not(.lk){border:0;background:none;color:var(--mut);font-size:18px;padding:4px 10px}
@@ -74,7 +76,7 @@ li>button:not(.lk){border:0;background:none;color:var(--mut);font-size:18px;padd
   <div id="gomsg" class="mut" style="text-align:center;margin-top:6px"></div>
  </div>
  <div class="card" id="ac" hidden>
-  <div style="text-align:center"><div class="mut" id="ph"></div><div id="tot" class="mono">00:00</div><div class="mut sm">Gesamtzeit (min:sek)</div><div id="stale" class="sm" hidden style="margin-top:6px;color:#dc2626"></div></div>
+  <div style="text-align:center"><div class="mut" id="ph"></div><div id="tot" class="mono">00:00</div><div class="mut sm">Gesamtzeit (min:sek)</div><div id="net" class="mut sm"></div><div id="stale" class="sm" hidden style="margin-top:6px;color:#dc2626"></div></div>
   <button class="big" id="wend" hidden>Warm-up beenden · weiter zu den Arbeitssätzen</button>
   <button class="end" id="end">Training beenden und speichern</button>
  </div>
@@ -90,7 +92,8 @@ li>button:not(.lk){border:0;background:none;color:var(--mut);font-size:18px;padd
   </div>
   <div id="manw">
    <div id="tm" class="mono" style="margin-top:10px">Bereit</div>
-   <div class="row" style="align-items:flex-end"><div><label for="bp">Piepton nach (Sek. Pause, 0 = aus)</label><input id="bp" inputmode="numeric" placeholder="z. B. 90"></div><div><button class="btn" id="bt" style="width:100%;margin:0">Ton testen</button></div></div>
+   <div class="row" style="align-items:flex-end"><div><label for="bp">Piepton nach (Sek. Pause, 0 = aus)</label><input id="bp" inputmode="numeric" placeholder="z. B. 90"></div><div><label for="ip">Rüstzeit vor dem Satz (Sek., 0 = aus)</label><input id="ip" inputmode="numeric" placeholder="z. B. 10"></div></div>
+   <button class="btn" id="bt" style="width:100%;margin:8px 0 0">Ton testen</button>
   </div>
   <p id="ivh" class="mut sm" style="margin:8px 0 0" hidden>Tippe „Satz speichern“, sobald dein Satz fertig ist. Läuft der Intervalltimer, berechnet die App daraus Satzzeit (ab Rundenbeginn) und Pause (Rest der Runde).</p>
   <button class="big" id="sb">Satz starten</button>
@@ -99,7 +102,7 @@ li>button:not(.lk){border:0;background:none;color:var(--mut);font-size:18px;padd
  </div>
  <div class="card" id="ic" hidden>
   <b>Intervalltimer</b>
-  <div class="row"><div><label for="iw">Arbeit (Sek.)</label><input id="iw" inputmode="numeric"></div><div><label for="ir">Pause (Sek.)</label><input id="ir" inputmode="numeric"></div><div id="irnw"><label for="irn">Runden</label><input id="irn" inputmode="numeric"></div></div>
+  <div class="row"><div><label for="ip3">Rüstzeit (Sek.)</label><input id="ip3" inputmode="numeric" placeholder="0"></div><div><label for="iw">Arbeit (Sek.)</label><input id="iw" inputmode="numeric"></div><div><label for="ir">Pause (Sek.)</label><input id="ir" inputmode="numeric"></div><div id="irnw"><label for="irn">Runden</label><input id="irn" inputmode="numeric"></div></div>
   <div class="chips" id="ipw" style="margin:8px 0 0"><button class="chip" data-ip="emom">EMOM (alle 60 Sek.)</button><button class="chip" data-ip="3030">30 / 30</button><button class="chip" data-ip="tab">20 / 10 × 8</button></div>
   <div id="mnow" hidden style="text-align:center;font-weight:600;margin-top:10px"></div><div id="idp" class="mono" style="margin-top:10px">Bereit</div><div id="is" class="mut sm" style="text-align:center"></div>
   <button class="big" id="ig">Intervall starten</button>
@@ -110,7 +113,7 @@ li>button:not(.lk){border:0;background:none;color:var(--mut);font-size:18px;padd
   <b>Mobility-Übungen</b>
   <div class="chips" id="mmo" style="margin-top:8px"><button class="chip" data-mm="man">Manuell (▶ pro Übung)</button><button class="chip" data-mm="ivl">Intervalltimer</button></div>
   <p id="mhint" class="mut sm" style="margin:2px 0 6px"></p>
-  <div id="mmanw" class="row" style="align-items:flex-end;margin-bottom:6px"><div><label for="mbp">Piepton nach (Sek. Pause, 0 = aus)</label><input id="mbp" inputmode="numeric" placeholder="z. B. 20"></div><div><button class="btn" id="mbt" style="width:100%;margin:0">Ton testen</button></div></div>
+  <div id="mmanw" style="margin-bottom:6px"><div class="row" style="align-items:flex-end"><div><label for="mbp">Piepton nach (Sek. Pause, 0 = aus)</label><input id="mbp" inputmode="numeric" placeholder="z. B. 20"></div><div><label for="ip2">Rüstzeit vor dem Halten (Sek., 0 = aus)</label><input id="ip2" inputmode="numeric" placeholder="z. B. 5"></div></div><button class="btn" id="mbt" style="width:100%;margin:8px 0 0">Ton testen</button></div>
   <div id="ml"></div>
   <button class="btn" id="mtog" style="margin-top:8px">+ Übung hinzufügen</button>
   <div id="maddw" hidden>
@@ -179,6 +182,8 @@ li>button:not(.lk){border:0;background:none;color:var(--mut);font-size:18px;padd
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],pad=n=>String(n).padStart(2,'0');
 const fmt=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()),today=()=>fmt(new Date());
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pz=s=>s>0?(s>=60?Math.floor(s/60)+':'+pad(Math.round(s)%60):Math.round(s)+' s'):'–';
+const hm=s=>s>=3600?dur(s*1000):mmss(s)+' min';
 const mmss=s=>{s=Math.max(0,Math.round(s||0));return pad(Math.floor(s/60))+':'+pad(s%60)};
 const dur=ms=>{const m=Math.round(ms/60000);return m>=60?Math.floor(m/60)+' h '+pad(m%60)+' min':m+' min'};
 const dd=k=>k.slice(8,10)+'.'+k.slice(5,7)+'.'+k.slice(0,4),N0=n=>Math.round(n).toLocaleString('de-DE');
@@ -186,7 +191,7 @@ const sum=a=>a.reduce((x,y)=>x+y,0),avg=a=>a.length?sum(a)/a.length:null;
 const addD=(v,o)=>{const a=v.slice(0,10).split('-').map(Number);return fmt(new Date(a[0],a[1]-1,a[2]+o))};
 const SK={days:'ktr_days',tpl:'ktr_tpl',plan:'ktr_plan',cfg:'ktr_cfg'},OLD={days:'kt',tpl:'ktp',plan:'kpl',cfg:'kcfg'};
 const J=k=>{try{const v=JSON.parse(localStorage.getItem(SK[k])||localStorage.getItem(OLD[k])||'{}');return v&&typeof v==='object'&&!Array.isArray(v)?v:{}}catch(e){return{}}};
-let days=J('days'),tpl=J('tpl'),plan=J('plan'),cfg=Object.assign({bw:0,bwEx:['Klimmzüge','Dips'],beep:0,mbeep:0,mmode:'man',tmode:'man',iw:60,ir:0,irn:10,lastBk:0},J('cfg')),db=null,uid=null,dl=null,chart=null;
+let days=J('days'),tpl=J('tpl'),plan=J('plan'),cfg=Object.assign({bw:0,bwEx:['Klimmzüge','Dips'],beep:0,mbeep:0,mmode:'man',tmode:'man',iw:60,ir:0,irn:10,ipr:0,lastBk:0},J('cfg')),db=null,uid=null,dl=null,chart=null;
 let editK=null,edDn=[],selUser=false,selVal=null,selDay=null,psel=null,edId=null,etype='kraft',cmo=new Date(),pmo=new Date(),curTab='t',selE=new Set(),selM=new Set(['r']);
 let tmode=cfg.tmode==='ivl'?'ivl':'man',umode='r',iv=null,cd=null,bpFor=null,mmode=cfg.mmode==='ivl'?'ivl':'man',mpause=null;
 cmo.setDate(1);pmo.setDate(1);
@@ -231,15 +236,33 @@ function migrate(){
   Object.keys(days).forEach(k=>{const d=days[k];if(d.type==='sonst'&&(d.xs||[]).length&&!d.mx){d.type='mob';d.mx=d.xs.map(n=>({n,h:0,dm:'stat'}));save(k)}else if(d.type==='mob'&&d.xs&&!d.mx){d.mx=d.xs.map(n=>({n,h:0,dm:'stat'}));save(k)}});
 }
 
-// ---------- Ton, Display-Sperre ----------
-let AC=null;
-function unlock(){try{if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume()}catch(e){}}
+// ---------- Ton ----------
+// Töne laufen über <audio>-Elemente mit erzeugtem WAV. Web Audio wird auf iPad/iPhone vom Stummschalter stummgeschaltet, <audio> nicht.
+const AUD=[];let audI=0;const TONES={};
+function wavURL(n,len,f){
+  const key=n+'_'+len+'_'+f;if(TONES[key])return TONES[key];
+  const sr=22050,gap=.12,N=Math.floor(sr*(n*(len+gap)+.05)),buf=new ArrayBuffer(44+N*2),v=new DataView(buf);
+  const wr=(o,t)=>{for(let i=0;i<t.length;i++)v.setUint8(o+i,t.charCodeAt(i))};
+  wr(0,'RIFF');v.setUint32(4,36+N*2,true);wr(8,'WAVE');wr(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,sr,true);v.setUint32(28,sr*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);wr(36,'data');v.setUint32(40,N*2,true);
+  for(let i=0;i<N;i++){const t=i/sr;let x=0;for(let k=0;k<n;k++){const u=t-k*(len+gap);if(u>=0&&u<len)x+=Math.sin(2*Math.PI*f*u)*Math.min(1,u/.01)*Math.exp(-u*6/len)}v.setInt16(44+i*2,Math.max(-1,Math.min(1,x*.7))*32767,true)}
+  return TONES[key]=URL.createObjectURL(new Blob([buf],{type:'audio/wav'}));
+}
+// Beim ersten Antippen werden alle Audio-Elemente einmal "freigeschaltet" (stumm angespielt), danach dürfen sie auch aus Timern heraus spielen
+function unlock(){
+  try{
+    if(!AUD.length)for(let i=0;i<4;i++){const a=new Audio();a.preload='auto';AUD.push(a)}
+    AUD.forEach(a=>{if(a._u)return;a.src=wavURL(1,.1,0);const p=a.play();if(p&&p.then)p.then(()=>{a.pause();a._u=true}).catch(()=>{})});
+  }catch(e){}
+}
 document.addEventListener('click',unlock,true);document.addEventListener('touchstart',unlock,true);
 function beep(n=1,len=.18,f=880){
-  try{unlock();if(!AC)return;let t=AC.currentTime+.02;
-    for(let i=0;i<n;i++){const o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.5,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+len);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+len+.02);t+=len+.12}
-    if(navigator.vibrate)navigator.vibrate(n*150)}catch(e){}
+  try{unlock();const a=AUD[audI++%AUD.length];a.src=wavURL(n,len,f);const p=a.play();if(p&&p.catch)p.catch(()=>{});if(navigator.vibrate)navigator.vibrate(n*150)}catch(e){}
 }
+// Geplante Pausentöne: Timer, die den Ton zum richtigen Zeitpunkt auslösen
+let bpNodes=[],bpSch=false,bpBeeped=null,lpFor=null;
+function sched(at,n=3,len=.18,f=880){bpNodes.push(setTimeout(()=>beep(n,len,f),Math.max(0,at-Date.now())));return true}
+function cancelSched(){bpNodes.forEach(id=>clearTimeout(id));bpNodes=[]}
+function startMp(){mpause={start:Date.now(),beeped:false,sch:false};cancelSched();if(cfg.mbeep>0)mpause.sch=sched(mpause.start+cfg.mbeep*1000)}
 let lock=null,lockReq=false;
 async function wl(on){try{if(on){if(lock||lockReq||!navigator.wakeLock)return;lockReq=true;lock=await navigator.wakeLock.request('screen');lockReq=false;lock.addEventListener('release',()=>{lock=null})}else if(lock){const l=lock;lock=null;await l.release()}}catch(e){lockReq=false}}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&curK())wl(true)});
@@ -288,7 +311,7 @@ function renderTrain(){
   sh('#ec',p==='work');sh('#lc',p==='work');sh('#mc',p==='mob');sh('#ic',(p==='work'&&tmode==='ivl')||(p==='mob'&&mmode==='ivl'));sh('#irnw',p!=='mob');sh('#ipw',p!=='mob');
   $('#today').textContent=new Date().toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'});
   $('#exl').innerHTML=exs(true).map(x=>'<option value="'+esc(x)+'">').join('');$('#mxl').innerHTML=mobNames().map(x=>'<option value="'+esc(x)+'">').join('');
-  setVal('#iw',cfg.iw||'');setVal('#ir',cfg.ir||0);setVal('#irn',cfg.irn||'');setVal('#bp',cfg.beep||'');setVal('#mbp',cfg.mbeep||'');
+  ['#ip','#ip2','#ip3'].forEach(s=>setVal(s,cfg.ipr||''));setVal('#iw',cfg.iw||'');setVal('#ir',cfg.ir||0);setVal('#irn',cfg.irn||'');setVal('#bp',cfg.beep||'');setVal('#mbp',cfg.mbeep||'');
   const old=d&&Date.now()-d.t0>12*3600000;sh('#stale',old);if(old)$('#stale').textContent='Dieses Training läuft seit dem '+dd(fmt(new Date(d.t0)))+'. Beende es und korrigiere danach die Dauer im Kalender unter „Bearbeiten“.';
   $('#ig').textContent=iv?'Intervall stoppen':'Intervall starten';
   wl(p!=='idle');sh('#bkh',false);
@@ -310,7 +333,7 @@ function renderTrain(){
     const t=d.tp&&tpl[d.tp],man=tmode==='man';
     $('#pl').innerHTML=t&&t.ex.length?'<label>Geplante Übungen (antippen)</label><div class="chips">'+t.ex.map((x,i)=>{const n=d.sets.filter(s=>s.ex===x.n).length;return '<button class="chip'+(x.s&&n>=x.s?' on':'')+'" data-px="'+i+'">'+esc(x.n)+' · '+(x.s?n+'/'+x.s:n+' Sätze')+(x.r?' · '+x.r+(x.u==='t'?' s':' Wdh'):'')+(x.kg?' · '+x.kg+' kg':'')+'</button>'}).join('')+'</div>':'';
     sh('#manw',man);sh('#ivh',!man);$('#sb').textContent=man?(d.ls?'Satz beenden und speichern':'Satz starten'):'Satz speichern';$('#sx').hidden=!(man&&d.ls);
-    $('#list').innerHTML=d.sets.map((s,i)=>'<li><span>'+esc(s.ex)+' · '+(cfg.bwEx.includes(s.ex)?'+':'')+s.kg+' kg × '+(s.secs?s.secs+' s':s.reps)+(s.rest?' · Pause '+mmss(s.rest):'')+(s.dur?' · Satz '+mmss(s.dur):'')+'</span><button data-i="'+i+'" aria-label="Löschen">✕</button></li>').join('')||'<li class="mut">Noch kein Satz im Training.</li>';
+    $('#list').innerHTML=(d.sets.length?'<li class="mut sm" style="border:0;padding-bottom:0">Kleine Zahl vorne = Pause vor dem Satz</li>':'')+d.sets.map((s,i)=>'<li><span><span class="pzb" title="Pause vor dem Satz">'+pz(s.rest)+'</span>'+esc(s.ex)+' · '+(cfg.bwEx.includes(s.ex)?'+':'')+s.kg+' kg × '+(s.secs?s.secs+' s':s.reps)+(s.dur?' · Satz '+mmss(s.dur):'')+'</span><button data-i="'+i+'" aria-label="Löschen">✕</button></li>').join('')||'<li class="mut">Noch kein Satz im Training.</li>';
   }
   if(p==='mob'){
     const items=mobItems(d),ivm=mmode==='ivl';
@@ -323,9 +346,10 @@ function renderTrain(){
   tick();
 }
 function ivState(){
-  const t=(Date.now()-iv.start)/1000,cyc=iv.w+iv.r,tot=cyc*iv.n-iv.r;
+  const pr=iv.pr||0,t=(Date.now()-iv.start)/1000,cyc=iv.w+iv.r,tot=pr+cyc*iv.n-iv.r;
   if(t>=tot)return{done:true};
-  const rd=Math.floor(t/cyc),wi=t-rd*cyc,work=wi<iv.w;
+  if(t<pr)return{prep:true,rd:0,work:false,left:pr-t,key:-2};
+  const u=t-pr,rd=Math.floor(u/cyc),wi=u-rd*cyc,work=wi<iv.w;
   return{rd,work,left:work?iv.w-wi:cyc-wi,key:rd*2+(work?0:1)};
 }
 function tick(){
@@ -340,8 +364,15 @@ function tickBody(mark){
     const w=d.w0&&!d.w1;
     $('#ph').textContent=d.type==='sonst'?(d.title||'Sonstiges'):d.type==='mob'?(d.title||'Mobility'):w?'Warm-up läuft · '+mmss((now-d.w0)/1000):'Arbeitssätze';
     if(isK(d)){
-      if(d.le&&!d.ls&&cfg.beep>0&&bpFor!==d.le&&now-d.le>=cfg.beep*1000){bpFor=d.le;if(now-d.le<cfg.beep*1000+10000)beep(3)}
-      $('#tm').textContent=d.ls?'Satz '+mmss((now-d.ls)/1000):(d.le?'Pause '+mmss((now-d.le)/1000)+(bpFor===d.le?' · Weiter!':''):'Bereit');
+      {const sd=sum(d.sets.map(s=>s.dur||0)),sr=sum(d.sets.map(s=>s.rest||0));$('#net').textContent=d.sets.length?'Echte Arbeit '+mmss(sd)+' · Pausen '+mmss(sr):''}
+      if(d.ls)cancelSched();
+      if(d.ls&&d.lp>0&&lpFor!==d.ls&&now>=d.ls+d.lp*1000){lpFor=d.ls;if(now<d.ls+d.lp*1000+10000)beep(2,.3,1175)}
+      if(d.le&&!d.ls&&cfg.beep>0&&tmode==='man'){
+        const th=cfg.beep*1000,el=now-d.le;
+        if(bpFor!==d.le){bpFor=d.le;bpSch=false;cancelSched();if(el<th)bpSch=sched(d.le+th)}
+        if(!bpSch&&el>=th&&el<th+10000&&bpBeeped!==d.le){bpBeeped=d.le;beep(3)}
+      }
+      $('#tm').textContent=d.ls?(now<d.ls+(d.lp||0)*1000?'Rüstzeit '+mmss((d.ls+(d.lp||0)*1000-now)/1000):'Satz '+mmss((now-d.ls-(d.lp||0)*1000)/1000)):(d.le?'Pause '+mmss((now-d.le)/1000)+(cfg.beep>0&&now-d.le>=cfg.beep*1000?' · Weiter!':''):'Bereit');
     }
   }
   if(iv){
@@ -354,19 +385,20 @@ function tickBody(mark){
     }else{
       const prev=iv.key;iv.key=s.key;
       if(prev!==-1&&s.key!==prev)beep(s.work?2:1);
-      if(iv.mob){const upto=s.work?s.rd:s.rd+1;while(iv.m<upto){const i=iv.m;iv.m=i+1;mark(markItem(i))}}
+      if(iv.mob){const upto=s.prep?0:(s.work?s.rd:s.rd+1);while(iv.m<upto){const i=iv.m;iv.m=i+1;mark(markItem(i))}}
       $('#idp').textContent=mmss(Math.ceil(s.left));
-      $('#is').textContent=(iv.mob?'Übung ':'Runde ')+(s.rd+1)+' / '+iv.n+' · '+(s.work?'Arbeit':'Pause');
-      if(iv.mob&&d){const it=mobItems(d)[s.work?s.rd:s.rd+1];$('#mnow').hidden=false;$('#mnow').textContent=it?(s.work?'Jetzt: ':'Als Nächstes: ')+itemPlain(it):''}
+      $('#is').textContent=s.prep?'Rüstzeit · mach dich bereit':(iv.mob?'Übung ':'Runde ')+(s.rd+1)+' / '+iv.n+' · '+(s.work?'Arbeit':'Pause');
+      if(iv.mob&&d){const it=mobItems(d)[s.prep?0:(s.work?s.rd:s.rd+1)];$('#mnow').hidden=false;$('#mnow').textContent=it?(s.prep?'Gleich: ':s.work?'Jetzt: ':'Als Nächstes: ')+itemPlain(it):''}
     }
   }
   if(!(iv&&iv.mob))$('#mnow').hidden=true;
   if(cd){
     const left=(cd.end-now)/1000;
-    if(left<=0){beep(2,.3);const k=curK(),d2=days[k];if(d2&&!(d2.dn||[]).includes(cd.key)){d2.dn=[...(d2.dn||[]),cd.key];save(k)}cd=null;if(mmode==='man')mpause={start:Date.now(),beeped:false};mark(true)}
-    else $('#cdt').textContent=cd.n+' · '+mmss(Math.ceil(left));
+    if(left<=0){beep(2,.3);const k=curK(),d2=days[k];if(d2&&!(d2.dn||[]).includes(cd.key)){d2.dn=[...(d2.dn||[]),cd.key];save(k)}cd=null;if(mmode==='man')startMp();mark(true)}
+    else if(cd.hs&&now<cd.hs)$('#cdt').textContent=cd.n+' · Rüstzeit '+mmss(Math.ceil((cd.hs-now)/1000));
+    else{if(!cd.hb){cd.hb=true;beep(1,.3,1175)}$('#cdt').textContent=cd.n+' · '+mmss(Math.ceil(left))}
   }
-  if(mpause){const e2=(now-mpause.start)/1000;if(cfg.mbeep>0&&!mpause.beeped&&e2>=cfg.mbeep){mpause.beeped=true;beep(3)}$('#mpt').textContent='Pause '+mmss(e2)+(mpause.beeped?' · Weiter!':'')}
+  if(mpause){const e2=(now-mpause.start)/1000;if(cfg.mbeep>0&&!mpause.beeped&&e2>=cfg.mbeep){mpause.beeped=true;if(!mpause.sch)beep(3)}$('#mpt').textContent='Pause '+mmss(e2)+(mpause.beeped?' · Weiter!':'')}
 }
 setInterval(tick,250);
 function prefill(){
@@ -383,7 +415,7 @@ function monthStats(ym){
   const keys=get(pre),ds=keys.map(k=>days[k]),kr=ds.filter(isK),mo=ds.filter(d=>d.type==='mob'),so=ds.filter(d=>d.type==='sonst');
   const sets=kr.flatMap(d=>(d.sets||[]).map(s=>({...s,w:W(d,s)}))),rsets=sets.filter(s=>!s.secs);
   const vol=d=>sum((d.sets||[]).map(s=>W(d,s)*s.reps));
-  const tm=a=>a.filter(d=>d.t0&&d.t1).map(d=>d.t1-d.t0),tt=tm(ds),kt=tm(kr),mt=tm(mo),stt=tm(so),wu=kr.filter(d=>d.w0&&d.w1).map(d=>d.w1-d.w0);
+  const tm=a=>a.filter(d=>d.t0&&d.t1).map(d=>d.t1-d.t0),tt=tm(ds),kt=tm(kr),mt=tm(mo),stt=tm(so),wu=kr.filter(d=>d.w0&&d.w1).map(d=>d.w1-d.w0),aw=kr.filter(d=>d.w1&&d.t1).map(d=>d.t1-d.w1);
   const dates=[...new Set(keys.map(k=>k.slice(0,10)))],nd=(y===now.getFullYear()&&m===now.getMonth())?now.getDate():new Date(y,m+1,0).getDate();
   const kd=[...new Set(keys.filter(k=>isK(days[k])).map(k=>k.slice(0,10)))];let gap=0;for(let i=1;i<kd.length;i++)gap=Math.max(gap,Math.round((new Date(kd[i])-new Date(kd[i-1]))/864e5));
   const av=avg(kr.map(vol)),pav=avg(get(ppre).map(k=>days[k]).filter(isK).map(vol));
@@ -403,6 +435,9 @@ function monthStats(ym){
     ['Einheiten',String(kr.length)],
     ['Gesamte Trainingszeit',kt.length?dur(sum(kt)):'–'],['Ø Trainingszeit',kt.length?dur(avg(kt)):'–'],
     ['Ø Warm-up',wu.length?dur(avg(wu)):'–'],
+    ['Arbeitszeit gesamt (nach Warm-up)',aw.length?dur(sum(aw)):'–'],
+    ['Echte Arbeitszeit (Summe Satzzeiten)',sets.some(s=>s.dur>0)?hm(sum(sets.map(s=>s.dur||0))):'–'],
+    ['Pausen gesamt',sets.some(s=>s.rest>0)?hm(sum(sets.map(s=>s.rest||0))):'–'],
     ['Gesamtvolumen',rsets.length?N0(sum(kr.map(vol)))+' kg':'–'],
     ['Ø Volumen pro Krafttraining',av!=null&&rsets.length?N0(av)+' kg'+(pav?' ('+(av>=pav?'+':'')+Math.round((av/pav-1)*100)+' % zum Vormonat)':''):'–'],
     ['Sätze',sets.length?sets.length+' · Ø '+(sets.length/kr.length).toFixed(1)+' pro Training':'–'],
@@ -422,13 +457,14 @@ function monthStats(ym){
 }
 function trHTML(k,d){
   const g={};(d.sets||[]).forEach(s=>(g[s.ex]=g[s.ex]||[]).push(s));
-  const ss=d.sets||[],vol=sum(ss.map(s=>W(d,s)*s.reps)),rs=ss.filter(s=>s.rest>0),du=ss.filter(s=>s.dur>0);
-  const meta=[tname(d),d.t0&&d.t1?'Dauer '+dur(d.t1-d.t0):'',d.w0&&d.w1?'Warm-up '+dur(d.w1-d.w0):'',d.w0&&d.w1&&d.t1?'Arbeitszeit '+dur(d.t1-d.w1):'',
+  const ss=d.sets||[],vol=sum(ss.map(s=>W(d,s)*s.reps)),rs=ss.filter(s=>s.rest>0),du=ss.filter(s=>s.dur>0),sd=sum(ss.map(s=>s.dur||0)),sr=sum(ss.map(s=>s.rest||0));
+  const meta=[tname(d),d.t0&&d.t1?'Dauer '+dur(d.t1-d.t0):'',d.w0&&d.w1?'Warm-up '+dur(d.w1-d.w0):'',d.w0&&d.w1&&d.t1?'Arbeitszeit gesamt '+dur(d.t1-d.w1):'',sd?'echte Arbeit '+hm(sd):'',sr?'Pausen '+hm(sr):'',
     ss.length?ss.length+' Sätze':'',vol?'Volumen '+N0(vol)+' kg':'',rs.length?'Ø Pause '+mmss(avg(rs.map(s=>s.rest))):'',du.length?'Ø Satz '+mmss(avg(du.map(s=>s.dur))):''].filter(Boolean).join(' · ');
   return '<div style="margin-bottom:14px"><b>'+esc(d.title||tname(d))+'</b> <span class="mut">'+dd(k)+'</span><div class="mut sm">'+meta+'</div>'
     +(d.note?'<p class="mut" style="margin:4px 0">Notiz: '+esc(d.note)+'</p>':'')
+    +(ss.length?'<div class="mut sm" style="margin:4px 0 2px">Kleine Zahl über dem Satz = Pause davor</div>':'')
     +Object.keys(g).map(e=>{const rp=g[e].filter(s=>!s.secs),hs=g[e].filter(s=>s.secs>0);
-      return '<div class="exr"><b>'+esc(e)+'</b><div>'+g[e].map(s=>(cfg.bwEx.includes(e)?'+':'')+s.kg+' × '+(s.secs?s.secs+' s':s.reps)).join(' · ')+'</div>'
+      return '<div class="exr"><b>'+esc(e)+'</b><div class="sts">'+g[e].map(s=>'<span class="st"><small title="Pause vor dem Satz">'+pz(s.rest)+'</small><span>'+(cfg.bwEx.includes(e)?'+':'')+s.kg+' × '+(s.secs?s.secs+' s':s.reps)+'</span></span>').join('')+'</div>'
       +(rp.length?'<div class="mut sm">Bester 1RM (geschätzt) '+Math.round(Math.max(...rp.map(s=>W(d,s)*(1+s.reps/30))))+' kg</div>':'')
       +(hs.length?'<div class="mut sm">Längster Halt '+Math.max(...hs.map(s=>s.secs))+' s</div>':'')+'</div>'}).join('')
     +((d.mx||[]).length?'<div class="exr"><b>Mobility-Übungen</b>'+d.mx.map((x,xi)=>{const its=mobItems(d).filter(t=>t.i===xi),dn=its.filter(t=>(d.dn||[]).includes(t.key)).length;return '<div>'+exTxt(x)+' · '+dn+'/'+its.length+' erledigt</div>'}).join('')+'</div>':'')
@@ -592,12 +628,12 @@ document.addEventListener('click',e=>{
   if(b.id==='esv2')saveEdit();
   if(b.id==='ecn2'){editK=null;renderCal()}
   if(b.id==='eadd')$('#esets').insertAdjacentHTML('beforeend',setRow(null,''));
-  if(D.mm){mmode=D.mm;cfg.mmode=mmode;saveC();iv=null;mpause=null;cd=null;render()}
+  if(D.mm){mmode=D.mm;cfg.mmode=mmode;saveC();iv=null;mpause=null;cd=null;cancelSched();render()}
   if(D.tm){tmode=D.tm;cfg.tmode=tmode;saveC();iv=null;const k=curK(),d=days[k];if(d&&d.ls){d.ls=null;d.pr=null;save(k)}render()}
   if(D.ip){const P={emom:[60,0,10],'3030':[30,30,10],tab:[20,10,8]}[D.ip];cfg.iw=P[0];cfg.ir=P[1];cfg.irn=P[2];saveC();render()}
   if(D.px!=null){const d=days[curK()],x=d&&tpl[d.tp]&&tpl[d.tp].ex[+D.px];if(x){$('#ex').value=x.n;prefill();if(x.kg)$('#kg').value=x.kg;setUm(x.u==='t'?'t':'r');if(x.r)$('#rp').value=x.r}}
-  if(D.mt!=null){const d=days[curK()],it=d&&mobItems(d)[+D.mt];if(it&&it.x.h>0){cd={n:itemPlain(it),key:it.key,end:Date.now()+it.x.h*1000};mpause=null;render()}}
-  if(D.mx!=null){const k=curK(),d=days[k],it=mobItems(d)[+D.mx],has=(d.dn||[]).includes(it.key);d.dn=has?d.dn.filter(x=>x!==it.key):[...(d.dn||[]),it.key];if(!has&&mmode==='man'){mpause={start:Date.now(),beeped:false};cd=null}save(k);render()}
+  if(D.mt!=null){const d=days[curK()],it=d&&mobItems(d)[+D.mt];if(it&&it.x.h>0){const st=Date.now()+(cfg.ipr||0)*1000;cd={n:itemPlain(it),key:it.key,hs:st,hb:!(cfg.ipr>0),end:st+it.x.h*1000};mpause=null;cancelSched();render()}}
+  if(D.mx!=null){const k=curK(),d=days[k],it=mobItems(d)[+D.mx],has=(d.dn||[]).includes(it.key);d.dn=has?d.dn.filter(x=>x!==it.key):[...(d.dn||[]),it.key];if(!has&&mmode==='man'){startMp();cd=null}save(k);render()}
   if(D.i!=null&&b.closest('#list')){const k=curK();days[k].sets.splice(+D.i,1);save(k);render()}
   if(D.m){cmo.setMonth(cmo.getMonth()+ +D.m);renderCal()}
   if(D.pm){pmo.setMonth(pmo.getMonth()+ +D.pm);renderPlan()}
@@ -618,7 +654,8 @@ $('#ex').addEventListener('change',prefill);
 $('#bw').addEventListener('change',()=>{cfg.bw=num($('#bw').value);saveC();render()});
 $('#bp').addEventListener('change',()=>{cfg.beep=parseInt($('#bp').value)||0;saveC();bpFor=null});
 $('#bt').onclick=()=>beep(3);
-$('#mbp').addEventListener('change',()=>{cfg.mbeep=parseInt($('#mbp').value)||0;saveC();if(mpause)mpause.beeped=false});
+$('#mbp').addEventListener('change',()=>{cfg.mbeep=parseInt($('#mbp').value)||0;saveC();if(mpause){mpause.beeped=false;cancelSched();mpause.sch=cfg.mbeep>0&&sched(mpause.start+cfg.mbeep*1000)}});
+['#ip','#ip2','#ip3'].forEach(s=>{const el=$(s);el.addEventListener('input',()=>{cfg.ipr=parseInt(el.value)||0});el.addEventListener('change',()=>{cfg.ipr=parseInt(el.value)||0;saveC();['#ip','#ip2','#ip3'].forEach(o=>{if(o!==s)setVal(o,cfg.ipr||'')})})});
 $('#mbt').onclick=()=>beep(3);
 ['#iw','#ir','#irn'].forEach(s=>$(s).addEventListener('change',()=>{cfg.iw=parseInt($('#iw').value)||0;cfg.ir=parseInt($('#ir').value)||0;cfg.irn=parseInt($('#irn').value)||0;saveC()}));
 function meta(){const k=curK(),d=days[k];if(!d)return;d.title=$('#ttl').value.trim();d.note=$('#note').value.trim();save(k)}
@@ -630,19 +667,23 @@ $('#go').onclick=()=>{
   const d=days[k]={date:today(),type,title:$('#ttl').value.trim()||(t?t.name:TN[type]),note:$('#note').value.trim(),sets:[],t0:now,tp:t?v.slice(2):null,bw:cfg.bw,ls:null,le:null,pr:null};
   if(type==='kraft')d.w0=now;
   if(type==='mob'){d.mx=t?(t.ex||[]).map(x=>({n:x.n,s:x.s||0,r:x.r||0,h:x.h||0,dm:x.dm||'stat',sd:x.sd?1:0})):[];d.dn=[]}
-  iv=null;cd=null;mpause=null;bpFor=null;$('#gomsg').textContent='';$('#idp').textContent='Bereit';$('#is').textContent='';save(k);render();
+  iv=null;cd=null;mpause=null;bpFor=null;cancelSched();$('#gomsg').textContent='';$('#idp').textContent='Bereit';$('#is').textContent='';save(k);render();
 };
 $('#wend').onclick=()=>{const k=curK(),d=days[k];if(!d)return;d.w1=Date.now();save(k);render()};
 $('#sb').onclick=()=>{
   const k=curK(),d=days[k];if(!d)return;const now=Date.now(),man=tmode==='man';
-  if(man&&!d.ls){d.ls=now;d.pr=d.le?Math.round((now-d.le)/1000):null;$('#emsg').textContent='';save(k);render();return}
+  if(man&&!d.ls){d.ls=now;d.lp=cfg.ipr||0;d.pr=d.le?Math.round((now-d.le)/1000):null;$('#emsg').textContent='';save(k);render();return}
   const ex=$('#ex').value.trim(),kg=num($('#kg').value);let v=Math.round(num($('#rp').value));
-  if(umode==='t'&&!(v>0)&&man&&d.ls)v=Math.round((now-d.ls)/1000);
+  if(umode==='t'&&!(v>0)&&man&&d.ls)v=Math.max(0,Math.round((now-d.ls-(d.lp||0)*1000)/1000));
   if(!ex||!(kg>=0)||!(v>0)){$('#emsg').textContent='Bitte Übung, Gewicht und '+(umode==='t'?'Sekunden':'Wiederholungen')+' eingeben.'+(man?' Der Satz läuft weiter.':'');return}
-  let rs=man?d.pr:null,du=man?Math.round((now-d.ls)/1000):null;
-  if(!man&&iv){const st=ivState();if(!st.done){if(st.work){du=Math.round(iv.w-st.left);rs=Math.round(st.left+iv.r)}else{du=iv.w;rs=iv.r}}}
+  let rs=man?((d.pr||0)+(d.lp||0))||null:null,du=man?Math.max(0,Math.round((now-d.ls-(d.lp||0)*1000)/1000)):null;
+  if(!man&&iv){const st=ivState();if(!st.done&&!st.prep){
+    const r0=iv.start+((iv.pr||0)+st.rd*(iv.w+iv.r))*1000,we=r0+iv.w*1000,same=iv.sv&&iv.sv>=r0,s0=same?iv.sv:r0;
+    du=Math.max(0,Math.round((Math.min(now,we)-s0)/1000));
+    rs=iv.sv?Math.round((s0-iv.sv)/1000):(iv.pr||null);
+    iv.sv=now}}
   const s={ex,kg,reps:umode==='t'?0:v,rest:rs||null,dur:du||null,ts:now};if(umode==='t')s.secs=v;
-  d.sets.push(s);if(man){d.ls=null;d.pr=null;d.le=now}
+  d.sets.push(s);d.le=now;if(man){d.ls=null;d.pr=null;d.lp=null}
   $('#emsg').textContent='';save(k);render();
 };
 $('#sx').onclick=()=>{const k=curK(),d=days[k];if(!d)return;d.ls=null;d.pr=null;save(k);render()};
@@ -653,7 +694,8 @@ $('#ig').onclick=()=>{
   if(w<=0||n<=0){$('#is').textContent=mob?'Bitte die Arbeitszeit (Sek.) eingeben.':'Bitte Arbeit (Sek.) und Runden eingeben.';return}
   cfg.iw=w;cfg.ir=r;if(!mob)cfg.irn=n;saveC();
   if(mob){d.dn=[];save(k)}
-  iv={start:Date.now(),w,r,n,key:-1,mob,m:0};mpause=null;cd=null;beep(1,.3,1175);render();
+  const pr=cfg.ipr||0;
+  iv={start:Date.now(),w,r,n,pr,key:-1,mob,m:0};mpause=null;cd=null;cancelSched();beep(1,.3,1175);render();
 };
 $('#madd').onclick=()=>{
   const k=curK(),d=days[k],n=$('#mn').value.trim();if(!d||!n)return;
@@ -666,7 +708,7 @@ $('#end').onclick=()=>{
     const k=curK(),d=days[k];if(!d)return;const now=Date.now();
     if(d.w0&&!d.w1)d.w1=now;
     d.ls=null;d.pr=null;d.title=$('#ttl').value.trim()||d.title;d.note=$('#note').value.trim();d.t1=now;d.ended=now;
-    save(k);iv=null;cd=null;mpause=null;bpFor=null;$('#maddw').hidden=true;selVal=null;selUser=false;['#ex','#kg','#rp','#note','#mn','#mh','#ms','#mr'].forEach(s=>{$(s).value=''});setUm('r');
+    save(k);iv=null;cd=null;mpause=null;bpFor=null;cancelSched();$('#maddw').hidden=true;selVal=null;selUser=false;['#ex','#kg','#rp','#note','#mn','#mh','#ms','#mr'].forEach(s=>{$(s).value=''});setUm('r');
     $('#gomsg').textContent='Gespeichert ('+dur(d.t1-d.t0)+'). Du findest es im Kalender.';
   }catch(err){$('#gomsg').textContent='Fehler beim Speichern: '+err.message}
   render();
