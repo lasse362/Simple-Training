@@ -400,7 +400,7 @@ body.srt-body,body.srt-body *{-webkit-user-select:none;user-select:none;-webkit-
   <p class="mut sm" style="margin:6px 0 0">Gelöscht wird erst nach zwei Tipps. Direkt danach kannst du es rückgängig machen, solange die App offen bleibt. Ein laufendes Training wird nie gelöscht. Sicherer ist trotzdem vorher ein Backup.</p>
  </details>
  </details>
- <p class="ver" id="ver">Version 59</p>
+ <p class="ver" id="ver">Version 60</p>
 </section>
 </main>
 
@@ -499,7 +499,7 @@ function beep(n=1,len=.18,f=880){
   try{unlock();if(cfg.fSnd===false)return;const a=AUD[audI++%AUD.length];a.src=wavURL(n,len,f);const p=a.play();if(p&&p.catch)p.catch(()=>{});if(navigator.vibrate)navigator.vibrate(n*150)}catch(e){}
 }
 // Geplante Pausentöne: Timer, die den Ton zum richtigen Zeitpunkt auslösen
-let bpNodes=[],bpSch=false,bpBeeped=null,lpFor=null;
+let bpNodes=[],bpSch=false,bpBeeped=null,lpFor=null,htFor=null;
 function sched(at,n=3,len=.18,f=880){bpNodes.push(setTimeout(()=>{if(Date.now()-at<2000)beep(n,len,f)},Math.max(0,at-Date.now())));return true}
 function cancelSched(){bpNodes.forEach(id=>clearTimeout(id));bpNodes=[]}
 function startMp(){mpause={start:Date.now(),beeped:false,sch:false};cancelSched();if(cfg.mbeep>0)mpause.sch=sched(mpause.start+cfg.mbeep*1000)}
@@ -745,6 +745,8 @@ function tickBody(mark){
       if(isK(d)){const sd=sum(d.sets.map(s=>s.dur||0)),sr=sum(d.sets.map(s=>s.rest||0));$('#net').textContent=d.sets.length?'Echte Arbeit '+mmss(sd)+' · Pausen '+mmss(sr):''}
       if(d.ls)cancelSched();
       if(d.ls&&d.lp>0&&lpFor!==d.ls&&now>=d.ls+d.lp*1000){lpFor=d.ls;if(now<d.ls+d.lp*1000+10000)beep(2,.3,1175)}
+      if(isK(d)&&d.ls&&tmode==='man'){const ht=d.ht>0?d.ht:(umode==='t'?Math.round(num($('#rp').value)):0),st=d.ls+(d.lp||0)*1000;
+        if(ht>0&&htFor!==d.ls&&now>=st+ht*1000){htFor=d.ls;if(now<st+ht*1000+10000)beep(3,.3,880)}}
       const bth=so?cfg.sbeep:cfg.beep;
       if(d.le&&!d.ls&&!d.sw&&bth>0&&(so||tmode==='man')){
         const th=bth*1000,el=now-d.le;
@@ -765,6 +767,7 @@ function tickBody(mark){
     }else{
       const prev=iv.key;iv.key=s.key;
       if(prev!==-1&&s.key!==prev)beep(s.work?2:1);
+      if(!iv.mob&&!iv.so&&s.work){const tg=umode==='t'?Math.round(num($('#rp').value)):0,el=iv.w-s.left;if(tg>0&&tg<iv.w&&iv.hb!==s.rd&&el>=tg){iv.hb=s.rd;if(el<tg+10)beep(3,.3,880)}}
       if(iv.so)soRounds(iv,s.prep?0:(s.work?s.rd:s.rd+1));
       if(iv.mob){const upto=s.prep?0:(s.work?s.rd:s.rd+1);while(iv.m<upto){const i=iv.m;iv.m=i+1;mark(markItem(i))}}
       $('#idp').textContent=mmss(Math.ceil(s.left));$('#iph').className='ph '+(s.prep?'prep':s.work?'work':'rest');
@@ -1325,7 +1328,7 @@ $('#go').onclick=()=>{
 $('#wend').onclick=()=>{const k=curK(),d=days[k];if(!d)return;d.w1=Date.now();save(k);render()};
 $('#sb').onclick=()=>{
   const k=curK(),d=days[k];if(!d)return;const now=Date.now(),man=tmode==='man';
-  if(man&&!d.ls){d.ls=now;d.sw=null;d.lp=cfg.ipr||0;d.pr=d.le?Math.round((now-d.le)/1000):null;$('#emsg').textContent='';save(k);render();return}
+  if(man&&!d.ls){d.ls=now;d.sw=null;d.lp=cfg.ipr||0;d.ht=umode==='t'?Math.max(0,Math.round(num($('#rp').value))):0;htFor=null;d.pr=d.le?Math.round((now-d.le)/1000):null;$('#emsg').textContent='';save(k);render();return}
   const ex=$('#ex').value.trim(),kg=num($('#kg').value);let v=Math.round(num($('#rp').value));
   if(umode==='t'&&!(v>0)&&man&&d.ls)v=Math.max(0,Math.round((now-d.ls-(d.lp||0)*1000)/1000));
   if(!ex||!(kg>=0)||!(v>0)){$('#emsg').textContent='Bitte Übung, Gewicht und '+(umode==='t'?'Sekunden':'Wiederholungen')+' eingeben.'+(man?' Der Satz läuft weiter.':'');return}
