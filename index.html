@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Krafttraining</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -14,7 +14,7 @@
 :root{--bg:#f6f7f9;--fg:#1a1d21;--card:#fff;--mut:#6b7280;--acc:#2563eb;--bd:#d9dde3;--on:#fff;--sg:#fff;--ck:#2563eb;--cm:#16a34a;--cs:#ea580c;--ok:#15803d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111418;--fg:#eceff3;--card:#1b2027;--mut:#9aa3af;--acc:#60a5fa;--bd:#2f3742;--on:#0b1220;--sg:#3a4350;--ck:#3b82f6;--cm:#22c55e;--cs:#f97316;--ok:#4ade80}}
 :root[data-theme="dark"]{--bg:#111418;--fg:#eceff3;--card:#1b2027;--mut:#9aa3af;--acc:#60a5fa;--bd:#2f3742;--on:#0b1220;--sg:#3a4350;--ck:#3b82f6;--cm:#22c55e;--cs:#f97316;--ok:#4ade80}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);touch-action:manipulation;-webkit-text-size-adjust:100%}
 *{box-sizing:border-box}[hidden]{display:none!important}
 body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.4 -apple-system,"Segoe UI",Arial,sans-serif}
 main{max-width:760px;margin:0 auto;padding:12px 14px calc(92px + env(safe-area-inset-bottom,0px))}
@@ -26,7 +26,7 @@ section{display:none}section.on{display:block}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;margin-bottom:12px}
 input[type=date]{-webkit-appearance:none;appearance:none;min-width:0;display:block;min-height:46px;line-height:1.3;text-align:left}input[type=date]::-webkit-date-and-time-value{text-align:left;margin:0}
 label{display:block;font-size:13px;color:var(--mut);margin:8px 0 4px}
-input,textarea,select{width:100%;padding:11px;font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--bd);border-radius:10px}
+input,textarea,select{width:100%;padding:11px;font:inherit;font-size:max(16px,1em);color:var(--fg);background:var(--bg);border:1px solid var(--bd);border-radius:10px}
 .row{display:flex;gap:10px}.row>div{flex:1;min-width:0}
 .step{display:flex;gap:6px}.step input{text-align:center}
 .step button{width:46px;border:1px solid var(--bd);background:var(--bg);color:var(--fg);border-radius:10px;font-size:20px}
@@ -288,35 +288,20 @@ li>button:not(.lk){border:0;background:none;color:var(--mut);font-size:18px;padd
 </section>
 
 <section id="d">
- <details class="card dsec"><summary><b>Darstellung</b><span class="mut sm" id="dsT"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><div class="seg" id="thm" style="margin-top:8px"><button data-th="system">System</button><button data-th="light">Hell</button><button data-th="dark">Dunkel</button></div><p class="mut sm" style="margin:0">„System“ folgt der Hell/Dunkel-Einstellung deines Geräts.</p></details>
  <details class="card dsec"><summary><b>Körpergewicht</b><span class="mut sm" id="dsB"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><label for="bw" style="margin-top:0">Körpergewicht (kg)</label><input id="bw" inputmode="decimal" placeholder="z. B. 82"><label for="bwd">Datum</label><input type="date" id="bwd"><button class="btn" id="bwsave" style="width:100%;margin:10px 0 0">Gewicht speichern</button><p id="bwmsg" class="mut sm" style="margin:6px 0 0"></p><p class="mut sm" style="margin:4px 0 0">Jeder Eintrag landet im Verlauf. Im Graf findest du ihn unter „Körpergewicht“.</p><div id="bwlist" style="margin-top:6px"></div>
   <label>Bei diesen Übungen gibst du nur das Zusatzgewicht ein. Das Körpergewicht wird in der Auswertung automatisch addiert:</label><div class="chips" id="bwc"></div>
   <p class="mut sm" style="margin:0">Das Körpergewicht wird bei jedem neuen Training mitgespeichert. Änderst du es später, bleiben ältere Trainings unverändert.</p></details>
- <details class="card dsec" id="plsec"><summary><b>Scheibenrechner</b><span class="mut sm" id="dsP"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-  <details class="pdrop" id="pmy"><summary><span>Meine Scheiben</span><span class="mut sm" id="pmys"></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p class="mut sm" style="margin:8px 0 6px">Wie viele Scheiben hast du von jeder Größe (insgesamt)? Bei der Stange kommt je die Hälfte auf eine Seite. Alles leer = beliebig viele von allen.</p><div id="pcl"></div></details>
-  <div class="seg" id="pmo" style="margin-top:10px"><button data-pmd="bar">Stange (2 Seiten)</button><button data-pmd="belt">Gürtel (1 Seite)</button></div>
-  <div class="row"><div id="pbarw"><label for="pbar">Gewicht der Stange (kg)</label><input id="pbar" inputmode="decimal" placeholder="20"></div><div id="pbeltw" hidden><label for="pbelt">Gewicht vom Gürtel (kg)</label><input id="pbelt" inputmode="decimal" placeholder="0"></div><div><label for="ptot">Gesamtgewicht (kg)</label><input id="ptot" inputmode="decimal" placeholder="z. B. 100"></div></div>
-  <div id="pres" style="margin-top:10px"></div>
- </details>
  <details class="card dsec"><summary><b>Hauptübungen</b><span class="mut sm" id="dsM"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
   <p class="mut sm" style="margin:4px 0 0">Nur diese Übungen stehen im Graf zur Auswahl und werden beim Planen im Auswahlmenü vorgeschlagen. Frei eintippen kannst du weiterhin jede Übung. Frühere Trainings zählen automatisch mit, wenn der Name genau gleich ist.</p>
   <div style="display:flex;gap:6px;margin-top:8px"><input id="mainn" list="alll" placeholder="z. B. Klimmzüge" autocomplete="off" style="flex:1;min-width:0"><button class="btn" id="mainadd" style="margin:0;width:auto;white-space:nowrap">Hinzufügen</button></div>
   <div id="mainmsg" class="mut sm" style="margin-top:6px"></div>
   <div id="mainc"></div>
  </details>
- <details class="card dsec"><summary><b>Backup und Export</b><span class="mut sm" id="dsS"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-  <p id="st" class="mut" style="margin-top:0"></p>
-  <button class="btn" id="ej">Backup (JSON)</button><button class="btn" id="ec2">Export (CSV)</button>
-  <label style="margin-top:6px">Backup einlesen</label><input type="file" id="imp" accept=".json,application/json">
-  <p id="msg" class="mut"></p>
- </details>
- <details class="card dsec"><summary><b>Sonstiges</b><span class="mut sm" id="dsX"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-  <label class="tgl"><span><b>Pieptöne</b><small>Aus = stumm: Timer und „Weiter!“ laufen normal, nur ohne Ton.</small></span><input type="checkbox" id="fSnd"></label>
-  <label class="tgl"><span><b>Notizen zu Übungen</b><small>In der Trainingsplanung bei einer Übung eine feste Notiz hinterlegen (z. B. Sitzhöhe, Griffbreite). Sie erscheint im Training immer bei genau dieser Übung.</small></span><input type="checkbox" id="fNote"></label>
-  <label class="tgl"><span><b>Steigerungs-Hinweise</b><small>Hast du beim letzten Mal in allen Sätzen das Ziel aus deiner Vorlage geschafft, schlägt die App mehr Gewicht vor (bei Zeit-Sätzen +5 s). Antippen übernimmt den Wert.</small></span><input type="checkbox" id="fProg"></label>
-  <div id="progw" style="display:flex;align-items:center;gap:10px;margin:0 0 10px"><span class="sm mut" style="flex:1">Steigerung pro Schritt (kg)</span><input id="progKg" inputmode="decimal" style="width:90px"></div>
-  <label class="tgl"><span><b>Anstrengung pro Satz</b><small>Vor dem Speichern 1–10 antippen (10 = Maximum). Steht bei den Sätzen und ist im Graf wählbar.</small></span><input type="checkbox" id="fRpe"></label>
-  <label class="tgl"><span><b>Supersätze und Zirkel</b><small>In der Vorlage Übungen einer Gruppe (A–D) zuordnen. Nach jedem Satz wechselt die App zur nächsten Übung der Gruppe, der Pausenton kommt erst nach der Runde.</small></span><input type="checkbox" id="fSup"></label>
+ <details class="card dsec" id="plsec"><summary><b>Scheibenrechner</b><span class="mut sm" id="dsP"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <details class="pdrop" id="pmy"><summary><span>Meine Scheiben</span><span class="mut sm" id="pmys"></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p class="mut sm" style="margin:8px 0 6px">Wie viele Scheiben hast du von jeder Größe (insgesamt)? Bei der Stange kommt je die Hälfte auf eine Seite. Alles leer = beliebig viele von allen.</p><div id="pcl"></div></details>
+  <div class="seg" id="pmo" style="margin-top:10px"><button data-pmd="bar">Stange (2 Seiten)</button><button data-pmd="belt">Gürtel (1 Seite)</button></div>
+  <div class="row"><div id="pbarw"><label for="pbar">Gewicht der Stange (kg)</label><input id="pbar" inputmode="decimal" placeholder="20"></div><div id="pbeltw" hidden><label for="pbelt">Gewicht vom Gürtel (kg)</label><input id="pbelt" inputmode="decimal" placeholder="0"></div><div><label for="ptot">Gesamtgewicht (kg)</label><input id="ptot" inputmode="decimal" placeholder="z. B. 100"></div></div>
+  <div id="pres" style="margin-top:10px"></div>
  </details>
  <details class="card dsec"><summary><b>Übungen umbenennen</b><span class="mut sm" id="dsR"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
   <div class="seg" id="rnk" style="margin-top:0"><button data-rk="k">Kraft</button><button data-rk="m">Mobility</button></div>
@@ -329,6 +314,21 @@ li>button:not(.lk){border:0;background:none;color:var(--mut);font-size:18px;padd
   <p id="rnmsg" class="mut sm" style="margin:6px 0 0"></p>
   <p class="mut sm" style="margin:6px 0 0">Gibt es den neuen Namen schon, werden beide zusammengeführt. Es wird nichts gelöscht, nur der Name ändert sich: im Verlauf, in den Vorlagen und in deinen Listen.</p>
  </details>
+ <details class="card dsec"><summary><b>Sonstiges</b><span class="mut sm" id="dsX"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <label class="tgl"><span><b>Pieptöne</b><small>Aus = stumm: Timer und „Weiter!“ laufen normal, nur ohne Ton.</small></span><input type="checkbox" id="fSnd"></label>
+  <label class="tgl"><span><b>Notizen zu Übungen</b><small>In der Trainingsplanung bei einer Übung eine feste Notiz hinterlegen (z. B. Sitzhöhe, Griffbreite). Sie erscheint im Training immer bei genau dieser Übung.</small></span><input type="checkbox" id="fNote"></label>
+  <label class="tgl"><span><b>Steigerungs-Hinweise</b><small>Hast du beim letzten Mal in allen Sätzen das Ziel aus deiner Vorlage geschafft, schlägt die App mehr Gewicht vor (bei Zeit-Sätzen +5 s). Antippen übernimmt den Wert.</small></span><input type="checkbox" id="fProg"></label>
+  <div id="progw" style="display:flex;align-items:center;gap:10px;margin:0 0 10px"><span class="sm mut" style="flex:1">Steigerung pro Schritt (kg)</span><input id="progKg" inputmode="decimal" style="width:90px"></div>
+  <label class="tgl"><span><b>Anstrengung pro Satz</b><small>Vor dem Speichern 1–10 antippen (10 = Maximum). Steht bei den Sätzen und ist im Graf wählbar.</small></span><input type="checkbox" id="fRpe"></label>
+  <label class="tgl"><span><b>Supersätze und Zirkel</b><small>In der Vorlage Übungen einer Gruppe (A–D) zuordnen. Nach jedem Satz wechselt die App zur nächsten Übung der Gruppe, der Pausenton kommt erst nach der Runde.</small></span><input type="checkbox" id="fSup"></label>
+ </details>
+ <details class="card dsec"><summary><b>Darstellung</b><span class="mut sm" id="dsT"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><div class="seg" id="thm" style="margin-top:8px"><button data-th="system">System</button><button data-th="light">Hell</button><button data-th="dark">Dunkel</button></div><p class="mut sm" style="margin:0">„System“ folgt der Hell/Dunkel-Einstellung deines Geräts.</p></details>
+ <details class="card dsec"><summary><b>Backup und Export</b><span class="mut sm" id="dsS"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <p id="st" class="mut" style="margin-top:0"></p>
+  <button class="btn" id="ej">Backup (JSON)</button><button class="btn" id="ec2">Export (CSV)</button>
+  <label style="margin-top:6px">Backup einlesen</label><input type="file" id="imp" accept=".json,application/json">
+  <p id="msg" class="mut"></p>
+ </details>
  <details class="card dsec"><summary><b>Löschen</b><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
   <label for="dwhat" style="margin-top:0">Was möchtest du löschen?</label>
   <select id="dwhat"><option value="range">Trainings in einem Zeitraum</option><option value="ex">Alle Sätze einer Übung</option><option value="plan">Eingeplante Tage in einem Zeitraum</option><option value="all">Gesamter Trainingsverlauf</option><option value="tpl">Alle Vorlagen und der ganze Plan</option></select>
@@ -340,11 +340,12 @@ li>button:not(.lk){border:0;background:none;color:var(--mut);font-size:18px;padd
   <p id="dmsg" class="mut sm" style="margin:6px 0 0"></p>
   <p class="mut sm" style="margin:6px 0 0">Gelöscht wird erst nach zwei Tipps. Direkt danach kannst du es rückgängig machen, solange die App offen bleibt. Ein laufendes Training wird nie gelöscht. Sicherer ist trotzdem vorher ein Backup.</p>
  </details>
- <p class="ver" id="ver">Version 44</p>
+ <p class="ver" id="ver">Version 46</p>
 </section>
 </main>
 
 <script>
+["gesturestart","gesturechange","gestureend"].forEach(e=>document.addEventListener(e,ev=>ev.preventDefault()));
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],pad=n=>String(n).padStart(2,'0');
 const fmt=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()),today=()=>fmt(new Date());
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -465,7 +466,7 @@ const sdTxt=sd=>sd==='L'?'links':sd==='R'?'rechts':'';
 const itemPlain=it=>it.x.n+(it.st>1?' · Satz '+it.j+'/'+it.st:'')+(it.sd?' · '+sdTxt(it.sd):'');
 const itemTxt=(it,det)=>esc(it.x.n)+(it.st>1?' · Satz '+it.j+'/'+it.st:'')+(it.sd?' · <b>'+sdTxt(it.sd)+'</b>':'')+(det?(it.x.r?' · '+it.x.r+' Wdh':'')+(it.x.h?' · '+it.x.h+' s':'')+' · '+(it.x.dm==='dyn'?'dynamisch':'statisch'):'');
 function markItem(i){const k=curK(),d=days[k];if(!d)return false;const it=mobItems(d)[i];if(!it)return false;d.dn=d.dn||[];if(d.dn.includes(it.key))return false;d.dn.push(it.key);save(k);return true}
-let selRpe=null,pendForm=null,noteHold=0,inTick=false,iOpen=false,selSet=null,nEdit=false,kOpen=false,mOpen=false,openTm=null,msOpen={K:true,M:false,S:false,A:false};
+let selRpe=null,pendForm=null,noteHold=0,inTick=false,iOpen=false,selSet=null,nEdit=false,kOpen=false,mOpen=false,openTm=null,msOpen={K:false,M:false,S:false,A:false};
 const TY={kraft:'K',mob:'M',sonst:'S'};
 const TILES=[['n','Trainings'],['days','Trainingstage'],['tt','Trainingszeit gesamt'],['kn','Krafttrainings'],['kt','Ø Dauer Krafttraining'],['wu','Ø Warm-up'],['vol','Volumen'],['avol','Ø Volumen pro Training'],['sets','Sätze'],['reps','Ø Wdh pro Satz'],['rest','Ø Pause'],['sdur','Ø Satzdauer'],['work','Echte Arbeitszeit'],['pauses','Pausen gesamt'],['mob','Mobility-Zeit'],['man','Nachgetragene Trainings'],['pr','Neue 1RM-Bestwerte'],['gap','Längste Trainingspause']];
 // Kurzname für Kalenderkästchen: „Push-Tag“ → „Push“, „Oberkörper“ → „Oberk.“
