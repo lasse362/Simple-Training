@@ -122,6 +122,10 @@ li>button:not(.lk){border:0;background:none;color:var(--mut);font-size:18px;padd
 .tcard{background:var(--card);border:1px solid var(--bd);border-left:5px solid var(--ck);border-radius:14px;padding:12px;margin-bottom:12px}.tcard.M{border-left-color:var(--cm)}.tcard.S{border-left-color:var(--cs)}
 .tsum{display:flex;align-items:center;gap:8px;width:100%;min-height:28px;border:0;background:none;color:var(--fg);font:inherit;padding:0;text-align:left;cursor:pointer}
 .tsum b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tsum span{text-align:right;white-space:nowrap}.tsum svg{flex:none;color:var(--mut);transition:transform .15s}.tcard.open .tsum svg{transform:rotate(180deg)}
+.tsum,#recs>details>summary,.tbody .tex{-webkit-touch-callout:none}
+body.srt-body,body.srt-body *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.srt-c>.tbody{display:none!important}details.srt-c>:not(summary){display:none!important}
+.srt-s{transition:transform .18s ease}.srt-d{position:relative;z-index:50;transition:none!important;box-shadow:0 12px 32px rgba(0,0,0,.28);opacity:.97}
 .tbody{margin-top:8px}.tbody .tex{padding:6px 0;border-top:1px solid var(--bd);font-size:14px}.tbody .tbt{margin-top:8px}
 .dots svg{display:block;transition:transform .15s}.dots.open svg{transform:rotate(180deg)}
 .ph .pv2{font:700 28px/1.25 ui-monospace,Menlo,monospace;text-align:center}
@@ -272,7 +276,7 @@ li>button:not(.lk){border:0;background:none;color:var(--mut);font-size:18px;padd
   <button class="big" id="esv">Training speichern</button><button class="end" id="ecn">Abbrechen</button>
   <div id="emsg2" class="mut" style="margin-top:6px"></div>
  </div>
- <div class="sech">Alle Trainings</div><div id="tl"></div>
+ <div class="sech">Alle Trainings</div><p class="mut sm" style="margin:-4px 2px 8px">Zum Verschieben ein Training oder eine Übung gedrückt halten.</p><div id="tl"></div>
 </section>
 
 <section id="g">
@@ -283,7 +287,7 @@ li>button:not(.lk){border:0;background:none;color:var(--mut);font-size:18px;padd
   <div class="cw"></div>
   <p class="mut sm" style="margin:8px 0 0">Tippe in den Graf, um die Werte des Tages und deine Notiz zu sehen. Jeder Faktor hat seine eigene Achse, der Abstand erscheint als Säulen.</p>
  </div>
- <p class="mut sm" style="margin:14px 4px 6px"><b style="color:var(--fg);font-size:16px">Rekorde</b> · Hauptübungen</p>
+ <p class="mut sm" style="margin:14px 4px 6px"><b style="color:var(--fg);font-size:16px">Rekorde</b> · Hauptübungen · zum Verschieben gedrückt halten</p>
  <div id="recs"></div>
 </section>
 
@@ -340,7 +344,7 @@ li>button:not(.lk){border:0;background:none;color:var(--mut);font-size:18px;padd
   <p id="dmsg" class="mut sm" style="margin:6px 0 0"></p>
   <p class="mut sm" style="margin:6px 0 0">Gelöscht wird erst nach zwei Tipps. Direkt danach kannst du es rückgängig machen, solange die App offen bleibt. Ein laufendes Training wird nie gelöscht. Sicherer ist trotzdem vorher ein Backup.</p>
  </details>
- <p class="ver" id="ver">Version 46</p>
+ <p class="ver" id="ver">Version 50</p>
 </section>
 </main>
 
@@ -407,7 +411,7 @@ function sanitize(){
   if(!Array.isArray(cfg.tiles)||cfg.tiles.length!==4||cfg.tiles.some(t=>!TILES.some(x=>x[0]===t)))cfg.tiles=['n','tt','vol','rest'];
   cfg.exNote=(cfg.exNote&&typeof cfg.exNote==='object'&&!Array.isArray(cfg.exNote))?cfg.exNote:{};cfg.mxNote=(cfg.mxNote&&typeof cfg.mxNote==='object'&&!Array.isArray(cfg.mxNote))?cfg.mxNote:{};
   if(!cfg.pc||typeof cfg.pc!=='object'||Array.isArray(cfg.pc)){cfg.pc={};if(Array.isArray(cfg.plates))cfg.plates.forEach(p=>{cfg.pc[p]=2})}delete cfg.plates;Object.keys(cfg.pc).forEach(p=>{const n=Math.max(0,Math.min(99,Math.round(num(cfg.pc[p]))));if(n)cfg.pc[p]=n;else delete cfg.pc[p]});if(cfg.pBelt==null||!(num(cfg.pBelt)>=0))cfg.pBelt=0;if(!(num(cfg.pBar)>=0)||cfg.pBar===''||cfg.pBar==null)cfg.pBar=20;if(!['bar','belt'].includes(cfg.pMode))cfg.pMode='bar';
-  cfg.main=[...new Set((Array.isArray(cfg.main)?cfg.main:[]).map(x=>String(x).trim()).filter(Boolean))];
+  cfg.main=[...new Set((Array.isArray(cfg.main)?cfg.main:[]).map(x=>String(x).trim()).filter(Boolean))];cfg.tplOrder=(Array.isArray(cfg.tplOrder)?cfg.tplOrder:[]).filter(x=>typeof x==='string');
   Object.keys(plan).forEach(k=>{if(!Array.isArray(plan[k]))plan[k]=[]});
 }
 function migrate(){
@@ -558,7 +562,7 @@ function renderTrain(){
    {const fv=d?d.form:pendForm;$$('[data-form]').forEach(b=>b.classList.toggle('on',+b.dataset.form===fv))}sh('#nfin',act&&nEdit);
    setLbl()}
   if(p==='idle'){
-    const pl=planned(today()),rest=Object.keys(tpl).filter(i=>!pl.includes(i)).sort((a,b)=>tpl[a].name.localeCompare(tpl[b].name));
+    const pl=planned(today()),rest=tplIds().filter(i=>!pl.includes(i));
     const o=(v,t)=>'<option value="'+v+'">'+esc(t)+'</option>',lab=i=>tpl[i].name+' ('+(TN[tpl[i].type||'kraft']||'Kraft')+')';
     $('#tsel').innerHTML=(pl.length?'<optgroup label="Heute geplant">'+pl.map(i=>o('T:'+i,lab(i))).join('')+'</optgroup>':'')
       +(rest.length?'<optgroup label="Alle Trainings">'+rest.map(i=>o('T:'+i,lab(i))).join('')+'</optgroup>':'')
@@ -861,19 +865,20 @@ function renderCalBody(){
 function pDone(k,i){const nm=s=>String(s||'').trim().toLowerCase();return trs(k).some(([,d])=>d.tp===i||(!d.tp&&nm(d.title)===nm(tpl[i].name)))}
 function manOf(k,i){const x=trs(k).find(([,d])=>d.man&&d.tp===i);return x?x[0]:null}
 function ckBtn(k,i){const dn=pDone(k,i),m=dn&&manOf(k,i);return '<button class="ckb'+(dn?' on':'')+(dn&&!m?' lock':'')+'" data-pck="'+i+'" aria-pressed="'+dn+'"><i aria-hidden="true"></i>Erledigt</button>'}
+function tplIds(){const o=Array.isArray(cfg.tplOrder)?cfg.tplOrder:[],all=Object.keys(tpl).sort((a,b)=>tpl[a].name.localeCompare(tpl[b].name)),pos=new Map(o.map((i,ix)=>[i,ix]));return[...all.filter(i=>pos.has(i)).sort((a,b)=>pos.get(a)-pos.get(b)),...all.filter(i=>!pos.has(i))]}
 function renderPlan(){
   $('#pmt').textContent=monthLbl(pmo);
   $('#pcal').innerHTML=gridHTML(pmo,k=>{const p=planned(k);if(!p.length)return['',''];const t0=today(),done=i=>pDone(k,i),st=i=>done(i)?'M':(k<t0?'S':'K'),mn=i=>!!manOf(k,i);return['has','',pill(st(p[0]),tpl[p[0]].name,mn(p[0]))+(p.length>1?'<i class="dot '+st(p[1])+'" title="'+p.length+' Trainings"></i>':'')]},psel);
   const pd=$('#pday');pd.hidden=!psel;
   if(psel){
-    const p=planned(psel),ids=Object.keys(tpl).sort((a,b)=>tpl[a].name.localeCompare(tpl[b].name));
+    const p=planned(psel),ids=tplIds();
     pd.innerHTML='<b>'+dd(psel)+'</b>'+(p.length?p.map(i=>'<div class="exr mrow"><span>'+esc(tpl[i].name)+' <span class="mut sm">'+(tpl[i].type==='sonst'?'Sonstiges':(tpl[i].type==='mob'?'Mobility, ':'')+(tpl[i].ex||[]).length+' Übungen')+'</span></span><span style="display:flex;gap:6px;flex:0 0 auto;align-items:center">'+(psel<=today()?ckBtn(psel,i):'')+'<button class="btn" style="margin:0" data-pr="'+i+'">Entfernen</button></span></div>').join('')
       +(pdMsg?'<p class="mut sm" id="pdm" style="margin:6px 0 0">'+pdMsg+'</p>':''):'<p class="mut sm">Für diesen Tag ist nichts geplant.</p>')
       +(ids.length?'<label>Training einplanen</label><select id="psl">'+ids.map(i=>'<option value="'+i+'">'+esc(tpl[i].name)+'</option>').join('')+'</select><label>Wiederholen</label><select id="prp"><option value="1">Nur an diesem Tag</option><option value="12">Jede Woche, 12 Wochen lang</option></select><button class="big" id="pgo">Einplanen</button>':'<p class="mut sm">Erstelle unten zuerst ein Training.</p>');
   }
-  $('#tl').innerHTML=Object.keys(tpl).sort((a,b)=>tpl[a].name.localeCompare(tpl[b].name)).map(i=>{const t=tpl[i],ty=t.type||'kraft',n=(t.ex||[]).length,op=openTm===i;
-    return '<div class="tcard '+TY[ty]+(op?' open':'')+'"><button class="tsum" data-tmn="'+i+'" aria-expanded="'+op+'"><b>'+esc(t.name)+'</b><span class="mut sm">'+(ty==='sonst'?'nur Gesamtzeit':n+(n===1?' Übung':' Übungen'))+'</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>'
-      +(op?'<div class="tbody"><div class="mut sm" style="margin-bottom:4px">'+TN[ty]+'</div>'+(ty==='sonst'?'':(t.ex||[]).map(x=>'<div class="tex">'+exTxt(x)+'</div>').join(''))
+  $('#tl').innerHTML=tplIds().map(i=>{const t=tpl[i],ty=t.type||'kraft',n=(t.ex||[]).length,nS=(t.ex||[]).reduce((a,x)=>a+Math.round(+x.s||0)*(x.lr||x.sd?2:1),0),op=openTm===i;
+    return '<div class="tcard '+TY[ty]+(op?' open':'')+'" data-tid="'+i+'"><button class="tsum" data-tmn="'+i+'" aria-expanded="'+op+'"><b>'+esc(t.name)+'</b><span class="mut sm">'+(ty==='sonst'?'nur Gesamtzeit':n+(n===1?' Übung':' Übungen')+(nS?'<br>'+nS+(nS===1?' Satz':' Sätze'):''))+'</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>'
+      +(op?'<div class="tbody"><div class="mut sm" style="margin-bottom:4px">'+TN[ty]+'</div>'+(ty==='sonst'?'':(t.ex||[]).map((x,xi)=>'<div class="tex" data-xi="'+xi+'">'+exTxt(x)+'</div>').join(''))
         +'<div class="tbt"><button class="btn" data-te="'+i+'">Bearbeiten</button><button class="btn" data-tx="'+i+'">Löschen</button></div></div>':'')+'</div>'}).join('')||'<div class="card"><p class="mut sm" style="margin:0">Noch kein Training gespeichert.</p></div>';
 }
 function addRow(x,box,ng){box=box&&box.nodeType===1?box:null;ng=ng===true;
@@ -1285,6 +1290,58 @@ $('#imp').onchange=async e=>{
   }catch(x){$('#msg').textContent='Datei konnte nicht gelesen werden. Ist es ein Backup (JSON) dieser App?'}
   e.target.value='';
 };
+// Verschieben per langem Drücken: Rekorde, Trainings (Plan), Übungen in einem Training
+const SORT=[
+ {col:1,item:t=>{const x=t.closest('#recs>details>summary');return x&&x.parentElement},sibs:it=>[...it.parentElement.children].filter(c=>c.matches('details')),
+  drop:(it,o)=>{const M=cfg.main||[];cfg.main=o.map(x=>M[+x.dataset.rec]).filter(v=>v!=null);saveC();renderRec()}},
+ {col:1,item:t=>{const x=t.closest('#tl>.tcard>.tsum');return x&&x.parentElement},sibs:it=>[...it.parentElement.children].filter(c=>c.classList.contains('tcard')),
+  drop:(it,o)=>{cfg.tplOrder=o.map(x=>x.dataset.tid);saveC();renderPlan()}},
+ {col:0,item:t=>t.closest('#tl .tbody>.tex'),sibs:it=>[...it.parentElement.children].filter(c=>c.classList.contains('tex')),
+  drop:(it,o)=>{const id=it.closest('.tcard').dataset.tid,ex=(tpl[id].ex||[]).slice();tpl[id].ex=o.map(x=>ex[+x.dataset.xi]).filter(Boolean);saveT(id);renderPlan()}}
+];
+(()=>{
+  let pend=null,dr=null,sup=0,lastY=0,sc=null;
+  const clr=()=>{if(pend){clearTimeout(pend.t);pend=null}};
+  function start(){
+    const p=pend;pend=null;if(!p)return;
+    const sibs=p.cf.sibs(p.it);if(sibs.length<2)return;
+    sibs.forEach(e=>{if(p.cf.col||e===p.it)e.classList.add('srt-c')});
+    document.body.classList.add('srt-body');void p.it.offsetHeight;
+    const R=sibs.map(e=>{const r=e.getBoundingClientRect();return{e,top:r.top+scrollY,h:r.height}}),i0=sibs.indexOf(p.it);
+    const gap=i0<R.length-1?R[i0+1].top-(R[i0].top+R[i0].h):R[i0].top-(R[i0-1].top+R[i0-1].h);
+    dr={it:p.it,cf:p.cf,sibs,R,i0,j:i0,gap:Math.max(0,gap),p0:lastY+scrollY};
+    sibs.forEach(e=>e.classList.add(e===p.it?'srt-d':'srt-s'));
+    sc=setInterval(()=>{if(!dr)return;const H=innerHeight;let v=0;if(lastY<90)v=-Math.ceil((90-lastY)/5);else if(lastY>H-130)v=Math.ceil((lastY-(H-130))/5);if(v){scrollBy(0,Math.max(-24,Math.min(24,v)));mv(lastY)}},16);
+    mv(lastY);
+  }
+  function mv(cy){
+    const d=dr;if(!d)return;const dy=cy+scrollY-d.p0,h=d.R[d.i0].h+d.gap;
+    d.it.style.transform='translateY('+dy+'px)';
+    const c=d.R[d.i0].top+d.R[d.i0].h/2+dy;let j=0;d.R.forEach((r,k)=>{if(k!==d.i0&&r.top+r.h/2<c)j++});d.j=j;
+    d.R.forEach((r,k)=>{if(k===d.i0)return;let t=0;if(k>d.i0&&k<=j)t=-h;else if(k<d.i0&&k>=j)t=h;r.e.style.transform=t?'translateY('+t+'px)':''});
+  }
+  function end(ok){
+    const d=dr;dr=null;clearInterval(sc);document.body.classList.remove('srt-body');
+    const o=d.sibs.slice(),m=o.splice(d.i0,1)[0];o.splice(d.j,0,m);
+    d.sibs.forEach(e=>{e.style.transform='';e.classList.remove('srt-d','srt-s','srt-c')});
+    sup=Date.now()+350;
+    if(ok&&d.j!==d.i0)d.cf.drop(d.it,o);
+  }
+  document.addEventListener('pointerdown',e=>{
+    if(e.button>0||dr)return;clr();if(e.target.closest('input,select,textarea,label'))return;
+    for(const cf of SORT){const it=cf.item(e.target);if(it){lastY=e.clientY;pend={t:setTimeout(start,1000),it,cf,x:e.clientX,y:e.clientY};return}}
+  });
+  document.addEventListener('pointermove',e=>{
+    lastY=e.clientY;
+    if(pend&&Math.hypot(e.clientX-pend.x,e.clientY-pend.y)>10)clr();
+    if(dr){mv(e.clientY);e.preventDefault()}
+  });
+  document.addEventListener('pointerup',()=>{clr();if(dr)end(true)});
+  document.addEventListener('pointercancel',()=>{clr();if(dr)end(false)});
+  document.addEventListener('touchmove',e=>{if(dr)e.preventDefault()},{passive:false});
+  document.addEventListener('contextmenu',e=>{if(pend||dr)e.preventDefault()});
+  window.addEventListener('click',e=>{if(Date.now()<sup){sup=0;e.stopPropagation();e.preventDefault()}},true);
+})();
 // Gezieltes Löschen mit Vorschau und Rückgängig
 let undoSnap=null;
 function delPlan(){
