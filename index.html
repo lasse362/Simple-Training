@@ -125,6 +125,7 @@ li>button:not(.lk){border:0;background:none;color:var(--mut);font-size:18px;padd
 .dgrp{margin-bottom:12px;border:0;padding:0}.dgrp>summary{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px 18px;min-height:30px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
 .dgrp>summary b{font-size:19px;white-space:nowrap;flex:none}.dgrp>summary span{flex:1}.dgrp>summary span{font-size:12px}.dgrp>summary svg{width:22px;height:22px}.dgrp[open]>summary{margin-bottom:12px;border-color:var(--acc)}
 .dgrp>.card:last-child{margin-bottom:0}
+.shr{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--bd);font-size:15px;margin:0;color:var(--fg)}.shr:first-child{border-top:0}.shr input{width:22px;height:22px;flex:none;margin:0}.shr small{font-size:12px}
 .about h4{margin:12px 0 4px;font-size:15px;color:var(--acc)}.about p{margin:4px 0 6px;font-size:14px}.about .ai{margin:6px 0;padding-left:10px;border-left:3px solid var(--bd);font-size:14px;display:block}.abw{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:8px 10px}
 .sech{font-weight:700;margin:4px 2px 8px}
 .tcard{background:var(--card);border:1px solid var(--bd);border-left:5px solid var(--ck);border-radius:14px;padding:12px;margin-bottom:12px}.tcard.M{border-left-color:var(--cm)}.tcard.S{border-left-color:var(--cs)}
@@ -264,8 +265,9 @@ body.srt-body,body.srt-body *{-webkit-user-select:none;user-select:none;-webkit-
   <button class="btn" id="mtog" style="margin-top:8px">+ Übung hinzufügen</button>
   <div id="maddw" hidden>
    <label for="mn">Name</label><input id="mn" list="mxl" placeholder="z. B. Hüftkreisen" autocomplete="off">
-   <div class="row"><div><label for="ms">Sätze</label><input id="ms" inputmode="numeric"></div><div><label for="mr">Wdh</label><input id="mr" inputmode="numeric"></div><div><label for="mh">Halten (Sek.)</label><input id="mh" inputmode="numeric"></div></div>
-   <div class="row"><div><label for="mdm">Art</label><select id="mdm"><option value="stat">statisch</option><option value="dyn">dynamisch</option></select></div><div><label for="msd">Seite</label><select id="msd"><option value="">ohne Seitenwechsel</option><option value="LR">links und rechts</option></select></div></div>
+   <select id="mown" aria-label="Meine Übung wählen" style="margin-top:6px" hidden></select>
+   <div class="row"><div><label for="ms">Sätze</label><input id="ms" inputmode="numeric"></div><div><label for="mdm">Art</label><select id="mdm"><option value="stat">statisch</option><option value="dyn">dynamisch</option></select></div><div id="mrw"><label for="mr">Wdh</label><input id="mr" inputmode="numeric"></div><div id="mhw"><label for="mh">Halten (Sek.)</label><input id="mh" inputmode="numeric"></div></div>
+   <div class="row"><div><label for="msd">Seite</label><select id="msd"><option value="">ohne Seitenwechsel</option><option value="LR">links und rechts</option></select></div></div>
    <button class="big" id="madd">Hinzufügen</button>
   </div>
  </div>
@@ -298,6 +300,14 @@ body.srt-body,body.srt-body *{-webkit-user-select:none;user-select:none;-webkit-
   <div id="emsg2" class="mut" style="margin-top:6px"></div>
  </div>
  <div class="sech">Alle Trainings</div><p class="mut sm" style="margin:-4px 2px 8px">Zum Verschieben ein Training oder eine Übung gedrückt halten.</p><div id="tl"></div>
+ <button class="btn" id="shb" style="margin-top:6px">Trainings teilen</button>
+ <div class="card" id="shw" hidden style="margin-top:10px"><b>Trainings teilen</b>
+  <p class="mut sm" style="margin:4px 0 8px">Wähle ein oder mehrere Trainings und speichere sie als Datei. Wer die gleiche App hat, liest sie unter Daten › Einstellungen › Backup und Export mit „Backup oder geteilte Trainings einlesen“ ein. Dein Kalender und deine Daten bleiben dabei privat.</p>
+  <div id="shl"></div>
+  <div style="display:flex;gap:6px"><button class="btn" id="sha" style="margin:0">Alle</button><button class="btn" id="shn" style="margin:0">Keine</button></div>
+  <button class="big" id="shs" disabled>Auswahl als Datei speichern</button><button class="end" id="shc">Schließen</button>
+  <div id="shm" class="mut sm" style="margin-top:6px"></div>
+ </div>
 </section>
 
 <section id="g">
@@ -322,6 +332,13 @@ body.srt-body,body.srt-body *{-webkit-user-select:none;user-select:none;-webkit-
   <div style="display:flex;gap:6px;margin-top:8px"><input id="mainn" list="alll" placeholder="z. B. Klimmzüge" autocomplete="off" style="flex:1;min-width:0"><button class="btn" id="mainadd" style="margin:0;width:auto;white-space:nowrap">Hinzufügen</button></div>
   <div id="mainmsg" class="mut sm" style="margin-top:6px"></div>
   <div id="mainc"></div>
+ </details>
+ <details class="card dsec" id="owsec"><summary><b>Meine Übungen</b><span class="mut sm" id="dsO"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <p class="mut sm" style="margin:4px 0 0">Deine eigenen Übungen zum schnellen Auswählen, getrennt für Krafttraining und Mobility. Beim Hinzufügen einer Übung im Training oder in der Planung findest du sie im Auswahlmenü „Meine Übung“. Sie erscheinen nicht im Graf und bei den Rekorden.</p>
+  <div class="seg" id="ownt" style="margin-top:8px"><button data-ot="k">Krafttraining</button><button data-ot="m">Mobility</button></div>
+  <div style="display:flex;gap:6px;margin-top:8px"><input id="ownn" placeholder="z. B. Hollow Hold" autocomplete="off" style="flex:1;min-width:0"><button class="btn" id="ownadd" style="margin:0;width:auto;white-space:nowrap">Hinzufügen</button></div>
+  <div id="ownmsg" class="mut sm" style="margin-top:6px"></div>
+  <div id="ownc"></div>
  </details>
  <details class="card dsec" id="plsec"><summary><b>Scheibenrechner</b><span class="mut sm" id="dsP"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
   <details class="pdrop" id="pmy"><summary><span>Meine Scheiben</span><span class="mut sm" id="pmys"></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p class="mut sm" style="margin:8px 0 6px">Wie viele Scheiben hast du von jeder Größe (insgesamt)? Bei der Stange kommt je die Hälfte auf eine Seite. Alles leer = beliebig viele von allen.</p><div id="pcl"></div></details>
@@ -370,11 +387,11 @@ body.srt-body,body.srt-body *{-webkit-user-select:none;user-select:none;-webkit-
    <h4>Kalender</h4>
    <p>Tag antippen: alle Trainings mit Sätzen, Zeiten und Bestwerten. <b>Bearbeiten</b> korrigiert später, <b>Als Plan speichern</b> macht aus einem freien Training eine Vorlage. Die <b>Monatsübersicht</b> zeigt Trainings, Zeit, Volumen, Läufe und mehr (Kacheln wählbar).</p>
    <h4>Plan</h4>
-   <p>Tag antippen, Training wählen, einmalig oder 12 Wochen lang einplanen. Vergessen zu starten? Bei dem Tag <b>Erledigt</b> tippen. Vorlagen: <b>Neues Training</b>, <b>Kopieren</b> und <b>Training einfügen</b>. Für Läufe gibt es bei Sonstiges den Haken „Laufen“. <b>Lange drücken und ziehen</b> ändert die Reihenfolge.</p>
+   <p>Tag antippen, Training wählen, einmalig oder 12 Wochen lang einplanen. Mit <b>Trainings teilen</b> speicherst du ausgewählte Trainings als Datei für andere. Vergessen zu starten? Bei dem Tag <b>Erledigt</b> tippen. Vorlagen: <b>Neues Training</b>, <b>Kopieren</b> und <b>Training einfügen</b>. Für Läufe gibt es bei Sonstiges den Haken „Laufen“. <b>Lange drücken und ziehen</b> ändert die Reihenfolge.</p>
    <h4>Graf</h4>
    <p>Wähle Übungen und sieh z. B. geschätztes 1RM, Volumen, Pausen, RPE oder Körpergewicht. „Laufen“ zeigt Strecke, Pace, Puls, Zeit und Höhenmeter. Darunter stehen die Rekorde deiner Hauptübungen.</p>
    <h4>Daten</h4>
-   <p>Hier sind drei Gruppen: <b>Daten und Rechner</b> (Körpergewicht, Hauptübungen, Scheiben- und Prozentrechner, Übungen umbenennen), <b>Sonstiges</b> (Funktionen wie Pieptöne und Warm-up, diese Anleitung) und <b>Einstellungen</b> (Darstellung, Backup und Export, Löschen).</p>
+   <p>Hier sind drei Gruppen: <b>Daten und Rechner</b> (Körpergewicht, Hauptübungen, Meine Übungen, Scheiben- und Prozentrechner, Übungen umbenennen), <b>Sonstiges</b> (Funktionen wie Pieptöne und Warm-up, diese Anleitung) und <b>Einstellungen</b> (Darstellung, Backup und Export, Löschen).</p>
    <p class="abw"><b>Wichtig:</b> Deine Daten liegen nur auf deinem Gerät. Mach regelmäßig ein <b>Backup (JSON)</b>, nach 14 Tagen erinnert dich die App. Nach dem ersten Laden geht alles offline. Auf dem iPad: Safari → Teilen → <b>Zum Home-Bildschirm</b>.</p>
   </div>
  </details>
@@ -384,8 +401,9 @@ body.srt-body,body.srt-body *{-webkit-user-select:none;user-select:none;-webkit-
 <details class="card dsec"><summary><b>Darstellung</b><span class="mut sm" id="dsT"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><div class="seg" id="thm" style="margin-top:8px"><button data-th="system">System</button><button data-th="light">Hell</button><button data-th="dark">Dunkel</button></div><p class="mut sm" style="margin:0">„System“ folgt der Hell/Dunkel-Einstellung deines Geräts.</p></details>
  <details class="card dsec"><summary><b>Backup und Export</b><span class="mut sm" id="dsS"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
   <p id="st" class="mut" style="margin-top:0"></p>
+  <p class="mut sm" style="margin:0 0 8px">Das Backup (JSON) enthält alles: Trainings, Vorlagen, Plan, Körpergewicht-Verlauf, Hauptübungen, Meine Übungen, Scheiben, Notizen und alle Einstellungen.</p>
   <button class="btn" id="ej">Backup (JSON)</button><button class="btn" id="ec2">Export (CSV)</button>
-  <label style="margin-top:6px">Backup einlesen</label><input type="file" id="imp" accept=".json,application/json">
+  <label style="margin-top:6px">Backup oder geteilte Trainings einlesen</label><input type="file" id="imp" accept=".json,application/json">
   <p id="msg" class="mut"></p>
  </details>
  <details class="card dsec"><summary><b>Löschen</b><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
@@ -400,7 +418,7 @@ body.srt-body,body.srt-body *{-webkit-user-select:none;user-select:none;-webkit-
   <p class="mut sm" style="margin:6px 0 0">Gelöscht wird erst nach zwei Tipps. Direkt danach kannst du es rückgängig machen, solange die App offen bleibt. Ein laufendes Training wird nie gelöscht. Sicherer ist trotzdem vorher ein Backup.</p>
  </details>
  </details>
- <p class="ver" id="ver">Version 60</p>
+ <p class="ver" id="ver">Version 64</p>
 </section>
 </main>
 
@@ -461,7 +479,7 @@ function sanitize(){
   Object.keys(tpl).forEach(i=>{const t=tpl[i];if(!t||typeof t!=='object'){delete tpl[i];return}t.name=String(t.name||'Training');if(!['kraft','mob','sonst'].includes(t.type))t.type='kraft';if(!Array.isArray(t.ex))t.ex=[];t.ex=t.ex.filter(x=>x&&x.n)});
   cfg.bw=num(cfg.bw);if(!Array.isArray(cfg.bwEx))cfg.bwEx=['Klimmzüge','Dips'];
   if(!['system','light','dark'].includes(cfg.theme))cfg.theme='system';if(!['mix','loud'].includes(cfg.snd))cfg.snd='mix';
-  ['fProg','fRpe','fSup','fSnd','fNote','fWu'].forEach(f=>{if(typeof cfg[f]!=='boolean')cfg[f]=true});if(!(num(cfg.progKg)>0))cfg.progKg=2.5;
+  ['fProg','fRpe','fSup','fSnd','fNote','fWu'].forEach(f=>{if(typeof cfg[f]!=='boolean')cfg[f]=true});if(!(num(cfg.progKg)>0))cfg.progKg=2.5;cfg.own=[...new Set((Array.isArray(cfg.own)?cfg.own:[]).map(x=>String(x).trim()).filter(Boolean))];cfg.ownM=[...new Set((Array.isArray(cfg.ownM)?cfg.ownM:[]).map(x=>String(x).trim()).filter(Boolean))];if(cfg.ownT!=='m')cfg.ownT='k';
   cfg.bwLog=(Array.isArray(cfg.bwLog)?cfg.bwLog:[]).filter(x=>x&&/^\d{4}-\d{2}-\d{2}$/.test(x.d)&&num(x.kg)>0).map(x=>({d:x.d,kg:num(x.kg)})).sort((a,b)=>a.d.localeCompare(b.d));
   if(!cfg.bwLog.length&&num(cfg.bw)>0)cfg.bwLog=[{d:today(),kg:num(cfg.bw)}];
   if(!Array.isArray(cfg.tiles)||cfg.tiles.length!==4||cfg.tiles.some(t=>!TILES.some(x=>x[0]===t)))cfg.tiles=['n','tt','vol','rest'];
@@ -521,8 +539,8 @@ const runSec=d=>{if(!d||!d.t0)return 0;const e=d.t1||Date.now();return Math.max(
 function runMeta(d){if(!isRun(d))return'';const km=+d.km||0,sec=d.t0&&d.t1?runSec(d):0;return[km>0?fkm(km)+' km':'',km>0&&sec>0?'Pace '+paceTxt(sec,km):'',d.rps>0&&sec>0?'Bewegungszeit '+dur(sec*1000):'',+d.hr>0?'Ø Puls '+d.hr:'',+d.hrx>0?'Max. Puls '+d.hrx:'',+d.up>0?d.up+' Hm':''].filter(Boolean).join(' · ')}
 function updRun(d){if(!d||!isRun(d))return;const sec=runSec(d),km=+d.km||0;$('#rzt').textContent=mmss(sec)+(d.rpa?' · pausiert':'');$('#rpc').textContent=paceTxt(sec,km);const b=$('#rpb');b.textContent=d.rpa?'▶ Lauf fortsetzen':'⏸ Lauf pausieren';b.classList.toggle('on',!!d.rpa)}
 const planned=k=>(plan[k]||[]).filter(i=>tpl[i]);
-function mobNames(){const s=new Set();Object.values(days).forEach(d=>(d.mx||[]).forEach(x=>s.add(x.n)));Object.values(tpl).forEach(t=>{if(t.type==='mob')t.ex.forEach(x=>s.add(x.n))});return[...s]}
-function exs(kOnly){const s=new Set(DEF);Object.values(days).forEach(d=>{if(!kOnly||isK(d))(d.sets||[]).forEach(x=>s.add(x.ex))});Object.values(tpl).forEach(t=>{if(!kOnly||(t.type||'kraft')==='kraft')(t.ex||[]).forEach(x=>s.add(x.n))});return[...s]}
+function mobNames(){const s=new Set((cfg.ownM||[]));Object.values(days).forEach(d=>(d.mx||[]).forEach(x=>s.add(x.n)));Object.values(tpl).forEach(t=>{if(t.type==='mob')t.ex.forEach(x=>s.add(x.n))});return[...s]}
+function exs(kOnly){const s=new Set(DEF);(cfg.own||[]).forEach(x=>s.add(x));Object.values(days).forEach(d=>{if(!kOnly||isK(d))(d.sets||[]).forEach(x=>s.add(x.ex))});Object.values(tpl).forEach(t=>{if(!kOnly||(t.type||'kraft')==='kraft')(t.ex||[]).forEach(x=>s.add(x.n))});return[...s]}
 const exTxt0=(x,ns)=>x.dm?esc(x.n)+(x.s&&x.r?' '+x.s+'×'+x.r:'')+(x.h?' · '+x.h+' s':'')+' · '+(x.dm==='dyn'?'dynamisch':'statisch')+(x.sd&&!ns?' · links & rechts':''):esc(x.n)+(x.s&&x.r?' '+x.s+'×'+x.r+(x.u==='t'?' s':''):'')+((x.kg||isBW(x.n))?' '+kgH(x.n,x.kg||0):'')+(x.g&&cfg.fSup?' · Gruppe '+x.g:'')+(x.lr?' · rechts + links':'');
 const exTxt=x=>exTxt0(x,false),exTxtNS=x=>exTxt0(x,true);
 function mobItems(d){
@@ -574,7 +592,8 @@ function progHint(ex){
   const kg=Math.round((Math.max(...ss.slice(0,need).map(s=>+s.kg||0))+(num(cfg.progKg)||2.5))*100)/100;
   return{txt:'Ziel beim letzten Mal geschafft ('+zt+') → heute '+kgS(ex,kg)+'? Antippen übernimmt.',kg};
 }
-function updLast(){const ex=$('#ex').value.trim(),t=lastTxt(ex);{const nt=cfg.fNote&&ex?(cfg.exNote[ex]||''):'';$('#exn').hidden=!nt;$('#exn').textContent=nt?'📝 '+nt:''}updLr();$('#last').hidden=!t;setKG($('#last'),t);let P=null;try{P=progHint(ex)}catch(e){}$('#prog').hidden=!P;setKG($('#prog'),P?P.txt:'')}
+function updLast(){const ex=$('#ex').value.trim(),t=lastTxt(ex);{const nt=cfg.fNote&&ex?(cfg.exNote[ex]||''):'';$('#exn').hidden=!nt;$('#exn').textContent=nt?'📝 '+nt:''}updLr();$('#last').hidden=!t;setKG($('#last'),t);updProg()}
+function updProg(){const ex=$('#ex').value.trim();let P=null;try{P=progHint(ex)}catch(e){}if(P){const done=P.kg!=null?num($('#kg').value)>=P.kg-1e-9:(umode==='t'&&num($('#rp').value)>=P.secs);if(done)P=null}$('#prog').hidden=!P;setKG($('#prog'),P?P.txt:'')}
 let sdOv=null,curPi=null;
 function pItems(d){const T=d&&d.tp&&tpl[d.tp]&&(tpl[d.tp].type||'kraft')==='kraft'?tpl[d.tp].ex||[]:[];return[...T.map((x,i)=>({x,id:'p'+i})),...((d&&d.ax)||[]).map((x,i)=>({x,id:'a'+i}))]}
 function pSets(d,id){const I=pItems(d),it=I.find(e=>e.id===id);if(!it)return[];const n=it.x.n,first=(I.find(e=>e.x.n===n)||{}).id,ids=new Set(I.map(e=>e.id));return(d.sets||[]).filter(s=>s.ex===n&&(s.pi&&ids.has(s.pi)?s.pi===id:first===id))}
@@ -606,7 +625,7 @@ const monthLbl=d=>d.toLocaleDateString('de-DE',{month:'long',year:'numeric'});
 
 // ---------- Training-Seite ----------
 function applySel(){const t=selVal&&selVal.startsWith('T:')?tpl[selVal.slice(2)]:null;$('#ttl').value=t?t.name:''}
-function setUm(m){umode=m;$$('[data-um]').forEach(b=>b.classList.toggle('on',b.dataset.um===m));$('#rpl').textContent=m==='t'?'Sekunden':'Wiederholungen'}
+function setUm(m){umode=m;setTimeout(()=>{try{updProg()}catch(e){}},0);$$('[data-um]').forEach(b=>b.classList.toggle('on',b.dataset.um===m));$('#rpl').textContent=m==='t'?'Sekunden':'Wiederholungen'}
 const phaseOf=d=>!d?'idle':d.type==='sonst'?'sonst':d.type==='mob'?'mob':(d.w0&&!d.w1?'warm':'work');
 function sdetHTML(ex,d,i){const s=d.sets[i],tm=!!s.secs;
   if(selEd===i)return '<div class="sdet sed"><div class="row"><div><label>'+(isBW(ex)?'Zusatzgewicht (kg)':'Gewicht (kg)')+'</label><input class="eg" inputmode="decimal" value="'+esc(edKg)+'"></div><div><label>'+(tm?'Sekunden':'Wiederholungen')+'</label><input class="er" inputmode="numeric" value="'+esc(edRp)+'"></div></div><div class="sbt"><button class="btn" data-sok="1">Speichern</button><button class="btn" data-scx="1">Abbrechen</button></div><div class="mut sm" id="sedm"></div></div>';
@@ -974,7 +993,7 @@ function pDone(k,i){const nm=s=>String(s||'').trim().toLowerCase();return trs(k)
 function manOf(k,i){const x=trs(k).find(([,d])=>d.man&&d.tp===i);return x?x[0]:null}
 function ckBtn(k,i){const dn=pDone(k,i),m=dn&&manOf(k,i);return '<button class="ckb'+(dn?' on':'')+(dn&&!m?' lock':'')+'" data-pck="'+i+'" aria-pressed="'+dn+'"><i aria-hidden="true"></i>Erledigt</button>'}
 function tplIds(){const o=Array.isArray(cfg.tplOrder)?cfg.tplOrder:[],all=Object.keys(tpl).sort((a,b)=>tpl[a].name.localeCompare(tpl[b].name)),pos=new Map(o.map((i,ix)=>[i,ix]));return[...all.filter(i=>pos.has(i)).sort((a,b)=>pos.get(a)-pos.get(b)),...all.filter(i=>!pos.has(i))]}
-function renderPlan(){
+function renderPlan(){try{renderSh()}catch(e){}
   $('#pmt').textContent=monthLbl(pmo);
   $('#pcal').innerHTML=gridHTML(pmo,k=>{const p=planned(k);if(!p.length)return['',''];const t0=today(),done=i=>pDone(k,i),st=i=>done(i)?'M':(k<t0?'S':'K'),mn=i=>!!manOf(k,i);return['has','',pill(st(p[0]),tpl[p[0]].name,mn(p[0]))+(p.length>1?'<i class="dot '+st(p[1])+'" title="'+p.length+' Trainings"></i>':'')]},psel);
   const pd=$('#pday');pd.hidden=!psel;
@@ -992,14 +1011,21 @@ function renderPlan(){
 function addRow(x,box,ng){box=box&&box.nodeType===1?box:null;ng=ng===true;
   const r=document.createElement('div');r.className='exr';
   const M=cfg.main||[];
-  r.innerHTML='<div style="display:flex;gap:6px"><input class="rn" list="exl" placeholder="Übung" value="'+esc(x.n||'')+'" style="flex:1;min-width:0">'+(M.length?'<select class="rsel" aria-label="Hauptübung wählen" style="width:auto;flex:0 1 auto;max-width:45%"><option value="">Hauptübung</option>'+M.map(m=>'<option value="'+esc(m)+'">'+esc(m)+'</option>').join('')+'</select>':'')+'<button class="btn rm" style="margin:0;width:auto">✕</button></div><div class="row"><div><label>Sätze</label><input class="rs" inputmode="numeric" value="'+(x.s||'')+'"></div><div><label>Ziel in</label><select class="ru"><option value="r"'+(x.u==='t'?'':' selected')+'>Wdh</option><option value="t"'+(x.u==='t'?' selected':'')+'>Sek</option></select></div><div><label>Ziel</label><input class="rr" inputmode="numeric" value="'+(x.r||'')+'"></div><div><label>kg</label><input class="rk" inputmode="decimal" value="'+(x.kg||'')+'"></div></div>';
+  const o2=(l,a)=>a.length?'<select class="rsel" aria-label="'+l+' wählen" style="flex:1;min-width:0;width:auto"><option value="">'+l+'</option>'+a.map(m=>'<option value="'+esc(m)+'">'+esc(m)+'</option>').join('')+'</select>':'';
+  const sel2=M.length||(cfg.own||[]).length?'<div style="display:flex;gap:6px;margin-top:6px">'+o2('Hauptübung',M)+o2('Meine Übung',cfg.own||[])+'</div>':'';
+  r.innerHTML='<div style="display:flex;gap:6px"><input class="rn" list="exl" placeholder="Übung" value="'+esc(x.n||'')+'" style="flex:1;min-width:0"><button class="btn rm" style="margin:0;width:auto">✕</button></div>'+sel2+'<div class="row"><div><label>Sätze</label><input class="rs" inputmode="numeric" value="'+(x.s||'')+'"></div><div><label>Ziel</label><input class="rr" inputmode="numeric" value="'+(x.r||'')+'"></div><div><label>Ziel in</label><select class="ru"><option value="r"'+(x.u==='t'?'':' selected')+'>Wdh</option><option value="t"'+(x.u==='t'?' selected':'')+'>Sek</option></select></div><div><label>kg</label><input class="rk" inputmode="decimal" value="'+(x.kg||'')+'"></div></div>';
   r.insertAdjacentHTML('beforeend','<div style="display:flex;align-items:center;gap:10px;margin-top:6px"><span class="sm mut" style="flex:1">Seiten</span><select class="rlr" style="width:auto;padding:8px 6px"><option value="">beidseitig</option><option value="1">rechts + links getrennt</option></select></div>'+(cfg.fNote?'<input class="rnt" placeholder="Notiz zur Übung (optional, z. B. Sitzhöhe 4)" style="margin-top:6px" value="'+esc(cfg.exNote[x.n]||'')+'">':''));r.querySelector('.rlr').value=x.lr?'1':'';
   if(cfg.fSup&&!ng){r.insertAdjacentHTML('beforeend','<div style="display:flex;align-items:center;gap:10px;margin-top:6px"><span class="sm mut" style="flex:1">Supersatz / Zirkel</span><select class="rg" style="width:auto;padding:8px 6px"><option value="">keine Gruppe</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>');r.querySelector('.rg').value=x.g||''}
   (box||$('#exr')).appendChild(r);return r;
 }
+function mArt(root,change){const dyn=root.querySelector('.md,#mdm').value==='dyn',rw=root.querySelector('.mrw,#mrw'),hw=root.querySelector('.mhw,#mhw'),ri=root.querySelector('.mr,#mr'),hi=root.querySelector('.mh,#mh');
+  rw.style.display=dyn?'':'none';hw.style.display=dyn?'none':'';
+  if(change){if(dyn){hi.value='';if(!ri.value)ri.value='10'}else{ri.value='';if(!hi.value)hi.value='30'}}}
 function addMRow(x){
   const r=document.createElement('div');r.className='exr';
-  r.innerHTML='<div style="display:flex;gap:6px"><input class="rn" list="mxl" placeholder="Mobility-Übung" value="'+esc(x.n||'')+'"><button class="btn rm" style="margin:0">✕</button></div><div class="row"><div><label>Sätze</label><input class="ms" inputmode="numeric" value="'+(x.s||'')+'"></div><div><label>Wdh</label><input class="mr" inputmode="numeric" value="'+(x.r||'')+'"></div><div><label>Halten (Sek.)</label><input class="mh" inputmode="numeric" value="'+(x.h||'')+'"></div></div><div class="row"><div><label>Art</label><select class="md"><option value="stat"'+(x.dm==='dyn'?'':' selected')+'>statisch</option><option value="dyn"'+(x.dm==='dyn'?' selected':'')+'>dynamisch</option></select></div><div><label>Seite</label><select class="msd"><option value=""'+(x.sd?'':' selected')+'>ohne Seitenwechsel</option><option value="LR"'+(x.sd?' selected':'')+'>links und rechts</option></select></div></div>';
+  const O=cfg.ownM||[],sel=O.length?'<select class="rsel" aria-label="Meine Übung wählen" style="margin-top:6px"><option value="">Meine Übung</option>'+O.map(m=>'<option value="'+esc(m)+'">'+esc(m)+'</option>').join('')+'</select>':'';
+  r.innerHTML='<div style="display:flex;gap:6px"><input class="rn" list="mxl" placeholder="Mobility-Übung" value="'+esc(x.n||'')+'"><button class="btn rm" style="margin:0">✕</button></div>'+sel+'<div class="row"><div><label>Sätze</label><input class="ms" inputmode="numeric" value="'+(x.s||'')+'"></div><div><label>Art</label><select class="md"><option value="stat"'+(x.dm==='dyn'?'':' selected')+'>statisch</option><option value="dyn"'+(x.dm==='dyn'?' selected':'')+'>dynamisch</option></select></div><div class="mrw"><label>Wdh</label><input class="mr" inputmode="numeric" value="'+(x.r||'')+'"></div><div class="mhw"><label>Halten (Sek.)</label><input class="mh" inputmode="numeric" value="'+(x.h||'')+'"></div></div><div class="row"><div><label>Seite</label><select class="msd"><option value=""'+(x.sd?'':' selected')+'>ohne Seitenwechsel</option><option value="LR"'+(x.sd?' selected':'')+'>links und rechts</option></select></div></div>';
+  mArt(r,false);
   if(cfg.fNote)r.insertAdjacentHTML('beforeend','<input class="rnt" placeholder="Notiz zur Übung (optional)" style="margin-top:6px" value="'+esc(cfg.mxNote[x.n]||'')+'">');
   $('#mxr').appendChild(r);
 }
@@ -1093,6 +1119,10 @@ function gTip(ev){
 function setCount(n){let c=0;Object.values(days).forEach(d=>{if(isK(d))(d.sets||[]).forEach(s=>{if(s.ex===n)c++})});return c}
 function renderMain(){
   $('#alll').innerHTML=exs(true).filter(e=>!(cfg.main||[]).includes(e)).map(e=>'<option value="'+esc(e)+'">').join('');
+  {const mo=cfg.ownT==='m',L=(mo?cfg.ownM:cfg.own)||[];$$('[data-ot]').forEach(b=>b.classList.toggle('on',b.dataset.ot===(mo?'m':'k')));$('#ownn').placeholder=mo?'z. B. Hüftkreisen':'z. B. Hollow Hold';
+    $('#ownc').innerHTML=L.map((m,i)=>'<div class="exr" style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span>'+esc(m)+'</span><button class="btn" data-orm="'+i+'" style="margin:0;width:auto" aria-label="Entfernen">✕</button></div>').join('')||'<p class="mut sm" style="margin:6px 0 0">Noch keine eigenen '+(mo?'Mobility-':'Kraft-')+'Übungen.</p>';
+    const a=(cfg.own||[]).length,b=(cfg.ownM||[]).length;$('#dsO').textContent=a+b?[a?a+' Kraft':'',b?b+' Mobility':''].filter(Boolean).join(' · '):'keine';
+    const mw=$('#mown');if(mw){const O=cfg.ownM||[];mw.hidden=!O.length;mw.innerHTML=O.length?'<option value="">Meine Übung</option>'+O.map(m=>'<option value="'+esc(m)+'">'+esc(m)+'</option>').join(''):''}}
   $('#mainc').innerHTML=(cfg.main||[]).map((m,i)=>{const c=setCount(m);return '<div class="exr" style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span>'+esc(m)+' <span class="mut sm">· '+(c?c+' Sätze':'noch keine Daten')+'</span></span><button class="btn" data-mrm="'+i+'" style="margin:0;width:auto" aria-label="Entfernen">✕</button></div>'}).join('')||'<p class="mut sm" style="margin:6px 0 0">Noch keine Hauptübungen. Solange die Liste leer ist, zeigt der Graf alle Kraftübungen.</p>';
 }
 function renderData(){status();
@@ -1180,7 +1210,7 @@ function tab(t){curTab=t;$$('nav button,section').forEach(x=>x.classList.remove(
 document.addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;const D=b.dataset;
   if(D.t)tab(D.t);
-  if(D.s){const[id,st]=D.s.split(','),i=$('#'+id),v=num(i.value),mu=(id==='rp'&&umode==='t')?5:1;i.value=Math.max(0,Math.round((v+parseFloat(st)*mu)*100)/100)}
+  if(D.s){setTimeout(updProg,0);const[id,st]=D.s.split(','),i=$('#'+id),v=num(i.value),mu=(id==='rp'&&umode==='t')?5:1;i.value=Math.max(0,Math.round((v+parseFloat(st)*mu)*100)/100)}
   if(D.um)setUm(D.um);
   if(D.si!=null){selSet=selSet===+D.si?null:+D.si;selEd=null;renderTrain()}
   if(D.sed!=null){const k=curK(),d=days[k],st=d&&d.sets[+D.sed];if(st){selEd=+D.sed;edKg=st.kg?String(st.kg).replace('.',','):'';edRp=String(st.secs||st.reps||'');edFc='eg';renderTrain();const el=$('#list .sed .eg');if(el){el.focus();try{el.select()}catch(e){}}}}
@@ -1248,6 +1278,8 @@ document.addEventListener('click',e=>{
   if(D.te)openEd(D.te);
   if(D.tx)arm(b,'Löschen',()=>{const id=D.tx;delete tpl[id];saveT(id);Object.keys(plan).forEach(k=>{if(plan[k].includes(id)){plan[k]=plan[k].filter(x=>x!==id);saveP(k)}});if(selVal==='T:'+D.tx)selVal=null;render()});
   if(D.et)setEt(D.et);
+  if(D.ot){cfg.ownT=D.ot==='m'?'m':'k';saveC();render();return}
+  if(D.orm!=null&&b.closest('#ownc')){const L=cfg.ownT==='m'?cfg.ownM:cfg.own,n=L[+D.orm];L.splice(+D.orm,1);saveC();$('#ownmsg').textContent='„'+n+'“ entfernt.';render()}
   if(D.mrm!=null&&b.closest('#mainc')){const n=cfg.main[+D.mrm];cfg.main.splice(+D.mrm,1);saveC();$('#mainmsg').textContent='„'+n+'“ ist keine Hauptübung mehr. Die Trainingsdaten bleiben erhalten.';render()}
   if(D.bw!=null&&b.closest('#bwc')){cfg.bwEx=cfg.bwEx.includes(D.bw)?cfg.bwEx.filter(x=>x!==D.bw):[...cfg.bwEx,D.bw];saveC();render()}
   if(b.classList.contains('rm')){if(b.closest('#axw'))$('#axw').hidden=true;else b.closest('.exr').remove()}
@@ -1266,8 +1298,13 @@ function addMain(){
   render();
 }
 $('#mainadd').onclick=addMain;
+function addOwn(){const n=$('#ownn').value.trim();if(!n)return;const mo=cfg.ownT==='m',L=mo?(cfg.ownM=cfg.ownM||[]):(cfg.own=cfg.own||[]);if(L.some(x=>x.toLowerCase()===n.toLowerCase())){$('#ownmsg').textContent='„'+n+'“ ist schon in deiner Liste.';return}
+  L.push(n);saveC();$('#ownn').value='';$('#ownmsg').textContent='„'+n+'“ hinzugefügt.';render()}
+$('#ownadd').onclick=addOwn;$('#ownn').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addOwn()}});
 $('#mainn').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addMain()}});
-document.addEventListener('change',e=>{const s=e.target;if(s&&s.classList&&s.classList.contains('rsel')&&s.value){const r=s.closest('.exr');if(r)r.querySelector('.rn').value=s.value;s.value=''}});
+document.addEventListener('change',e=>{const s=e.target;if(s&&(s.id==='mdm'||(s.classList&&s.classList.contains('md')))){mArt(s.closest('#maddw,.exr'),true);return}
+  if(s&&s.id==='mown'&&s.value){$('#mn').value=s.value;s.value='';return}
+  if(s&&s.classList&&s.classList.contains('rsel')&&s.value){const r=s.closest('.exr');if(r)r.querySelector('.rn').value=s.value;s.value=''}});
 $('.cw').addEventListener('click',gTip);
 window.addEventListener('resize',()=>{if(curTab==='g')draw()});
 $('#ptot').value=cfg.pTot||'';
@@ -1296,7 +1333,8 @@ $('#ex').addEventListener('input',()=>{updLast();markCur()});
 $('#notew').addEventListener('pointerdown',()=>{noteHold=Date.now()},true);
 $('#note').addEventListener('blur',()=>{if(nEdit&&Date.now()-noteHold>500){nEdit=false;setTimeout(renderTrain,0)}});
 $('#bwsave').onclick=()=>{const kg=num($('#bw').value);if(!(kg>0)){$('#bwmsg').textContent='Bitte ein Gewicht eingeben.';return}const dt=$('#bwd').value||today();cfg.bwLog=(cfg.bwLog||[]).filter(x=>x.d!==dt).concat([{d:dt,kg}]).sort((a,b)=>a.d.localeCompare(b.d));cfg.bw=cfg.bwLog[cfg.bwLog.length-1].kg;saveC();render();$('#bwmsg').textContent='Gespeichert: '+kg+' kg am '+dd(dt)+'.'};
-$('#prog').onclick=()=>{const P=progHint($('#ex').value.trim());if(!P)return;if(P.kg!=null)$('#kg').value=P.kg;else if(P.secs){setUm('t');$('#rp').value=P.secs}};
+$('#prog').onclick=()=>{const P=progHint($('#ex').value.trim());if(!P)return;if(P.kg!=null)$('#kg').value=P.kg;else if(P.secs){setUm('t');$('#rp').value=P.secs}updProg()};
+['#kg','#rp'].forEach(q=>$(q).addEventListener('input',updProg));
 ['fProg','fRpe','fSup','fSnd','fNote','fWu'].forEach(f=>$('#'+f).addEventListener('change',()=>{cfg[f]=$('#'+f).checked;if(f==='fSnd'&&!cfg.fSnd)cancelSched();if(f==='fRpe'&&!cfg.fRpe)selRpe=null;saveC();render()}));
 $('#progKg').addEventListener('change',()=>{const v=num($('#progKg').value);if(v>0){cfg.progKg=v;saveC()}render()});
 $('#bp').addEventListener('change',()=>{cfg.beep=parseInt($('#bp').value)||0;saveC();bpFor=null;setLbl()});
@@ -1359,10 +1397,10 @@ $('#ig').onclick=()=>{
 };
 $('#madd').onclick=()=>{
   const k=curK(),d=days[k],n=$('#mn').value.trim();if(!d||!n)return;
-  (d.mx=d.mx||[]).push({n,s:parseInt($('#ms').value)||0,r:parseInt($('#mr').value)||0,h:parseInt($('#mh').value)||0,dm:$('#mdm').value,sd:$('#msd').value==='LR'?1:0});save(k);['#mn','#ms','#mr','#mh'].forEach(x=>{$(x).value=''});$('#maddw').hidden=true;render();
+  (d.mx=d.mx||[]).push({n,s:parseInt($('#ms').value)||0,r:parseInt($('#mr').value)||0,h:parseInt($('#mh').value)||0,dm:$('#mdm').value,sd:$('#msd').value==='LR'?1:0});save(k);['#mn','#ms','#mr','#mh'].forEach(x=>{$(x).value=''});mArt($('#maddw'),true);$('#maddw').hidden=true;render();
 };
 $('#cdx').onclick=()=>{cd=null;ms=null;render()};
-$('#mtog').onclick=()=>{$('#maddw').hidden=!$('#maddw').hidden};
+$('#mtog').onclick=()=>{const w=$('#maddw');w.hidden=!w.hidden;if(!w.hidden&&!$('#mr').value&&!$('#mh').value)mArt(w,true)};mArt($('#maddw'),false);
 function endTraining(){
   try{
     const k=curK(),d=days[k];if(!d)return;const now=Date.now();
@@ -1392,8 +1430,8 @@ $('#esv').onclick=()=>{
 };
 
 // Daten
-async function saveFile(name,data){
-  const msg=t=>{$('#msg').textContent=t};
+async function saveFile(name,data,mid){
+  const msg=t=>{$(mid||'#msg').textContent=t};
   if(dl){try{await dl.save({filename:name,data});msg('Gespeichert: '+name);return true}catch(e){msg('Download abgebrochen.');return false}}
   const type=name.endsWith('.csv')?'text/csv':'application/json';
   try{const f=new File([data],name,{type});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});msg('Weitergegeben: '+name+' (z. B. „In Dateien sichern“).');return true}}
@@ -1401,6 +1439,29 @@ async function saveFile(name,data){
   try{const u=URL.createObjectURL(new Blob([data],{type})),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),10000);msg('Heruntergeladen: '+name);return true}
   catch(e){msg('Download nicht möglich.');return false}
 }
+function shTxt(i){const t=tpl[i],n=(t.ex||[]).length;return ((t.run?'Laufen':({kraft:'Kraft',mob:'Mobility',sonst:'Sonstiges'})[t.type||'kraft'])||'Kraft')+(t.type==='sonst'||!n?'':' · '+n+(n===1?' Übung':' Übungen'))}
+const shSel=new Set();
+function renderSh(){const w=$('#shw');if(!w||w.hidden)return;[...shSel].forEach(i=>{if(!tpl[i])shSel.delete(i)});
+  $('#shl').innerHTML=tplIds().map(i=>'<label class="shr"><input type="checkbox" data-sh="'+i+'"'+(shSel.has(i)?' checked':'')+'><span><b>'+esc(tpl[i].name)+'</b><small class="mut"> '+esc(shTxt(i))+'</small></span></label>').join('')||'<p class="mut sm" style="margin:6px 0">Noch keine Trainings vorhanden.</p>';
+  $('#shs').textContent=shSel.size?'Auswahl speichern ('+shSel.size+')':'Auswahl als Datei speichern';$('#shs').disabled=!shSel.size}
+$('#shb').onclick=()=>{const w=$('#shw');w.hidden=!w.hidden;$('#shm').textContent='';renderSh()};
+$('#shc').onclick=()=>{$('#shw').hidden=true};
+$('#sha').onclick=()=>{tplIds().forEach(i=>shSel.add(i));renderSh()};$('#shn').onclick=()=>{shSel.clear();renderSh()};
+$('#shl').addEventListener('change',e=>{const c=e.target;if(c&&c.dataset&&c.dataset.sh){c.checked?shSel.add(c.dataset.sh):shSel.delete(c.dataset.sh);renderSh()}});
+$('#shs').onclick=async()=>{const ids=[...shSel].filter(i=>tpl[i]);if(!ids.length)return;const T={},en={},mn={};
+  ids.forEach(i=>{T[i]=tpl[i];(tpl[i].ex||[]).forEach(x=>{if(tpl[i].type==='mob'){if(cfg.mxNote&&cfg.mxNote[x.n])mn[x.n]=cfg.mxNote[x.n]}else if(cfg.exNote&&cfg.exNote[x.n])en[x.n]=cfg.exNote[x.n]})});
+  const nm=ids.length===1?'training-'+(tpl[ids[0]].name.toLowerCase().replace(/[^a-z0-9äöüß]+/g,'-').replace(/^-+|-+$/g,'')||'training')+'.json':'trainings-'+ids.length+'-'+today()+'.json';
+  await saveFile(nm,JSON.stringify({app:'krafttraining',v:2,kind:'trainings',tpl:T,notes:{ex:en,mx:mn}},null,1),'#shm')};
+function importShared(j){const T=j.tpl&&typeof j.tpl==='object'?j.tpl:{};let add=0,same=0;
+  const sg=t=>JSON.stringify([t.type||'kraft',t.ex||[],t.run?1:0]);
+  Object.keys(T).forEach(id=>{const t=T[id];if(!t||typeof t.name!=='string'||!Array.isArray(t.ex||[]))return;t.ex=Array.isArray(t.ex)?t.ex:[];
+    if(Object.values(tpl).some(o=>sg(o)===sg(t)&&(o.name===t.name||o.name===t.name+' (importiert)'))){same++;return}
+    let nid=Date.now().toString(36)+Math.random().toString(36).slice(2,5);while(tpl[nid])nid+='x';
+    const nameTaken=Object.values(tpl).some(o=>o.name===t.name);
+    tpl[nid]={...t,name:nameTaken?t.name+' (importiert)':t.name};saveT(nid);add++});
+  const nt=j.notes||{};cfg.exNote=cfg.exNote||{};cfg.mxNote=cfg.mxNote||{};
+  Object.keys(nt.ex||{}).forEach(k=>{if(!cfg.exNote[k])cfg.exNote[k]=String(nt.ex[k])});Object.keys(nt.mx||{}).forEach(k=>{if(!cfg.mxNote[k])cfg.mxNote[k]=String(nt.mx[k])});saveC();
+  migrate();L();render();$('#msg').textContent='Trainings eingelesen: '+add+' neu'+(same?', '+same+' schon vorhanden':'')+'. Du findest sie im Tab „Plan“ unter „Alle Trainings“.'}
 $('#ej').onclick=async()=>{if(await saveFile('training-backup-'+today()+'.json',JSON.stringify({app:'krafttraining',v:2,days,tpl,plan,cfg},null,1))){cfg.lastBk=Date.now();saveC();render()}};
 $('#ec2').onclick=()=>{
   const r=['Datum;Art;Titel;Übung;Satz;Gewicht_kg;Wdh;Sekunden;Pause_s;Satzdauer_s;Dauer_min;Notiz'],q=s=>String(s==null?'':s).replace(/;/g,',');
@@ -1415,6 +1476,7 @@ $('#imp').onchange=async e=>{
   try{
     const j=JSON.parse(await f.text());
     if(!j||typeof j!=='object'||!(j.days||j.tpl||j.plans))throw new Error('kein Backup');
+    if(j.kind==='trainings'){importShared(j);e.target.value='';return}
     const o=j.days&&typeof j.days==='object'?j.days:{};let nd=0,nt=0;
     Object.keys(o).forEach(k=>{
       const v=o[k];if(!v||typeof v!=='object'||!/^\d{4}-\d{2}-\d{2}/.test(k))return;
@@ -1426,13 +1488,13 @@ $('#imp').onchange=async e=>{
       }
       days[nk]=v;nd++;save(nk);
     });
-    if(j.cfg&&typeof j.cfg==='object'){const pm=cfg.main||[];Object.assign(cfg,j.cfg);cfg.main=[...new Set([...pm,...(Array.isArray(j.cfg.main)?j.cfg.main:[])].map(x=>String(x).trim()).filter(Boolean))];saveC()}
+    if(j.cfg&&typeof j.cfg==='object'){const pm=cfg.main||[],po=cfg.own||[],pq=cfg.ownM||[],lb=cfg.bwLog||[],ln=cfg.exNote||{},lm=cfg.mxNote||{},lx=cfg.bwEx||[],lk=cfg.lastBk||0;Object.assign(cfg,j.cfg);{const m={};lb.forEach(x=>{if(x&&x.d)m[x.d]=x});(Array.isArray(j.cfg.bwLog)?j.cfg.bwLog:[]).forEach(x=>{if(x&&x.d)m[x.d]=x});cfg.bwLog=Object.values(m).sort((a,b)=>a.d<b.d?-1:1);if(cfg.bwLog.length)cfg.bw=num(cfg.bwLog[cfg.bwLog.length-1].kg)||cfg.bw;cfg.exNote=Object.assign({},ln,j.cfg.exNote&&typeof j.cfg.exNote==='object'?j.cfg.exNote:{});cfg.mxNote=Object.assign({},lm,j.cfg.mxNote&&typeof j.cfg.mxNote==='object'?j.cfg.mxNote:{});cfg.bwEx=[...new Set([...(Array.isArray(j.cfg.bwEx)?j.cfg.bwEx:[]),...lx])];cfg.lastBk=Math.max(lk,+j.cfg.lastBk||0)}cfg.main=[...new Set([...pm,...(Array.isArray(j.cfg.main)?j.cfg.main:[])].map(x=>String(x).trim()).filter(Boolean))];cfg.own=[...new Set([...po,...(Array.isArray(j.cfg.own)?j.cfg.own:[])].map(x=>String(x).trim()).filter(Boolean))];cfg.ownM=[...new Set([...pq,...(Array.isArray(j.cfg.ownM)?j.cfg.ownM:[])].map(x=>String(x).trim()).filter(Boolean))];if(cfg.ownT!=='m')cfg.ownT='k';saveC()}
     if(j.tpl&&typeof j.tpl==='object'){Object.keys(j.tpl).forEach(k=>{tpl[k]=j.tpl[k];nt++;saveT(k)});Object.keys(j.plan||{}).forEach(k=>{if(Array.isArray(j.plan[k])){plan[k]=[...new Set([...(plan[k]||[]),...j.plan[k]])];saveP(k)}})}
     else if(j.plans){const by={};Object.keys(tpl).forEach(i=>by[tpl[i].name]=i);
       Object.keys(j.plans).forEach(k=>{const p=j.plans[k]||{},nm=p.title||'Training',ex=Array.isArray(p.ex)?p.ex:[];
         if(!by[nm]){const id=Date.now().toString(36)+Object.keys(by).length;tpl[id]={name:nm,type:ex.length?'kraft':(/mob/i.test(nm)?'mob':'sonst'),ex};by[nm]=id;nt++;saveT(id)}
         plan[k]=[by[nm]];saveP(k)})}
-    migrate();L();render();$('#msg').textContent='Backup eingelesen: '+nd+' Trainings, '+nt+' Vorlagen.';
+    migrate();L();render();$('#msg').textContent='Backup eingelesen: '+nd+' Trainings, '+nt+' Vorlagen.'+(j.cfg?' Übernommen: Einstellungen, Körpergewicht ('+(cfg.bwLog||[]).length+' Einträge), Hauptübungen ('+(cfg.main||[]).length+'), Meine Übungen ('+((cfg.own||[]).length+(cfg.ownM||[]).length)+'), Scheiben und Notizen.':'');
   }catch(x){$('#msg').textContent='Datei konnte nicht gelesen werden. Ist es ein Backup (JSON) dieser App?'}
   e.target.value='';
 };
