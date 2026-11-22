@@ -44,6 +44,7 @@ li>button:not(.lk){border:0;background:none;color:var(--mut);font-size:18px;padd
 .chip.on{background:var(--acc);color:var(--on);border-color:var(--acc)}
 .cw{position:relative;min-height:120px;-webkit-tap-highlight-color:transparent}.cw svg{max-width:100%}
 .glg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--mut);margin-top:6px}.glg i,.gtip i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.ch{position:relative}.ctip{white-space:pre-line;max-width:230px}.ch [data-tip]{cursor:pointer}
 .gtip{position:absolute;z-index:5;background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:10px;padding:8px 10px;font-size:12px;line-height:1.4;box-shadow:0 4px 14px #0003;pointer-events:none}
 .btn{padding:11px 14px;border:1px solid var(--bd);background:var(--bg);color:var(--fg);border-radius:10px;font:inherit;margin:0 6px 6px 0}
 .cm{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
@@ -356,8 +357,8 @@ details.inf{margin:2px 0}.inf>summary{list-style:none;cursor:pointer;display:fle
 
 <section id="d">
  <details class="dsec dgrp" id="dgD"><summary><b>Profil und Rechner</b><span class="mut sm">Gewicht, Übungen &amp; Rechner</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-<details class="card dsec"><summary><b>Körpergewicht</b><span class="mut sm" id="dsB"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><label for="bw" style="margin-top:0">Körpergewicht (kg)</label><input id="bw" inputmode="decimal" placeholder="z. B. 82"><label for="bwd">Datum</label><input type="date" id="bwd"><button class="btn" id="bwsave" style="width:100%;margin:10px 0 0">Gewicht speichern</button><p id="bwmsg" class="mut sm" style="margin:6px 0 0"></p><p class="mut sm" style="margin:4px 0 0">Jeder Eintrag landet im Verlauf. Im Graf findest du ihn unter „Körpergewicht“.</p><div id="bwlist" style="margin-top:6px"></div>
-  <label>Bei diesen Übungen gibst du nur das Zusatzgewicht ein. Das Körpergewicht wird in der Auswertung automatisch addiert:</label><div class="chips" id="bwc"></div>
+<details class="card dsec"><summary><b>Körpergewicht</b><span class="mut sm" id="dsB"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><label for="bw" style="margin-top:0">Körpergewicht (kg)</label><input id="bw" inputmode="decimal" placeholder="z. B. 82"><label for="bwd">Datum</label><input type="date" id="bwd"><button class="btn" id="bwsave" style="width:100%;margin:10px 0 0">Gewicht speichern</button><p id="bwmsg" class="mut sm" style="margin:6px 0 0"></p><p class="mut sm" style="margin:4px 0 0">Jeder Eintrag landet im Verlauf. Im Tab „Daten“ › Verlauf findest du ihn unter „Körpergewicht“.</p><div id="bwlist" style="margin-top:6px"></div>
+  <label>Bei diesen Übungen gibst du nur das Zusatzgewicht ein. Das Körpergewicht wird in der Auswertung automatisch addiert:</label><div style="display:flex;gap:6px;margin-top:4px"><input id="bwn" placeholder="Übung eintippen, z. B. Klimmzüge" autocomplete="off"><button class="btn" id="bwadd" style="margin:0;width:auto;white-space:nowrap">Hinzufügen</button></div><div class="sug" id="sugB"></div><div id="bwc" style="margin-top:8px"></div>
   <p class="mut sm" style="margin:0">Das Körpergewicht wird bei jedem neuen Training mitgespeichert. Änderst du es später, bleiben ältere Trainings unverändert.</p></details>
  <details class="card dsec"><summary><b>Hauptübungen</b><span class="mut sm" id="dsM"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
   <p class="mut sm" style="margin:4px 0 0">Nur diese Übungen stehen im Tab „Daten“ zur Auswahl und werden beim Planen im Auswahlmenü vorgeschlagen. Frei eintippen kannst du weiterhin jede Übung. Frühere Trainings zählen automatisch mit, wenn der Name genau gleich ist.</p>
@@ -456,7 +457,7 @@ details.inf{margin:2px 0}.inf>summary{list-style:none;cursor:pointer;display:fle
   <p class="mut sm" style="margin:6px 0 0">Gelöscht wird erst nach zwei Tipps. Direkt danach kannst du es rückgängig machen, solange die App offen bleibt. Ein laufendes Training wird nie gelöscht. Sicherer ist trotzdem vorher ein Backup.</p>
  </details>
  </details>
- <p class="ver" id="ver">Version 76</p>
+ <p class="ver" id="ver">Version 77</p>
 </section>
 </main>
 
@@ -942,7 +943,7 @@ function trHTML(k,d){
   const g={},pf=pbFlags(k,d),sn=snFlags(k,d),gn={};(d.sets||[]).forEach(s=>{const gk=grpKey(d,s);if(!g[gk])gn[gk]=Object.keys(g).filter(x=>x.split('\u0001')[0]===s.ex).length+1;(g[gk]=g[gk]||[]).push(s)});
   const ss=d.sets||[],vol=sum(ss.map(s=>W(d,s)*s.reps)),rs=ss.filter(s=>s.rest>0),du=ss.filter(s=>s.dur>0),sd=sum(ss.map(s=>s.dur||0)),sr=sum(ss.map(s=>s.rest||0));
   const rd=d.rd||[],rdw=sum(rd.map(r=>r.dur||0)),rdp=sum(rd.map(r=>r.rest||0));
-  const meta0=[tname(d),runMeta(d),d.man?'nachgetragen':'',d.form?'Tagesform '+d.form+'/5':'',d.srpe?'Anstrengung '+d.srpe+'/10':'',d.t0&&d.t1?'Dauer '+dur(d.t1-d.t0):'',d.w0&&d.w1?'Warm-up '+dur(d.w1-d.w0):'',d.w0&&d.w1&&d.t1?'Arbeitszeit gesamt '+dur(d.t1-d.w1):'',sd?'echte Arbeit '+hm(sd):'',sr?'Pausen '+hm(sr):'',
+  const meta0=[tname(d),!d.man&&d.t0?'Uhrzeit '+hhmm(d.t0)+(d.t1?' – '+hhmm(d.t1):'')+' Uhr':'',runMeta(d),d.man?'nachgetragen':'',d.form?'Tagesform '+d.form+'/5':'',d.srpe?'Anstrengung '+d.srpe+'/10':'',d.t0&&d.t1?'Dauer '+dur(d.t1-d.t0):'',d.w0&&d.w1?'Warm-up '+dur(d.w1-d.w0):'',d.w0&&d.w1&&d.t1?'Arbeitszeit gesamt '+dur(d.t1-d.w1):'',sd?'echte Arbeit '+hm(sd):'',sr?'Pausen '+hm(sr):'',
     ss.length?ss.length+' Sätze':'',vol?'Volumen '+N0(vol)+' kg':'',rs.length?'Ø Pause '+mmss(avg(rs.map(s=>s.rest))):'',du.length?'Ø Satz '+mmss(avg(du.map(s=>s.dur))):'',rd.length?rd.length+(rd.length===1?' Runde':' Runden')+' · Runden-Zeit '+hm(rdw)+(rdp?' · Pausen '+hm(rdp):''):''].filter(Boolean),meta=meta0.map(x=>'<div>'+x+'</div>').join('');
   return '<details class="trd" data-tk="'+k+'"'+(trOpen.has(k)?' open':'')+'><summary><span><b>'+esc(d.title||tname(d))+'</b><span class="mut sm" style="display:block">'+tname(d)+(ss.length?' · '+ss.length+' Sätze':'')+'</span></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><div class="trdb"><details class="inf"><summary>Informationen<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>'+meta+'</details>'
     +(d.note?'<p class="mut" style="margin:4px 0">Notiz: '+esc(d.note)+'</p>':'')
@@ -1192,7 +1193,7 @@ function renderData(){status();
   if(!$('#bwd').value)$('#bwd').value=today();
   {const L=(cfg.bwLog||[]).slice().reverse();$('#bwlist').innerHTML=L.slice(0,8).map(x=>'<div class="bwr"><span>'+dd(x.d)+' · <b>'+x.kg+' kg</b></span><button data-bwx="'+x.d+'" aria-label="Eintrag löschen">✕</button></div>').join('')+(L.length>8?'<p class="mut sm" style="margin:4px 0 0">… und '+(L.length-8)+' ältere Einträge (im Tab „Daten“ sichtbar)</p>':'')}try{renderDel()}catch(e){console.error(e)}try{renderRn()}catch(e){console.error(e)}
   try{$('#dsT').textContent={system:'System',light:'Hell',dark:'Dunkel'}[cfg.theme||'system'];$('#dsB').textContent=cfg.bw?cfg.bw+' kg':'nicht eingetragen';
-    const n=(cfg.main||[]).length;$('#dsM').textContent=n?n+(n===1?' Übung':' Übungen'):'keine';$('#dsS').textContent=cfg.lastBk?(x=>'zuletzt '+x.slice(8,10)+'.'+x.slice(5,7)+'.')(fmt(new Date(cfg.lastBk))):'noch kein Backup'}catch(e){}$$('[data-th]').forEach(b=>b.classList.toggle('on',b.dataset.th===(cfg.theme||'system')));setVal('#bw',cfg.bw||'');try{renderMain()}catch(e){console.error(e)}$('#bwc').innerHTML=exs(true).map(e=>'<button class="chip'+(cfg.bwEx.includes(e)?' on':'')+'" data-bw="'+esc(e)+'">'+esc(e)+'</button>').join('')}
+    const n=(cfg.main||[]).length;$('#dsM').textContent=n?n+(n===1?' Übung':' Übungen'):'keine';$('#dsS').textContent=cfg.lastBk?(x=>'zuletzt '+x.slice(8,10)+'.'+x.slice(5,7)+'.')(fmt(new Date(cfg.lastBk))):'noch kein Backup'}catch(e){}$$('[data-th]').forEach(b=>b.classList.toggle('on',b.dataset.th===(cfg.theme||'system')));setVal('#bw',cfg.bw||'');try{renderMain()}catch(e){console.error(e)}$('#bwc').innerHTML=(cfg.bwEx.length?cfg.bwEx.map((n,i)=>'<div class="exr xrow"><span>'+esc(n)+'</span><button class="btn" data-bwrm="'+i+'" style="margin:0;width:auto" aria-label="Entfernen">✕</button></div>').join(''):'<p class="mut sm" style="margin:0">Noch keine Übungen.</p>')}
 let recOpen=new Set();
 function recOf(n){const R={},H={};Object.keys(days).sort().forEach(k=>{(days[k].sets||[]).forEach(s=>{if(!s||s.ex!==n)return;const kg=+s.kg||0,d0=k.slice(0,10);
   if(s.secs>0){if(!H[kg]||s.secs>H[kg].v)H[kg]={v:s.secs,k:d0}}else if(s.reps>0){if(!R[kg]||s.reps>R[kg].v)R[kg]={v:s.reps,k:d0}}})});return{R,H}}
@@ -1278,11 +1279,12 @@ function weekLoads(n){const t=dOf(monOf(today()));t.setDate(t.getDate()-7*(n-1))
 function svgBars(v,labs,o){o=o||{};const W=320,H=130,pl=34,pr=6,pt=8,pb=18,mx=Math.max(...v,1)*1.1,bw=(W-pl-pr)/v.length;
   let r='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="'+esc(o.al||'Diagramm')+'">';
   [0,.5,1].forEach(f=>{const y=pt+(H-pt-pb)*(1-f);r+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y+'" y2="'+y+'" stroke="var(--bd)"/><text x="'+(pl-4)+'" y="'+(y+3)+'" text-anchor="end" font-size="9" fill="var(--mut)">'+Math.round(mx*f)+'</text>'});
-  v.forEach((x,i)=>{const h=(H-pt-pb)*x/mx,last=i===v.length-1;r+='<rect x="'+(pl+i*bw+bw*.15)+'" y="'+(H-pb-h)+'" width="'+bw*.7+'" height="'+h+'" rx="2" fill="#2563eb" opacity="'+(last?1:.7)+'"><title>'+esc(labs[i])+': '+f1(x)+'</title></rect>';
+  v.forEach((x,i)=>{const h=(H-pt-pb)*x/mx,last=i===v.length-1;r+='<rect x="'+(pl+i*bw+bw*.15)+'" y="'+(H-pb-h)+'" width="'+bw*.7+'" height="'+h+'" rx="2" fill="#2563eb" opacity="'+(last?1:.7)+'"/>';
     if(o.vl&&x>0)r+='<text x="'+(pl+i*bw+bw/2)+'" y="'+(H-pb-h-3)+'" text-anchor="middle" font-size="8" fill="#2563eb">'+f1(x)+'</text>';
     if(i%(v.length>8?3:1)===0||last)r+='<text x="'+(pl+i*bw+bw/2)+'" y="'+(H-5)+'" text-anchor="middle" font-size="9" fill="var(--mut)">'+esc(o.xl?o.xl[i]:'')+'</text>'});
   if(o.line!=null&&o.line>0){const y=pt+(H-pt-pb)*(1-o.line/mx);r+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y+'" y2="'+y+'" stroke="#d97706" stroke-dasharray="4 3" stroke-width="1.5"/>'}
-  return r+'</svg>'}
+  v.forEach((x,i)=>{r+='<rect x="'+(pl+i*bw)+'" y="'+pt+'" width="'+bw+'" height="'+(H-pt-pb)+'" fill="#000" fill-opacity="0" data-x="'+(pl+i*bw+bw/2)+'" data-tip="'+esc(o.tips?o.tips[i]:labs[i]+': '+f1(x))+'"/>'});
+  return '<div class="ch">'+r+'</svg><div class="gtip ctip" hidden></div></div>'}
 function svgLine(P,o){o=o||{};if(!P.length)return'';const W=320,H=130,pl=38,pr=10,pt=8,pb=18,fm=o.f||(x=>Math.round(x*10)/10);
   const xs=P.map(p=>p.x),x0=Math.min(...xs),x1=Math.max(...xs),ys=P.map(p=>p.y);let y0=Math.min(...ys),y1=Math.max(...ys);if(y1===y0){y0-=1;y1+=1}const pd=(y1-y0)*.12;y0-=pd;y1+=pd;
   const X=x=>pl+(x1>x0?(x-x0)/(x1-x0):.5)*(W-pl-pr),Y=y=>pt+(H-pt-pb)*(1-(y-y0)/(y1-y0));
@@ -1290,9 +1292,10 @@ function svgLine(P,o){o=o||{};if(!P.length)return'';const W=320,H=130,pl=38,pr=1
   [0,.5,1].forEach(f=>{const y=pt+(H-pt-pb)*(1-f);r+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y+'" y2="'+y+'" stroke="var(--bd)"/><text x="'+(pl-4)+'" y="'+(y+3)+'" text-anchor="end" font-size="9" fill="var(--mut)">'+esc(String(fm(y0+(y1-y0)*f)))+'</text>'});
   let d='M'+X(P[0].x)+' '+Y(P[0].y);for(let i=1;i<P.length;i++)d+=o.step?' H'+X(P[i].x)+' V'+Y(P[i].y):' L'+X(P[i].x)+' '+Y(P[i].y);
   r+='<path d="'+d+'" fill="none" stroke="'+(o.col||'#2563eb')+'" stroke-width="2" stroke-linejoin="round"/>';
-  P.forEach(p=>{if(p.m!==false)r+='<circle cx="'+X(p.x)+'" cy="'+Y(p.y)+'" r="3" fill="'+(o.col||'#2563eb')+'"><title>'+esc(dd(p.k)+': '+fm(p.y))+'</title></circle>'});
+  P.forEach(p=>{if(p.m!==false)r+='<circle cx="'+X(p.x)+'" cy="'+Y(p.y)+'" r="3" fill="'+(o.col||'#2563eb')+'"/>'});
   r+='<text x="'+pl+'" y="'+(H-5)+'" font-size="9" fill="var(--mut)">'+esc(dd(P[0].k))+'</text><text x="'+(W-pr)+'" y="'+(H-5)+'" text-anchor="end" font-size="9" fill="var(--mut)">'+esc(dd(P[P.length-1].k))+'</text>';
-  return r+'</svg>'}
+  const Q=P.filter(p=>p.m!==false);Q.forEach((p,i)=>{const cx=X(p.x),a=i?(X(Q[i-1].x)+cx)/2:pl,b2=i<Q.length-1?(cx+X(Q[i+1].x))/2:W-pr;r+='<rect x="'+a+'" y="'+pt+'" width="'+Math.max(1,b2-a)+'" height="'+(H-pt-pb)+'" fill="#000" fill-opacity="0" data-x="'+cx+'" data-tip="'+esc(o.tip?o.tip(p):dd(p.k)+': '+fm(p.y))+'"/>'});
+  return '<div class="ch">'+r+'</svg><div class="gtip ctip" hidden></div></div>'}
 // Plateau + Deload
 function pst(ex,a,b){const ks=Object.keys(days).filter(k=>{const t=k.slice(0,10);return t>=a&&t<=b&&isK(days[k])&&(days[k].sets||[]).some(x=>x.ex===ex)});if(!ks.length)return null;
   const ss=ks.flatMap(k=>days[k].sets.filter(x=>x.ex===ex)),rs=ss.map(x=>x.rest).filter(x=>x>0),rr=ss.map(x=>x.rpe).filter(x=>x>0),fm=ks.map(k=>days[k].form).filter(x=>x>0),wk=Math.max(1,(dOf(b)-dOf(a))/864e5/7);
@@ -1331,7 +1334,7 @@ function deload(pls){const W=weekLoads(12);if(W.filter(x=>x.n).length<4)return n
 function renderOv(){const el=$('#gu'),W=weekLoads(12);
   if(!W.some(x=>x.n)){el.innerHTML='<div class="card"><p class="mut sm" style="margin:0">Sobald du Trainings abgeschlossen hast, siehst du hier deine Wochenbelastung sowie Plateau- und Erholungs-Hinweise.</p></div>';return}
   const cur=W[11],av=Math.round(avg(W.slice(7,11).map(x=>x.l))||0),est=W.reduce((a,x)=>a+x.est,0),xl=W.map(x=>x.w.slice(8,10)+'.'+x.w.slice(5,7)+'.');
-  let h='<div class="card"><b>Belastungs-Score pro Woche</b><p class="mut sm" style="margin:2px 0 6px">Je Training: Minuten × Anstrengung (1–10), angepasst an die Tagesform (schlechte Tagesform zählt bis zu 20 % mehr, sehr gute 10 % weniger). Die orange Linie ist dein Schnitt der letzten 4 Wochen.</p>'+svgBars(W.map(x=>x.l),W.map(x=>'Woche ab '+dd(x.w)),{xl,line:av,al:'Belastungs-Score der letzten 12 Wochen',vl:true})
+  let h='<div class="card"><b>Belastungs-Score pro Woche</b><p class="mut sm" style="margin:2px 0 6px">Je Training: Minuten × Anstrengung (1–10), angepasst an die Tagesform (schlechte Tagesform zählt bis zu 20 % mehr, sehr gute 10 % weniger). Die orange Linie ist dein Schnitt der letzten 4 Wochen.</p>'+svgBars(W.map(x=>x.l),W.map(x=>'Woche ab '+dd(x.w)),{xl,line:av,al:'Belastungs-Score der letzten 12 Wochen',vl:true,tips:W.map(x=>'Woche ab '+dd(x.w)+'\nScore '+x.l.toLocaleString('de-DE')+' · '+x.n+' Training'+(x.n===1?'':'s')+(x.est?'\n'+x.est+' davon ohne Bewertung (geschätzt)':'')+(av?'\nØ 4 Wochen davor: '+av.toLocaleString('de-DE'):''))})
     +'<div class="kv"><span>Diese Woche</span><span>'+cur.l+' ('+cur.n+' Training'+(cur.n===1?'':'s')+')</span></div><div class="kv"><span>Ø der 4 Wochen davor</span><span>'+av+'</span></div>'
     +(est?'<p class="mut sm" style="margin:8px 0 0">'+est+' Training'+(est===1?'':'s')+' ohne Bewertung sind geschätzt. Tippe nach dem Training 1–10 an, dann wird es genauer.</p>':'')+'</div>';
   const M=cfg.main||[],pls=M.map(plateau).filter(Boolean),pl=pls.filter(p=>p.plat),dl=deload([]),ft=formTrend();
@@ -1346,7 +1349,7 @@ function renderOv(){const el=$('#gu'),W=weekLoads(12);
   if(!ft)h+='<p class="mut sm" style="margin:0">Noch zu wenige Bewertungen. Bewerte deine Trainings nach dem Beenden, dann siehst du hier den Verlauf.</p>';
   else{const kv=(l,a,b,mx)=>b?'<div class="kv"><span>'+l+'</span><span>'+(a?f1(a.v)+' → ':'')+f1(b.v)+' von '+mx+'</span></div>':'';
     h+='<p class="mut sm" style="margin:0 0 2px">Schnitt der 4 Wochen davor → letzte 4 Wochen</p>'+kv('Tagesform',ft.fPrev,ft.fNow,5)+kv('Anstrengung',ft.rPrev,ft.rNow,10);
-    if(ft.F.length>=3)h+='<div class="mut sm" style="margin:8px 0 0">Tagesform der letzten 8 Wochen</div>'+svgLine(ft.F.map(o=>({x:dOf(o.k).getTime(),y:o.v,k:o.k})),{f:v=>f1(v),al:'Tagesform',col:'#16a34a'});
+    if(ft.F.length>=3)h+='<div class="mut sm" style="margin:8px 0 0">Tagesform der letzten 8 Wochen</div>'+svgLine(ft.F.map(o=>({x:dOf(o.k).getTime(),y:o.v,k:o.k})),{f:v=>f1(v),al:'Tagesform',col:'#16a34a',tip:p=>{const d=days[p.k]||{};return dd(p.k)+'\nTagesform '+p.y+'/5'+(d.srpe?' · Anstrengung '+d.srpe+'/10':'')+'\n'+(d.title||tname(d))}});
     if(ft.low)h+='<div class="last" style="margin-top:8px">'+tip('Erholungstipp: Plane ein paar leichtere Tage ein, achte auf Schlaf und baue Stress ab, bevor du wieder voll trainierst.',ft.why)+'</div>'}
   const many=pl.length>=2&&pl.length/pls.length>=.4,ln=dl?dl.R:[],hiLoad=dl&&dl.ratio&&dl.ratio>1.3,fl=ft&&ft.low&&hiLoad;
   if(many||fl){const R=[];if(many)R.push('Bei '+pl.length+' von '+pls.length+' Hauptübungen geht es gerade nicht voran.');if(fl)R.push(ft.why+' Gleichzeitig ist deine Belastung hoch.');ln.forEach(x=>R.push(x));
@@ -1398,19 +1401,23 @@ function exLi(ctx,n,cnt,rm){const t=mgTxt(n),ed=mgRow&&mgRow.ctx===ctx&&mgRow.na
   return '<div class="exr xrow"><span>'+esc(n)+(cnt?'<span class="mut sm" style="display:block">'+cnt+'</span>':'')+'</span>'
    +(t?'<button class="mgt" data-xedit="'+ctx+'" data-xn="'+esc(n)+'">'+t+'</button>':'')
    +'<button class="btn" '+rm+' style="margin:0;width:auto" aria-label="Entfernen">✕</button></div>'+(ed?mgEdHTML():'')}
-function sugFor(ctx){const inp=$(ctx==='main'?'#mainn':'#ownn'),el=$(ctx==='main'?'#sugM':'#sugO');if(!inp||!el)return;const q=inp.value.trim().toLowerCase();
+const SUGI={main:['#mainn','#sugM'],own:['#ownn','#sugO'],bw:['#bwn','#sugB']};
+function sugFor(ctx){const inp=$(SUGI[ctx][0]),el=$(SUGI[ctx][1]);if(!inp||!el)return;const q=inp.value.trim().toLowerCase();
   if(!q||(ctx==='own'&&cfg.ownT==='m')){el.innerHTML='';return}
-  const lc=[...(cfg.main||[]),...(cfg.own||[])].map(x=>x.toLowerCase());
-  el.innerHTML=doneExs().filter(e=>e.toLowerCase().startsWith(q)&&e.toLowerCase()!==q&&!lc.includes(e.toLowerCase())).slice(0,4).map(e=>'<button class="sg" data-sg="'+ctx+'" data-sn="'+esc(e)+'"><span class="sgt">'+esc(e.slice(0,q.length))+'</span>'+esc(e.slice(q.length))+'</button>').join('')}
+  const lc=(ctx==='bw'?cfg.bwEx||[]:[...(cfg.main||[]),...(cfg.own||[])]).map(x=>x.toLowerCase()),pool=ctx==='bw'?[...new Set([...doneExs(),...(cfg.main||[]),...(cfg.own||[]),...exs(true)])]:doneExs();
+  el.innerHTML=pool.filter(e=>e.toLowerCase().startsWith(q)&&e.toLowerCase()!==q&&!lc.includes(e.toLowerCase())).slice(0,4).map(e=>'<button class="sg" data-sg="'+ctx+'" data-sn="'+esc(e)+'"><span class="sgt">'+esc(e.slice(0,q.length))+'</span>'+esc(e.slice(q.length))+'</button>').join('')}
 function renderMgDrafts(){const mo=cfg.ownT==='m';const w=$('#ownK');if(w)w.hidden=mo;
   [['main','M','#mainn'],['own','O','#ownn']].forEach(([ctx,sf,ii])=>{const st=mgDr[ctx],box=$('#mgd'+sf);if(!box)return;box.hidden=!$(ii).value.trim();if(box.hidden)box.open=false;
     ['p','s'].forEach(k=>{$('#mgd'+sf+k).innerHTML=MG.map(q=>'<button class="chip'+(st[k].includes(q)?' on':'')+'" data-mc="'+ctx+'" data-mk="'+k+'" data-mq="'+esc(q)+'">'+esc(q)+'</button>').join('')});
     const n=st.p.length+st.s.length;$('#mgd'+sf+'n').textContent=n?n+' gewählt':'optional';sugFor(ctx)})}
 document.addEventListener('toggle',e=>{const t=e.target;if(t&&t.classList&&t.classList.contains('trd')&&t.dataset.tk){if(t.open)trOpen.add(t.dataset.tk);else trOpen.delete(t.dataset.tk)}},true);
 // Einstellungen: Beim Zuklappen innere Bereiche (von innen nach außen, solange sichtbar) schließen und Eingaben leeren
-function setReset(root,self){[...root.querySelectorAll('details[open]')].reverse().forEach(x=>{x.open=false});if(self&&root.tagName==='DETAILS')root.open=false;
+function setReset(root,self){[...root.querySelectorAll('details[open]')].reverse().forEach(x=>{x.open=false});if(self&&root.tagName==='DETAILS')root.open=false;{const bi=$('#bwn');if(bi&&root.contains(bi)){bi.value='';const sb=$('#sugB');if(sb)sb.innerHTML=''}}
   [['#mainn','main'],['#ownn','own']].forEach(([q,c])=>{const i=$(q);if(i&&root.contains(i)&&(i.value||mgDr[c].p.length||mgDr[c].s.length)){i.value='';mgDr[c]={p:[],s:[]}}});mgRow=null;try{renderMgDrafts()}catch(e){}}
 document.addEventListener('click',e=>{const sm=e.target.closest&&e.target.closest('#d details>summary');if(!sm)return;const dt=sm.parentElement;if(dt.open)setReset(dt,false);else{[...dt.parentElement.children].forEach(x=>{if(x!==dt&&x.tagName==='DETAILS'&&x.open)setReset(x,true)});setTimeout(()=>{try{dt.scrollIntoView({block:'nearest',behavior:'smooth'})}catch(e){}},60)}},true);
+document.addEventListener('input',e=>{if(e.target&&e.target.id==='bwn')sugFor('bw')});
+document.addEventListener('keydown',e=>{if(e.target&&e.target.id==='bwn'&&e.key==='Enter'){e.preventDefault();addBw()}});
+function addBw(){const i=$('#bwn'),n=i.value.trim();if(!n)return;if(!cfg.bwEx.some(x=>x.toLowerCase()===n.toLowerCase())){cfg.bwEx.push(n);saveC()}i.value='';$('#sugB').innerHTML='';render()}
 document.addEventListener('input',e=>{const id=e.target&&e.target.id;if(id==='mainn'||id==='ownn'){const c=id==='mainn'?'main':'own';if(!e.target.value.trim())mgDr[c]={p:[],s:[]};renderMgDrafts()}});
 // Rekorde mit Verlauf
 function recHist(n){const sess=[],raw=[];let kmax=0,rmax=0;
@@ -1427,11 +1434,11 @@ function recExtra(n){let H;try{H=recHist(n)}catch(e){return''}if(!H.ev.length)re
 function renderLauf(){const el=$('#gl'),ks=Object.keys(days).sort().filter(k=>isRun(days[k])&&days[k].ended),RS=runStats();
   if(!ks.length){el.innerHTML='<div class="card"><p class="mut sm" style="margin:0">Noch keine Läufe. Starte im Training ein Lauf-Training, dann erscheinen hier Kilometer, Pace und Effizienz.</p></div>';return}
   const W=weekLoads(12),xl=W.map(x=>x.w.slice(8,10)+'.'+x.w.slice(5,7)+'.'),kmv=W.map(x=>Math.round(x.km*10)/10),av=avg(kmv.slice(7,11));
-  let h='<div class="card"><b>Kilometer pro Woche</b>'+svgBars(kmv,W.map(x=>'Woche ab '+dd(x.w)),{xl,line:av,al:'Wochenkilometer',vl:true})+'<div class="kv"><span>Diese Woche</span><span>'+f1(kmv[11])+' km</span></div><div class="kv"><span>Ø der 4 Wochen davor</span><span>'+f1(av||0)+' km</span></div><div class="kv"><span>Läufe insgesamt</span><span>'+ks.length+' · '+f1(sum(ks.map(k=>RS[k].lk||0)))+' km</span></div></div>';
+  let h='<div class="card"><b>Kilometer pro Woche</b>'+svgBars(kmv,W.map(x=>'Woche ab '+dd(x.w)),{xl,line:av,al:'Wochenkilometer',vl:true,tips:W.map((x,i)=>'Woche ab '+dd(x.w)+'\n'+f1(kmv[i])+' km'+(av?'\nØ 4 Wochen davor: '+f1(av)+' km':''))})+'<div class="kv"><span>Diese Woche</span><span>'+f1(kmv[11])+' km</span></div><div class="kv"><span>Ø der 4 Wochen davor</span><span>'+f1(av||0)+' km</span></div><div class="kv"><span>Läufe insgesamt</span><span>'+ks.length+' · '+f1(sum(ks.map(k=>RS[k].lk||0)))+' km</span></div></div>';
   const pp=ks.filter(k=>RS[k].lp).map(k=>({x:dOf(k).getTime(),y:RS[k].lp,k}));
-  if(pp.length>1)h+='<div class="card"><b>Pace-Verlauf</b><p class="mut sm" style="margin:2px 0 6px">Min pro km, kleiner ist schneller.</p>'+svgLine(pp,{f:pf,al:'Pace-Verlauf'})+'</div>';
+  if(pp.length>1)h+='<div class="card"><b>Pace-Verlauf</b><p class="mut sm" style="margin:2px 0 6px">Min pro km, kleiner ist schneller.</p>'+svgLine(pp,{f:pf,al:'Pace-Verlauf',tip:p=>{const r=RS[p.k];return dd(p.k)+'\nPace '+pf(p.y)+' /km'+(r.lk?' · '+f1(r.lk)+' km':'')+(r.lh?'\nØ Puls '+Math.round(r.lh):'')}})+'</div>';
   const ef=ks.filter(k=>RS[k].lp&&RS[k].lh).map(k=>({x:dOf(k).getTime(),y:Math.round(60/RS[k].lp*150/RS[k].lh*100)/100,k}));
-  if(ef.length>2)h+='<div class="card"><b>Effizienz</b><p class="mut sm" style="margin:2px 0 6px">Geschätztes Tempo bei 150 Puls (km/h). Steigt der Wert, läufst du mit gleichem Puls schneller.<br>Berechnung: Tempo (km/h) × 150 ÷ Ø-Puls. Beispiel: 10 km/h bei Ø-Puls 160 → 9,4. Am aussagekräftigsten bei ähnlichen Läufen (Strecke, Gelände).</p>'+svgLine(ef,{f:v=>f1(v),al:'Effizienz'})+'</div>';
+  if(ef.length>2)h+='<div class="card"><b>Effizienz</b><p class="mut sm" style="margin:2px 0 6px">Geschätztes Tempo bei 150 Puls (km/h). Steigt der Wert, läufst du mit gleichem Puls schneller.<br>Berechnung: Tempo (km/h) × 150 ÷ Ø-Puls. Beispiel: 10 km/h bei Ø-Puls 160 → 9,4. Am aussagekräftigsten bei ähnlichen Läufen (Strecke, Gelände).</p>'+svgLine(ef,{f:v=>f1(v),al:'Effizienz',tip:p=>{const r=RS[p.k];return dd(p.k)+'\n'+f1(p.y)+' km/h bei 150 Puls'+'\nPace '+pf(r.lp)+' /km · Ø Puls '+Math.round(r.lh)}})+'</div>';
   const mo={};ks.forEach(k=>{const m=k.slice(0,7),v=RS[k].lk||0;if(!mo[m]||v>mo[m].v)mo[m]={v,k}});
   h+='<div class="card"><b>Längster Lauf je Monat</b>'+Object.keys(mo).sort().reverse().slice(0,6).map(m=>'<div class="kv"><span>'+MON[+m.slice(5)-1]+' '+m.slice(0,4)+'</span><span>'+f1(mo[m].v)+' km · '+dd(mo[m].k)+'</span></div>').join('')+'</div>';
   h+='<div class="card"><b>Letzte Läufe</b>'+ks.slice().reverse().slice(0,12).map(k=>{const r=RS[k];return '<div class="kv"><span>'+dd(k)+'</span><span>'+(r.lk?f1(r.lk)+' km':'–')+(r.lp?' · '+pf(r.lp)+'/km':'')+(r.lh?' · '+Math.round(r.lh)+' bpm':'')+(r.lt?' · '+r.lt+' min':'')+'</span></div>'}).join('')+'</div>';
@@ -1440,6 +1447,13 @@ function renderG(){const S=['u','v','m','r','l'];if(!S.includes(gsub))gsub='u';$
   try{if(gsub==='u')renderOv();else if(gsub==='v'){renderChips();draw()}else if(gsub==='m')renderMu();else if(gsub==='r')renderRec();else renderLauf()}catch(e){console.error(e)}}
 // Training bewerten
 let trOpen=new Set(),msBody=false;
+const hhmm=t=>{const x=new Date(t);return pad(x.getHours())+':'+pad(x.getMinutes())};
+// Antippen in Diagrammen (Daten-Tab): Info-Kasten an der Stelle zeigen
+document.addEventListener('click',e=>{const h=e.target.closest&&e.target.closest('.ch [data-tip]'),ch=h&&h.closest('.ch');
+  $$('.ch').forEach(c=>{if(c!==ch){const t=c.querySelector('.ctip');if(t)t.hidden=true;c.querySelectorAll('.chl').forEach(l=>l.remove())}});if(!h)return;
+  const sv=ch.querySelector('svg'),tip=ch.querySelector('.ctip'),r=sv.getBoundingClientRect(),vb=sv.viewBox.baseVal,sx=r.width/vb.width,x=+h.dataset.x;
+  ch.querySelectorAll('.chl').forEach(l=>l.remove());sv.insertAdjacentHTML('beforeend','<line class="chl" x1="'+x+'" x2="'+x+'" y1="8" y2="'+(vb.height-18)+'" stroke="var(--mut)" stroke-dasharray="3 3" pointer-events="none"/>');
+  tip.textContent=h.dataset.tip;tip.hidden=false;const tw=tip.offsetWidth;tip.style.left=Math.max(2,Math.min(r.width-tw-2,x*sx-tw/2))+'px';tip.style.top='-6px';tip.style.transform='translateY(-100%)'});
 document.addEventListener('toggle',e=>{if(e.target&&e.target.id==='rvd'){rvOpen=e.target.open;if(rvOpen)renderRv()}},true);
 document.addEventListener('click',e=>{const td=e.target.closest&&e.target.closest('details.trd[data-tk]');if(td&&!e.target.closest('summary'))trOpen.add(td.dataset.tk)},true);
 let rtSel=null,rtForm=null,rtKey=null;
@@ -1488,7 +1502,9 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
   if(D.xs&&mgRow){cfg.mg=cfg.mg||{};if(mgRow.p.length+mgRow.s.length)cfg.mg[mgRow.name]={p:mgRow.p.slice(),s:mgRow.s.slice()};else delete cfg.mg[mgRow.name];mgRow=null;saveC();render();return}
   if(D.xc){mgRow=null;render();return}
   if(D.xr&&mgRow){if(cfg.mg)delete cfg.mg[mgRow.name];mgRow=null;saveC();render();return}
-  if(D.sg){const inp=$(D.sg==='main'?'#mainn':'#ownn');inp.value=D.sn;renderMgDrafts();inp.focus();return}
+  if(D.sg){const inp=$(SUGI[D.sg][0]);inp.value=D.sn;renderMgDrafts();sugFor(D.sg);inp.focus();return}
+  if(b.id==='bwadd'){addBw();return}
+  if(D.bwrm!=null){cfg.bwEx.splice(+D.bwrm,1);saveC();render();return}
   if(D.rvp){rvP=D.rvp;rvO=0;renderRv();return}
   if(D.rvo){rvO=Math.min(0,rvO+ +D.rvo);renderRv();return}
 });
