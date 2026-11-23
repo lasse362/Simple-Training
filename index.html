@@ -38,6 +38,9 @@ ul{list-style:none;margin:0;padding:0}
 li{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--bd)}
 li>button:not(.lk){border:0;background:none;color:var(--mut);font-size:18px;padding:4px 10px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px}
+/* Infotexte: über Einstellungen komplett ausblendbar */
+.nohint .hint{display:none!important}
+.pgh{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);margin:12px 0 2px}.pgh:first-child{margin-top:2px}.chips .pgh{flex-basis:100%;margin:6px 0 0}.chips .pgh:first-child{margin-top:0}
 .chip{padding:7px 12px;border:1px solid var(--bd);border-radius:20px;background:var(--bg);color:var(--fg);font-family:inherit;font-size:14px}
 .chip.on{background:var(--acc);color:var(--on);border-color:var(--acc)}
 .cw{position:relative;min-height:120px;-webkit-tap-highlight-color:transparent}.cw svg{max-width:100%}
@@ -177,6 +180,9 @@ details.inf{margin:2px 0}.inf>summary{list-style:none;cursor:pointer;display:fle
 .sdet{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;color:var(--mut);margin-top:6px}
 .nline{width:100%;text-align:left;border:1px dashed var(--bd);background:none;color:var(--mut);border-radius:12px;padding:10px 12px;font:inherit;font-size:14px;margin-bottom:12px}
 #nbox #notew{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:4px 12px 12px;margin-bottom:12px}
+@keyframes flash{0%,60%{box-shadow:0 0 0 3px #f59e0b}100%{box-shadow:0 0 0 0 transparent}}.flash{animation:flash 1.6s ease-out}
+.seen{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--mut);cursor:pointer}.seen input{width:18px;height:18px;margin:0;flex:0 0 18px;accent-color:var(--acc)}
+.lnk{display:block;margin:8px auto 0;padding:6px 10px;background:none;border:0;color:var(--acc);font:inherit;font-size:14px;cursor:pointer}
 /* Kalender: Woche und Jahr */
 .wkv{display:flex;flex-direction:column;gap:6px}
 .wkv .cd{flex-direction:row;align-items:center;gap:10px;min-height:52px;padding:6px 10px;background:var(--bg);color:var(--fg);border:1px solid var(--bd)}
@@ -192,6 +198,13 @@ details.inf{margin:2px 0}.inf>summary{list-style:none;cursor:pointer;display:fle
 .ymg i.td{outline:1.5px solid var(--fg);outline-offset:0}
 /* Wochenziel */
 .wgh{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.wgk{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;padding:0;margin:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.wgk .wgks{flex:1;min-width:0;display:flex;flex-direction:column}.wgk .wgks b{font-size:17px}.wgk .wgks small{color:var(--mut);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wgk .wgmini{flex:0 0 46px;width:46px;height:46px}.wgk .wgmini text,.wgk .wgmini path{display:none}
+.wgk .wgv{flex:0 0 20px;color:var(--mut);transition:transform .2s}#wgc.op .wgv{transform:rotate(180deg)}
+.wgw{flex:0 0 22px;height:22px;border-radius:50%;background:#f59e0b;color:#fff;font-weight:800;font-size:13px;display:inline-flex;align-items:center;justify-content:center}
+.wgtd{margin-top:10px;padding-top:10px;border-top:1px solid var(--bd);font-size:14px}
+.wgwr{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;margin-top:8px;padding:10px 12px;border-radius:10px;border:1px solid #f59e0b66;background:#f59e0b14;color:inherit;font:inherit;font-size:14px;text-align:left;cursor:pointer}
 .wgh b{font-size:17px}.wgh small{display:block;color:var(--mut);font-size:12px;font-weight:400}
 .stk{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:999px;background:linear-gradient(135deg,#fb923c,#ef4444);color:#fff;font-weight:700;font-size:13px;white-space:nowrap;box-shadow:0 2px 8px #ef444440}
 .stk.z{background:var(--bg);color:var(--mut);box-shadow:none;font-weight:600}
@@ -201,9 +214,8 @@ details.inf{margin:2px 0}.inf>summary{list-style:none;cursor:pointer;display:fle
 .wgl{flex:1;min-width:0}
 .wgr{display:flex;align-items:center;gap:8px;padding:4px 0}
 .wgr i{width:10px;height:10px;border-radius:50%;flex:0 0 10px}
-.wgr span{flex:1;color:var(--mut);font-size:13px}
+.wgr span{flex:1;color:var(--mut);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .wgr b{font-variant-numeric:tabular-nums;font-size:16px;white-space:nowrap}.wgr b small{color:var(--mut);font-weight:500;font-size:12px}
-.wgr span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fx .kv{align-items:flex-start}.fx .kv>span:first-child,.fx .kv>span:first-child .fxb{text-align:left;flex:1;min-width:0}.fx .kv>span:last-child{text-align:right;flex:0 0 auto}
 .fx .fxv{font-variant-numeric:tabular-nums}.fx .fxb{display:block;color:var(--mut);font-size:12px;margin-top:1px}
 .fx .up{color:var(--ok);font-weight:700}.fx .dn{color:var(--bad,#dc2626);font-weight:700}
@@ -246,7 +258,7 @@ details.inf{margin:2px 0}.inf>summary{list-style:none;cursor:pointer;display:fle
 <div class="card" id="warn" hidden style="border-color:#dc2626"></div>
 
 <section id="t" class="on">
- <div class="card" id="rtc" hidden><b>Wie war dein letztes Training?</b><p class="mut sm" id="rtn" style="margin:2px 0 0"></p><label>Anstrengung des Trainings (1 = sehr leicht · 10 = Maximum)</label><div class="chips" id="rtch"></div><label style="margin-top:0">Tagesform <small class="mut" style="font-weight:400">(Schlaf, Wohlbefinden, Stress · 1 = schlecht · 5 = sehr gut)</small></label><div class="chips" id="rtfc"></div><div style="display:flex;gap:8px;margin:0 0 8px"><button class="big" id="rts" disabled style="margin:0;flex:1">Speichern</button><button class="btn" id="rtx" style="margin:0;flex:1">Nicht bewerten</button></div><p class="mut sm" style="margin:0">Ändern geht durch anderes Antippen. Daraus berechnet die App deine Wochenbelastung im Tab „Daten“.</p></div>
+ <div class="card" id="rtc" hidden><b>Wie war dein letztes Training?</b><p class="mut sm" id="rtn" style="margin:2px 0 0"></p><label>Anstrengung des Trainings (1 = sehr leicht · 10 = Maximum)</label><div class="chips" id="rtch"></div><label style="margin-top:0">Tagesform <small class="mut" style="font-weight:400">(Schlaf, Wohlbefinden, Stress · 1 = schlecht · 5 = sehr gut)</small></label><div class="chips" id="rtfc"></div><div style="display:flex;gap:8px;margin:0 0 8px"><button class="big" id="rts" disabled style="margin:0;flex:1">Speichern</button><button class="btn" id="rtx" style="margin:0;flex:1">Nicht bewerten</button></div><p class="mut sm hint" style="margin:0">Ändern geht durch anderes Antippen. Daraus berechnet die App deine Wochenbelastung im Tab „Daten“.</p></div>
  <div class="card" id="wgc" hidden></div>
  <div class="card" id="hc">
   <div id="today" style="font-weight:600"></div>
@@ -264,10 +276,10 @@ details.inf{margin:2px 0}.inf>summary{list-style:none;cursor:pointer;display:fle
  <div class="seg" id="tmo" hidden style="margin:0 0 12px"><button data-tm="man">Manuell</button><button data-tm="ivl">Intervall</button></div>
  <div class="card" id="rc" hidden>
   <b>Lauf</b>
-  <p class="mut sm" style="margin:2px 0 6px">Trage ein, was du weißt. Zeit und Pace berechnet die App selbst.</p>
+  <p class="mut sm hint" style="margin:2px 0 6px">Trage ein, was du weißt. Zeit und Pace berechnet die App selbst.</p>
   <div class="row"><div><label for="rkm">Strecke (km)</label><input id="rkm" inputmode="decimal" placeholder="z. B. 8,5"></div><div><label for="rup">Höhenmeter (m)</label><input id="rup" inputmode="numeric" placeholder="optional"></div></div>
   <div class="row"><div><label for="rhr">Ø Puls (bpm)</label><input id="rhr" inputmode="numeric" placeholder="optional"></div><div><label for="rhx">Max. Puls (bpm)</label><input id="rhx" inputmode="numeric" placeholder="optional"></div></div>
-  <div class="kv" style="margin-top:8px"><span>Gesamtzeit</span><span id="rgz">00:00</span></div><div class="kv"><span>Bewegungszeit</span><span id="rzt">00:00</span></div><div class="kv"><span>Pace</span><span id="rpc">–</span></div><button class="btn" id="rpb" style="margin-top:8px">⏸ Lauf pausieren</button><p class="mut sm" style="margin:6px 0 0">Pause: Die Bewegungszeit und die Pace stehen still, die Gesamtzeit läuft weiter. So kannst du nach dem Lauf in Ruhe Werte eintragen.</p>
+  <div class="kv" style="margin-top:8px"><span>Gesamtzeit</span><span id="rgz">00:00</span></div><div class="kv"><span>Bewegungszeit</span><span id="rzt">00:00</span></div><div class="kv"><span>Pace</span><span id="rpc">–</span></div><button class="btn" id="rpb" style="margin-top:8px">⏸ Lauf pausieren</button><p class="mut sm hint" style="margin:6px 0 0">Pause: Die Bewegungszeit und die Pace stehen still, die Gesamtzeit läuft weiter. So kannst du nach dem Lauf in Ruhe Werte eintragen.</p>
  </div>
  <div class="card" id="sc" hidden>
   <b>Timer</b>
@@ -350,16 +362,16 @@ details.inf{margin:2px 0}.inf>summary{list-style:none;cursor:pointer;display:fle
   <label for="enm">Name</label><input id="enm" autocomplete="off" placeholder="z. B. Push-Tag">
   <label>Art</label><div class="chips" id="ety"><button class="chip on" data-et="kraft">Krafttraining</button><button class="chip" data-et="mob">Mobility</button><button class="chip" data-et="sonst">Sonstiges</button></div>
   <div id="exw"><label>Übungen mit Zielwerten (Wiederholungen oder Zeit)</label><div id="exr"></div><button class="btn" id="addr" style="margin-top:8px">+ Übung hinzufügen</button></div>
-  <div id="mxw"><label>Mobility-Übungen mit Sätzen, Wiederholungen, Haltedauer und Art</label><p class="mut sm" style="margin:0 0 4px">Bei „links und rechts“ gelten die Sätze pro Seite, abwechselnd links und rechts.</p><div id="mxr"></div><button class="btn" id="addm" style="margin-top:8px">+ Übung hinzufügen</button></div>
+  <div id="mxw"><label>Mobility-Übungen mit Sätzen, Wiederholungen, Haltedauer und Art</label><p class="mut sm hint" style="margin:0 0 4px">Bei „links und rechts“ gelten die Sätze pro Seite, abwechselnd links und rechts.</p><div id="mxr"></div><button class="btn" id="addm" style="margin-top:8px">+ Übung hinzufügen</button></div>
   <p id="sow" class="mut sm">Bei Sonstigem wird nur die Gesamtzeit gemessen, es gibt keine Übungen.</p>
   <label class="tgl" id="erunw"><span><b>Laufen</b><small>Beim Training erfasst du Strecke, Pace, Puls und Höhenmeter.</small></span><input type="checkbox" id="erun"></label>
   <button class="big" id="esv">Training speichern</button><button class="end" id="ecn">Abbrechen</button>
   <div id="emsg2" class="mut" style="margin-top:6px"></div>
  </div>
- <div class="sech">Alle Trainings</div><p class="mut sm" style="margin:-4px 2px 8px">Zum Verschieben ein Training oder eine Übung gedrückt halten.</p><div id="tl"></div>
+ <div class="sech">Alle Trainings</div><p class="mut sm hint" style="margin:-4px 2px 8px">Zum Verschieben ein Training oder eine Übung gedrückt halten.</p><div id="tl"></div>
  <button class="btn" id="shb" style="margin-top:6px">Trainings teilen</button>
  <div class="card" id="shw" hidden style="margin-top:10px"><b>Trainings teilen</b>
-  <p class="mut sm" style="margin:4px 0 8px">Wähle ein oder mehrere Trainings und speichere sie als Datei. Wer die gleiche App hat, liest sie unter Daten › Einstellungen › Backup und Export mit „Backup oder geteilte Trainings einlesen“ ein. Dein Kalender und deine Daten bleiben dabei privat.</p>
+  <p class="mut sm hint" style="margin:4px 0 8px">Wähle ein oder mehrere Trainings und speichere sie als Datei. Wer die gleiche App hat, liest sie unter Daten › Einstellungen › Backup und Export mit „Backup oder geteilte Trainings einlesen“ ein. Dein Kalender und deine Daten bleiben dabei privat.</p>
   <div id="shl"></div>
   <div style="display:flex;gap:6px"><button class="btn" id="sha" style="margin:0">Alle</button><button class="btn" id="shn" style="margin:0">Keine</button></div>
   <button class="big" id="shs" disabled>Auswahl als Datei speichern</button><button class="end" id="shc">Schließen</button>
@@ -375,9 +387,8 @@ details.inf{margin:2px 0}.inf>summary{list-style:none;cursor:pointer;display:fle
   <details class="pdrop" id="gsel"><summary><span>Auswahl</span><span class="mut sm" id="gseln"></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><label>Übungen</label><div class="chips" id="ce"></div><p id="mainhint" class="mut sm" style="margin:6px 0 0" hidden>Tipp: Lege im Tab „Einstellungen“ deine Hauptübungen fest. Dann stehen hier nur diese zur Auswahl.</p>
   <label>Faktoren (mehrere möglich)</label><div class="chips" id="cm2" style="margin-bottom:2px"></div></details><div class="seg" id="gsep" hidden style="margin-top:10px"><button data-gsep="1">Getrennt</button><button data-gsep="0">Zusammen</button></div>
   <div id="gz"><div class="seg" style="margin:10px 0 6px"><button data-gz="a">Alles</button><button data-gz="y">Jahr</button><button data-gz="m">Monat</button><button data-gz="w">Woche</button></div><div class="cm" id="gzn" hidden><button data-gzm="-1" aria-label="Zurück">‹</button><b id="gzl"></b><button data-gzm="1" aria-label="Weiter">›</button></div></div>
-  <p id="nochart" class="mut sm" hidden>Die Diagramm-Bibliothek konnte nicht geladen werden (keine Internetverbindung?). Öffne die App einmal mit Internet, danach klappt es.</p>
   <div class="cw"></div>
-  <p class="mut sm" style="margin:8px 0 0">Tippe ins Diagramm, um die Werte des Tages und deine Notiz zu sehen. Mit Jahr, Monat und Woche zoomst du hinein: auf den angetippten Tag oder, wenn keiner gewählt ist, auf heute. Mehrere Faktoren erscheinen getrennt untereinander oder zusammen mit eigenen Achsen. Der Abstand erscheint als Säulen.</p>
+  <p class="mut sm hint" style="margin:8px 0 0">Tippe ins Diagramm, um die Werte des Tages und deine Notiz zu sehen. Mit Jahr, Monat und Woche zoomst du hinein: auf den angetippten Tag oder, wenn keiner gewählt ist, auf heute. Mehrere Faktoren erscheinen getrennt untereinander oder zusammen mit eigenen Achsen. Der Abstand erscheint als Säulen.</p>
  </div>
  <div id="gfx"></div>
  </div>
@@ -391,28 +402,28 @@ details.inf{margin:2px 0}.inf>summary{list-style:none;cursor:pointer;display:fle
 
 <section id="d">
  <details class="dsec dgrp" id="dgD"><summary><b>Profil und Rechner</b><span class="mut sm">Ziele, Gewicht, Übungen &amp; Rechner</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-<details class="card dsec" id="wgsec"><summary><b>Wochenziele</b><span class="mut sm" id="dsG"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p class="mut sm" style="margin:0 0 8px">Die Ringe im Tab „Training“ zeigen, wie weit du in dieser Woche bist (Montag bis Sonntag). Die Serie zählt die Wochen hintereinander, in denen du alle Ziele erreicht hast. Leer = Ziel aus. Tippe auf den Farbkreis, um die Farbe des Rings zu ändern.</p><div class="gzr"><input type="color" id="gc_n" aria-label="Farbe Trainings"><b>Trainings</b><input id="gv_n" inputmode="numeric" placeholder="aus" aria-label="Ziel Trainings"><span class="mut sm gzt">Anzahl, alle Arten</span></div><div class="gzr"><input type="color" id="gc_mk" aria-label="Farbe Kraft"><b>Kraft</b><input id="gv_mk" inputmode="numeric" placeholder="aus" aria-label="Ziel Kraft"><div class="seg gzu"><button data-gu="mk:m">Min.</button><button data-gu="mk:n">Anzahl</button></div></div><div class="gzr"><input type="color" id="gc_mm" aria-label="Farbe Mobility"><b>Mobility</b><input id="gv_mm" inputmode="numeric" placeholder="aus" aria-label="Ziel Mobility"><div class="seg gzu"><button data-gu="mm:m">Min.</button><button data-gu="mm:n">Anzahl</button></div></div><div class="gzr"><input type="color" id="gc_ms" aria-label="Farbe Sonstiges"><b>Sonstiges</b><input id="gv_ms" inputmode="numeric" placeholder="aus" aria-label="Ziel Sonstiges"><div class="seg gzu"><button data-gu="ms:m">Min.</button><button data-gu="ms:n">Anzahl</button></div></div><div class="gzr"><input type="color" id="gc_km" aria-label="Farbe Laufen"><b>Laufen</b><input id="gv_km" inputmode="decimal" placeholder="aus" aria-label="Ziel Laufen"><span class="mut sm gzt">km</span></div><p class="mut sm" style="margin:8px 0 0">Kraft, Mobility und Sonstiges misst du wahlweise in Minuten oder in Anzahl Trainings. „Trainings“ zählt jedes beendete Training. Läufe zählen nur bei den Kilometern.</p><button class="btn" id="gcr" style="margin-top:10px">Standardfarben</button></details>
-<details class="card dsec"><summary><b>Körpergewicht</b><span class="mut sm" id="dsB"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><label for="bw" style="margin-top:0">Körpergewicht (kg)</label><input id="bw" inputmode="decimal" placeholder="z. B. 82"><label for="bwd">Datum</label><input type="date" id="bwd"><button class="btn" id="bwsave" style="width:100%;margin:10px 0 0">Gewicht speichern</button><p id="bwmsg" class="mut sm" style="margin:6px 0 0"></p><p class="mut sm" style="margin:4px 0 0">Jeder Eintrag landet im Verlauf. Im Tab „Daten“ › Verlauf findest du ihn unter „Körpergewicht“.</p><div id="bwlist" style="margin-top:6px"></div>
+<details class="card dsec" id="wgsec"><summary><b>Wochenziele</b><span class="mut sm" id="dsG"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p class="mut sm hint" style="margin:0 0 8px">Die Ringe im Tab „Training“ zeigen, wie weit du in dieser Woche bist (Montag bis Sonntag). Die Serie zählt die Wochen hintereinander, in denen du alle Ziele erreicht hast. Leer = Ziel aus. Tippe auf den Farbkreis, um die Farbe des Rings zu ändern.</p><div class="gzr"><input type="color" id="gc_n" aria-label="Farbe Trainings"><b>Trainings</b><input id="gv_n" inputmode="numeric" placeholder="aus" aria-label="Ziel Trainings"><span class="mut sm gzt">Anzahl, alle Arten</span></div><div class="gzr"><input type="color" id="gc_mk" aria-label="Farbe Kraft"><b>Kraft</b><input id="gv_mk" inputmode="numeric" placeholder="aus" aria-label="Ziel Kraft"><div class="seg gzu"><button data-gu="mk:m">Min.</button><button data-gu="mk:n">Anzahl</button></div></div><div class="gzr"><input type="color" id="gc_mm" aria-label="Farbe Mobility"><b>Mobility</b><input id="gv_mm" inputmode="numeric" placeholder="aus" aria-label="Ziel Mobility"><div class="seg gzu"><button data-gu="mm:m">Min.</button><button data-gu="mm:n">Anzahl</button></div></div><div class="gzr"><input type="color" id="gc_ms" aria-label="Farbe Sonstiges"><b>Sonstiges</b><input id="gv_ms" inputmode="numeric" placeholder="aus" aria-label="Ziel Sonstiges"><div class="seg gzu"><button data-gu="ms:m">Min.</button><button data-gu="ms:n">Anzahl</button></div></div><div class="gzr"><input type="color" id="gc_km" aria-label="Farbe Laufen"><b>Laufen</b><input id="gv_km" inputmode="decimal" placeholder="aus" aria-label="Ziel Laufen"><span class="mut sm gzt">km</span></div><p class="mut sm hint" style="margin:8px 0 0">Kraft, Mobility und Sonstiges misst du wahlweise in Minuten oder in Anzahl Trainings. „Trainings“ zählt jedes beendete Training. Läufe zählen nur bei den Kilometern.</p><button class="btn" id="gcr" style="margin-top:10px">Standardfarben</button></details>
+<details class="card dsec"><summary><b>Körpergewicht</b><span class="mut sm" id="dsB"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><label for="bw" style="margin-top:0">Körpergewicht (kg)</label><input id="bw" inputmode="decimal" placeholder="z. B. 82"><label for="bwd">Datum</label><input type="date" id="bwd"><button class="btn" id="bwsave" style="width:100%;margin:10px 0 0">Gewicht speichern</button><p id="bwmsg" class="mut sm" style="margin:6px 0 0"></p><p class="mut sm hint" style="margin:4px 0 0">Jeder Eintrag landet im Verlauf. Im Tab „Daten“ › Verlauf findest du ihn unter „Körpergewicht“.</p><div id="bwlist" style="margin-top:6px"></div>
   <label>Bei diesen Übungen gibst du nur das Zusatzgewicht ein. Das Körpergewicht wird in der Auswertung automatisch addiert:</label><div style="display:flex;gap:6px;margin-top:4px"><input id="bwn" placeholder="Übung eintippen, z. B. Klimmzüge" autocomplete="off"><button class="btn" id="bwadd" style="margin:0;width:auto;white-space:nowrap">Hinzufügen</button></div><div class="sug" id="sugB"></div><div id="bwc" style="margin-top:8px"></div>
-  <p class="mut sm" style="margin:0">Das Körpergewicht wird bei jedem neuen Training mitgespeichert. Änderst du es später, bleiben ältere Trainings unverändert.</p></details>
+  <p class="mut sm hint" style="margin:0">Das Körpergewicht wird bei jedem neuen Training mitgespeichert. Änderst du es später, bleiben ältere Trainings unverändert.</p></details>
  <details class="card dsec"><summary><b>Hauptübungen</b><span class="mut sm" id="dsM"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-  <p class="mut sm" style="margin:4px 0 0">Nur diese Übungen stehen im Tab „Daten“ zur Auswahl und werden beim Planen im Auswahlmenü vorgeschlagen. Frei eintippen kannst du weiterhin jede Übung. Frühere Trainings zählen automatisch mit, wenn der Name genau gleich ist.</p>
+  <p class="mut sm hint" style="margin:4px 0 0">Nur diese Übungen stehen im Tab „Daten“ zur Auswahl und werden beim Planen im Auswahlmenü vorgeschlagen. Frei eintippen kannst du weiterhin jede Übung. Frühere Trainings zählen automatisch mit, wenn der Name genau gleich ist.</p>
   <div style="display:flex;gap:6px;margin-top:8px"><input id="mainn" placeholder="z. B. Klimmzüge" autocomplete="off" style="flex:1;min-width:0"><button class="btn" id="mainadd" style="margin:0;width:auto;white-space:nowrap">Hinzufügen</button></div>
   <div class="sug" id="sugM"></div>
-  <details class="pdrop" id="mgdM" hidden><summary><span>Muskelgruppen hinzufügen</span><span class="mut sm" id="mgdMn"></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p class="mut sm" style="margin:8px 0 0">Gilt für die Übung, die du oben eintippst. Primär = hauptsächlich, sekundär = unterstützend.</p><label>Primär</label><div class="chips" id="mgdMp"></div><label>Sekundär</label><div class="chips" id="mgdMs"></div></details>
+  <details class="pdrop" id="mgdM" hidden><summary><span>Muskelgruppen hinzufügen</span><span class="mut sm" id="mgdMn"></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p class="mut sm hint" style="margin:8px 0 0">Gilt für die Übung, die du oben eintippst. Primär = hauptsächlich, sekundär = unterstützend.</p><label>Primär</label><div class="chips" id="mgdMp"></div><label>Sekundär</label><div class="chips" id="mgdMs"></div></details>
   <div id="mainmsg" class="mut sm" style="margin-top:6px"></div>
   <div id="mainc"></div>
  </details>
  <details class="card dsec" id="owsec"><summary><b>Meine Übungen</b><span class="mut sm" id="dsO"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-  <p class="mut sm" style="margin:4px 0 0">Deine eigenen Übungen zum schnellen Auswählen, getrennt für Krafttraining und Mobility. Beim Hinzufügen einer Übung im Training oder in der Planung findest du sie im Auswahlmenü „Meine Übung“. Sie erscheinen nicht im Tab „Daten“ und bei den Rekorden.</p>
+  <p class="mut sm hint" style="margin:4px 0 0">Deine eigenen Übungen zum schnellen Auswählen, getrennt für Krafttraining und Mobility. Beim Hinzufügen einer Übung im Training oder in der Planung findest du sie im Auswahlmenü „Meine Übung“. Sie erscheinen nicht im Tab „Daten“ und bei den Rekorden.</p>
   <div class="seg" id="ownt" style="margin-top:8px"><button data-ot="k">Krafttraining</button><button data-ot="m">Mobility</button></div>
   <div style="display:flex;gap:6px;margin-top:8px"><input id="ownn" placeholder="z. B. Hollow Hold" autocomplete="off" style="flex:1;min-width:0"><button class="btn" id="ownadd" style="margin:0;width:auto;white-space:nowrap">Hinzufügen</button></div>
-  <div id="ownK"><div class="sug" id="sugO"></div><details class="pdrop" id="mgdO" hidden><summary><span>Muskelgruppen hinzufügen</span><span class="mut sm" id="mgdOn"></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p class="mut sm" style="margin:8px 0 0">Gilt für die Übung, die du oben eintippst. Primär = hauptsächlich, sekundär = unterstützend.</p><label>Primär</label><div class="chips" id="mgdOp"></div><label>Sekundär</label><div class="chips" id="mgdOs"></div></details></div>
+  <div id="ownK"><div class="sug" id="sugO"></div><details class="pdrop" id="mgdO" hidden><summary><span>Muskelgruppen hinzufügen</span><span class="mut sm" id="mgdOn"></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p class="mut sm hint" style="margin:8px 0 0">Gilt für die Übung, die du oben eintippst. Primär = hauptsächlich, sekundär = unterstützend.</p><label>Primär</label><div class="chips" id="mgdOp"></div><label>Sekundär</label><div class="chips" id="mgdOs"></div></details></div>
   <div id="ownmsg" class="mut sm" style="margin-top:6px"></div>
   <div id="ownc"></div>
  </details>
  <details class="card dsec" id="plsec"><summary><b>Scheibenrechner</b><span class="mut sm" id="dsP"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-  <details class="pdrop" id="pmy"><summary><span>Meine Scheiben</span><span class="mut sm" id="pmys"></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p class="mut sm" style="margin:8px 0 6px">Wie viele Scheiben hast du von jeder Größe (insgesamt)? Bei der Stange kommt je die Hälfte auf eine Seite. Alles leer = beliebig viele von allen.</p><div id="pcl"></div></details>
+  <details class="pdrop" id="pmy"><summary><span>Meine Scheiben</span><span class="mut sm" id="pmys"></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p class="mut sm hint" style="margin:8px 0 6px">Wie viele Scheiben hast du von jeder Größe (insgesamt)? Bei der Stange kommt je die Hälfte auf eine Seite. Alles leer = beliebig viele von allen.</p><div id="pcl"></div></details>
   <div class="seg" id="pmo" style="margin-top:10px"><button data-pmd="bar">Stange (2 Seiten)</button><button data-pmd="belt">Gürtel (1 Seite)</button></div>
   <div class="row"><div id="pbarw"><label for="pbar">Gewicht der Stange (kg)</label><input id="pbar" inputmode="decimal" placeholder="20"></div><div id="pbeltw" hidden><label for="pbelt">Gewicht vom Gürtel (kg)</label><input id="pbelt" inputmode="decimal" placeholder="0"></div><div><label for="ptot">Gesamtgewicht (kg)</label><input id="ptot" inputmode="decimal" placeholder="z. B. 100"></div></div>
   <div id="pres" style="margin-top:10px"></div>
@@ -432,7 +443,7 @@ details.inf{margin:2px 0}.inf>summary{list-style:none;cursor:pointer;display:fle
   <button class="btn" id="rngo" style="width:100%;margin:8px 0 0">Umbenennen</button>
   <button class="btn" id="rnundo" style="width:100%;margin:8px 0 0" hidden>Rückgängig</button>
   <p id="rnmsg" class="mut sm" style="margin:6px 0 0"></p>
-  <p class="mut sm" style="margin:6px 0 0">Gibt es den neuen Namen schon, werden beide zusammengeführt. Es wird nichts gelöscht, nur der Name ändert sich: im Verlauf, in den Vorlagen und in deinen Listen.</p>
+  <p class="mut sm hint" style="margin:6px 0 0">Gibt es den neuen Namen schon, werden beide zusammengeführt. Es wird nichts gelöscht, nur der Name ändert sich: im Verlauf, in den Vorlagen und in deinen Listen.</p>
  </details>
  </details>
 <details class="dsec dgrp" id="dgS"><summary><b>Sonstiges</b><span class="mut sm">Funktionen &amp; Anleitung</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
@@ -447,6 +458,9 @@ details.inf{margin:2px 0}.inf>summary{list-style:none;cursor:pointer;display:fle
   <label class="tgl"><span><b>Anstrengung pro Satz</b><small>Vor dem Speichern 1–10 antippen (10 = Maximum). Steht bei den Sätzen und ist im Tab „Daten“ wählbar.</small></span><input type="checkbox" id="fRpe"></label>
   <label class="tgl"><span><b>Supersätze und Zirkel</b><small>In der Vorlage Übungen einer Gruppe (A–D) zuordnen. Nach jedem Satz wechselt die App zur nächsten Übung der Gruppe, der Pausenton kommt erst nach der Runde.</small></span><input type="checkbox" id="fSup"></label>
  </details>
+<details class="card dsec"><summary><b>Infotexte</b><span class="mut sm" id="dsI"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <label class="tgl"><span><b>Infotexte ganz ausblenden</b><small>Blendet die grauen Erklärtexte in der ganzen App aus. Hinweise wie „Noch keine Daten“, Legenden und die Begründungen bei Plateau und Erholung bleiben stehen.</small></span><input type="checkbox" id="fNoHint"></label>
+</details>
  <details class="card dsec" id="about"><summary><b>Über die App</b><span class="mut sm">Quick-Start &amp; Anleitung</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
   <div class="about">
    <div class="qs"><b>Quick-Start</b>
@@ -472,10 +486,10 @@ details.inf{margin:2px 0}.inf>summary{list-style:none;cursor:pointer;display:fle
 </details>
 
  <details class="dsec dgrp" id="dgE"><summary><b>Darstellung und Backup</b><span class="mut sm">Aussehen, Export &amp; mehr</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-<details class="card dsec"><summary><b>Darstellung</b><span class="mut sm" id="dsT"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><div class="seg" id="thm" style="margin-top:8px"><button data-th="system">System</button><button data-th="light">Hell</button><button data-th="dark">Dunkel</button></div><p class="mut sm" style="margin:0">„System“ folgt der Hell/Dunkel-Einstellung deines Geräts.</p></details>
+<details class="card dsec"><summary><b>Darstellung</b><span class="mut sm" id="dsT"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><div class="seg" id="thm" style="margin-top:8px"><button data-th="system">System</button><button data-th="light">Hell</button><button data-th="dark">Dunkel</button></div><p class="mut sm hint" style="margin:0">„System“ folgt der Hell/Dunkel-Einstellung deines Geräts.</p></details>
  <details class="card dsec"><summary><b>Backup und Export</b><span class="mut sm" id="dsS"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
   <p id="st" class="mut" style="margin-top:0"></p>
-  <p class="mut sm" style="margin:0 0 8px">Das Backup (JSON) enthält alles: Trainings, Vorlagen, Plan, Körpergewicht-Verlauf, Hauptübungen, Meine Übungen, Scheiben, Notizen und alle Einstellungen.</p>
+  <p class="mut sm hint" style="margin:0 0 8px">Das Backup (JSON) enthält alles: Trainings, Vorlagen, Plan, Körpergewicht-Verlauf, Hauptübungen, Meine Übungen, Scheiben, Notizen und alle Einstellungen.</p>
   <button class="btn" id="ej">Backup (JSON)</button><button class="btn" id="ec2">Export (CSV)</button>
   <label style="margin-top:6px">Backup oder geteilte Trainings einlesen</label><input type="file" id="imp" accept=".json,application/json">
   <p id="msg" class="mut"></p>
@@ -489,18 +503,18 @@ details.inf{margin:2px 0}.inf>summary{list-style:none;cursor:pointer;display:fle
   <button class="btn" id="dgo" style="width:100%;margin:8px 0 0">Löschen</button>
   <button class="btn" id="dundo" style="width:100%;margin:8px 0 0" hidden>Rückgängig</button>
   <p id="dmsg" class="mut sm" style="margin:6px 0 0"></p>
-  <p class="mut sm" style="margin:6px 0 0">Gelöscht wird erst nach zwei Tipps. Direkt danach kannst du es rückgängig machen, solange die App offen bleibt. Ein laufendes Training wird nie gelöscht. Sicherer ist trotzdem vorher ein Backup.</p>
+  <p class="mut sm hint" style="margin:6px 0 0">Gelöscht wird erst nach zwei Tipps. Direkt danach kannst du es rückgängig machen, solange die App offen bleibt. Ein laufendes Training wird nie gelöscht. Sicherer ist trotzdem vorher ein Backup.</p>
  </details>
  </details>
- <p class="ver" id="ver">Version 83</p>
+ <p class="ver" id="ver">Version 87</p>
 </section>
 </main>
 
 <script>
 /* Aufbau dieser Datei
-   Speicher · Ton · Hilfen · Training-Seite · Kalender · Plan · Graf (Verlauf) · Rendern/Tabs
-   Daten: Analyse (Belastung, Plateau, Muskeln, Rekorde, Laufen, Rückblick) · Eingaben · Plan-Editor
-   Backup/Export · Verschieben · Löschen · Umbenennen · Start
+   Speicher · Ton · Hilfen · Training-Seite · Kalender (Monat/Woche/Jahr) · Plan · Graf (Verlauf, Zoom, Fortschritt) · Rendern/Tabs
+   Daten: Analyse (Belastung, Plateau/Erholung + Warnungen, Muskeln, Bewegungsmuster, Rekorde, Laufen, Beste Läufe, Rückblick)
+   Wochenziel und Serie · Eingaben · Plan-Editor · Backup/Export · Verschieben · Löschen · Umbenennen · Start
    Daten liegen in localStorage: ktr_days, ktr_tpl, ktr_plan, ktr_cfg */
 ["gesturestart","gesturechange","gestureend"].forEach(e=>document.addEventListener(e,ev=>ev.preventDefault()));
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],pad=n=>String(n).padStart(2,'0');
@@ -563,7 +577,7 @@ function sanitize(){
   Object.keys(tpl).forEach(i=>{const t=tpl[i];if(!t||typeof t!=='object'){delete tpl[i];return}t.name=String(t.name||'Training');if(!['kraft','mob','sonst'].includes(t.type))t.type='kraft';if(!Array.isArray(t.ex))t.ex=[];t.ex=t.ex.filter(x=>x&&x.n)});
   cfg.bw=num(cfg.bw);if(!Array.isArray(cfg.bwEx))cfg.bwEx=['Klimmzüge','Dips'];
   if(!['system','light','dark'].includes(cfg.theme))cfg.theme='system';if(!['mix','loud'].includes(cfg.snd))cfg.snd='mix';
-  FEATS.forEach(f=>{if(typeof cfg[f]!=='boolean')cfg[f]=true});['cv','pv'].forEach(q=>{if(!['w','m','y'].includes(cfg[q]))delete cfg[q]});{const g=cfg.goal&&typeof cfg.goal==='object'?cfg.goal:{n:3},mi=v=>Math.max(0,Math.min(3000,Math.round(num(v)))),gu=g.u&&typeof g.u==='object'?g.u:{},gc=g.c&&typeof g.c==='object'?g.c:{},u={},c={};['mk','mm','ms'].forEach(q=>{u[q]=gu[q]==='n'?'n':'m'});GK.forEach(q=>{if(/^#[0-9a-f]{6}$/i.test(gc[q]||''))c[q]=gc[q].toLowerCase()});cfg.goal={n:Math.max(0,Math.min(21,Math.round(num(g.n)))),mk:mi(g.mk),mm:mi(g.mm),ms:mi(g.ms),km:Math.max(0,Math.min(500,Math.round(num(g.km)*10)/10)),u,c};['mk','mm','ms'].forEach(q=>{if(u[q]==='n')cfg.goal[q]=Math.min(21,cfg.goal[q])})}if(cfg.lastM!=='main')cfg.lastM='all';if(!(num(cfg.progKg)>0))cfg.progKg=2.5;cfg.own=[...new Set((Array.isArray(cfg.own)?cfg.own:[]).map(x=>String(x).trim()).filter(Boolean))];cfg.ownM=[...new Set((Array.isArray(cfg.ownM)?cfg.ownM:[]).map(x=>String(x).trim()).filter(Boolean))];if(cfg.ownT!=='m')cfg.ownT='k';
+  FEATS.forEach(f=>{if(typeof cfg[f]!=='boolean')cfg[f]=true});cfg.noHint=cfg.noHint===true;if(!cfg.wSeen||typeof cfg.wSeen!=='object'||Array.isArray(cfg.wSeen))cfg.wSeen={};cfg.wgO=cfg.wgO===true;['cv','pv'].forEach(q=>{if(!['w','m','y'].includes(cfg[q]))delete cfg[q]});{const g=cfg.goal&&typeof cfg.goal==='object'?cfg.goal:{n:3},mi=v=>Math.max(0,Math.min(3000,Math.round(num(v)))),gu=g.u&&typeof g.u==='object'?g.u:{},gc=g.c&&typeof g.c==='object'?g.c:{},u={},c={};['mk','mm','ms'].forEach(q=>{u[q]=gu[q]==='n'?'n':'m'});GK.forEach(q=>{if(/^#[0-9a-f]{6}$/i.test(gc[q]||''))c[q]=gc[q].toLowerCase()});cfg.goal={n:Math.max(0,Math.min(21,Math.round(num(g.n)))),mk:mi(g.mk),mm:mi(g.mm),ms:mi(g.ms),km:Math.max(0,Math.min(500,Math.round(num(g.km)*10)/10)),u,c};['mk','mm','ms'].forEach(q=>{if(u[q]==='n')cfg.goal[q]=Math.min(21,cfg.goal[q])})}if(cfg.lastM!=='main')cfg.lastM='all';if(!(num(cfg.progKg)>0))cfg.progKg=2.5;cfg.own=[...new Set((Array.isArray(cfg.own)?cfg.own:[]).map(x=>String(x).trim()).filter(Boolean))];cfg.ownM=[...new Set((Array.isArray(cfg.ownM)?cfg.ownM:[]).map(x=>String(x).trim()).filter(Boolean))];if(cfg.ownT!=='m')cfg.ownT='k';
   cfg.bwLog=(Array.isArray(cfg.bwLog)?cfg.bwLog:[]).filter(x=>x&&/^\d{4}-\d{2}-\d{2}$/.test(x.d)&&num(x.kg)>0).map(x=>({d:x.d,kg:num(x.kg)})).sort((a,b)=>a.d.localeCompare(b.d));
   if(!cfg.bwLog.length&&num(cfg.bw)>0)cfg.bwLog=[{d:today(),kg:num(cfg.bw)}];
   if(!Array.isArray(cfg.tiles)||cfg.tiles.length!==4||cfg.tiles.some(t=>!TILES.some(x=>x[0]===t)))cfg.tiles=['n','tt','vol','rest'];
@@ -736,7 +750,7 @@ function renderTrain(){
   sh('#sel0',p==='idle');sh('#go',p==='idle');try{renderGoal(p==='idle')}catch(e){console.error(e)}sh('#gomsg',p==='idle');sh('#ac',p!=='idle');sh('#wend',p==='warm');
   sh('#ec',p==='work');sh('#lc',p==='work');sh('#mc',p==='mob');sh('#sc',p==='sonst');sh('#rc',p==='sonst'&&!!(d&&d.run));sh('#ic',(p==='work'&&tmode==='ivl')||(p==='mob'&&mmode==='ivl')||(p==='sonst'&&smode==='ivl'));sh('#irnw',p!=='mob');sh('#ipw',p!=='mob');
   $('#today').textContent=new Date().toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'});
-  $('#exl').innerHTML=exs(true).map(x=>'<option value="'+esc(x)+'">').join('');$('#mxl').innerHTML=mobNames().map(x=>'<option value="'+esc(x)+'">').join('');
+  $('#exl').innerHTML=patSort(exs(true)).map(x=>'<option value="'+esc(x)+'">').join('');$('#mxl').innerHTML=mobNames().map(x=>'<option value="'+esc(x)+'">').join('');
   ['#ip','#ip2','#ip3','#ip4'].forEach(s=>setVal(s,cfg.ipr||''));setVal('#sbp',cfg.sbeep||'');setVal('#iw',cfg.iw||'');setVal('#ir',cfg.ir||0);setVal('#irn',cfg.irn||'');setVal('#bp',cfg.beep||'');setVal('#mbp',cfg.mbeep||'');
   const old=d&&Date.now()-d.t0>12*3600000;sh('#stale',old);if(old)$('#stale').textContent='Dieses Training läuft seit dem '+dd(fmt(new Date(d.t0)))+'. Beende es und korrigiere danach die Dauer im Kalender unter „Bearbeiten“.';
   $('#ig').textContent=iv?'Intervall stoppen':'Intervall starten';$('#ig').classList.toggle('gr',!iv);
@@ -1067,7 +1081,7 @@ function renderMs(){
     const kr=sec['Krafttraining']||[],key=KEY.map(l=>kr.find(r=>r[0]===l)).filter(Boolean),rest=kr.filter(r=>!KEY.includes(r[0]));
     const mn=t=>'<div class="kv"><span>Nachgetragene Trainings</span><span>'+((R.manT||{})[t]||0)+'</span></div>';
     const det=(id,ti,rt,body)=>'<details data-ms="'+id+'"'+(msOpen[id]?' open':'')+'><summary><span>'+ti+'</span><span class="mut">'+esc(rt)+'</span></summary>'+body+'</details>';
-    $('#msum').innerHTML='<div class="kpi">'+T.map((t,i)=>'<div><b>'+esc(t[1])+'</b><span>'+t[2]+'</span><em>▾</em><select data-tile="'+i+'" aria-label="Kachel '+(i+1)+' ändern">'+TILES.map(([v,lb])=>'<option value="'+v+'"'+(v===t[0]?' selected':'')+'>'+lb+'</option>').join('')+'</select></div>').join('')+'</div><div id="msb"'+(msBody?'':' hidden')+'><p class="mut sm" style="margin:0 0 4px">Tippe auf eine Kachel, um ihren Wert zu ändern.</p>'
+    $('#msum').innerHTML='<div class="kpi">'+T.map((t,i)=>'<div><b>'+esc(t[1])+'</b><span>'+t[2]+'</span><em>▾</em><select data-tile="'+i+'" aria-label="Kachel '+(i+1)+' ändern">'+TILES.map(([v,lb])=>'<option value="'+v+'"'+(v===t[0]?' selected':'')+'>'+lb+'</option>').join('')+'</select></div>').join('')+'</div><div id="msb"'+(msBody?'':' hidden')+'><p class="mut sm hint" style="margin:0 0 4px">Tippe auf eine Kachel, um ihren Wert zu ändern.</p>'
       +det('K','Krafttraining',T.kn,mn('kraft')+CATK.map(([t,ls])=>{const rr=ls.map(l=>kr.find(r=>r[0]===l)).filter(Boolean);return rr.length?'<div class="msc">'+t+'</div>'+rr.map(kv).join(''):''}).join('')+(()=>{const used=CATK.flatMap(c=>c[1]),o=kr.filter(r=>!used.includes(r[0]));return o.length?'<div class="msc">Weitere</div>'+o.map(kv).join(''):''})())
       +det('M','Mobility',T.mn,mn('mob')+(sec['Mobility']||[]).map(kv).join(''))
       +det('S','Sonstiges',T.sn,mn('sonst')+(sec['Sonstiges']||[]).map(kv).join(''))+'</div>';
@@ -1123,7 +1137,7 @@ function renderPlan(){try{renderSh()}catch(e){}
 function addRow(x,box,ng){box=box&&box.nodeType===1?box:null;ng=ng===true;
   const r=document.createElement('div');r.className='exr';
   const M=cfg.main||[];
-  const o2=(l,a)=>a.length?'<select class="rsel" aria-label="'+l+' wählen" style="flex:1;min-width:0;width:auto"><option value="">'+l+'</option>'+a.map(m=>'<option value="'+esc(m)+'">'+esc(m)+'</option>').join('')+'</select>':'';
+  const o2=(l,a)=>a.length?'<select class="rsel" aria-label="'+l+' wählen" style="flex:1;min-width:0;width:auto"><option value="">'+l+'</option>'+optG(a,m=>'<option value="'+esc(m)+'">'+esc(m)+'</option>')+'</select>':'';
   const sel2=M.length||(cfg.own||[]).length?'<div style="display:flex;gap:6px;margin-top:6px">'+o2('Hauptübung',M)+o2('Meine Übung',cfg.own||[])+'</div>':'';
   r.innerHTML='<div style="display:flex;gap:6px"><input class="rn" list="exl" placeholder="Übung" value="'+esc(x.n||'')+'" style="flex:1;min-width:0"><button class="btn rm" style="margin:0;width:auto">✕</button></div>'+sel2+'<div class="row"><div><label>Sätze</label><input class="rs" inputmode="numeric" value="'+(x.s||'')+'"></div><div><label>Ziel</label><input class="rr" inputmode="numeric" value="'+(x.r||'')+'"></div><div><label>Ziel in</label><select class="ru"><option value="r"'+(x.u==='t'?'':' selected')+'>Wdh</option><option value="t"'+(x.u==='t'?' selected':'')+'>Sek</option></select></div><div><label>kg</label><input class="rk" inputmode="decimal" value="'+(x.kg||'')+'"></div></div>';
   r.insertAdjacentHTML('beforeend','<div style="display:flex;align-items:center;gap:10px;margin-top:6px"><span class="sm mut" style="flex:1">Seiten</span><select class="rlr" style="width:auto;padding:8px 6px"><option value="">beidseitig</option><option value="1">rechts + links getrennt</option></select></div>'+(cfg.fNote?'<input class="rnt" placeholder="Notiz zur Übung (optional, z. B. Sitzhöhe 4)" style="margin-top:6px" value="'+esc(cfg.exNote[x.n]||'')+'">':''));r.querySelector('.rlr').value=x.lr?'1':'';
@@ -1181,7 +1195,7 @@ function renderChips(){
   if(!selE.size){const f=list.find(e=>cnt[e]);if(f)selE.add(f);else if(runN){selE.add('__run');if(![...selM].some(m=>RUNM.includes(m)))selM.add('lp')}}
   const rcb=runN?'<button class="chip'+(selE.has('__run')?' on':'')+'" data-id="__run">Laufen</button>':'';
   $('#mainhint').hidden=!!main.length;
-  $('#ce').innerHTML=bwc+rcb+(list.length?list.map(e=>'<button class="chip'+(selE.has(e)?' on':'')+'" data-id="'+esc(e)+'"'+(cnt[e]?'':' style="opacity:.55"')+'>'+esc(e)+(cnt[e]?'':' · noch keine Daten')+'</button>').join(''):(bwc?'':'<span class="mut">Noch keine Daten.</span>'));
+  $('#ce').innerHTML=(hasPat(list)&&(bwc||rcb)?'<div class="pgh">Allgemein</div>':'')+bwc+rcb+(list.length?listG(list,e=>'<button class="chip'+(selE.has(e)?' on':'')+'" data-id="'+esc(e)+'"'+(cnt[e]?'':' style="opacity:.55"')+'>'+esc(e)+(cnt[e]?'':' · noch keine Daten')+'</button>'):(bwc?'':'<span class="mut">Noch keine Daten.</span>'));
   {const vm=visM(),FG=[['Kraft',['r','q','v','h']],['Training',['p','a','d','e','f']],['Laufen',RUNM]],used=FG.flatMap(g=>g[1]);FG.push(['Weitere',vm.filter(m=>!used.includes(m))]);
     $('#cm2').innerHTML=FG.map(([t,ks])=>{const k2=ks.filter(m=>vm.includes(m));return k2.length?'<span class="cgl">'+t+'</span>'+k2.map(m=>'<button class="chip'+(selM.has(m)?' on':'')+'" data-id="'+m+'">'+MET[m]+'</button>').join(''):''}).join('');
     const nm=e=>e==='__bw'?'Körpergewicht':e==='__run'?'Laufen':e,fs=Object.keys(MET).filter(m=>selM.has(m)&&vm.includes(m)).map(m=>MET[m].replace(/\s*\(.*\)/,'').replace('Lauf · ',''));
@@ -1213,7 +1227,7 @@ function gPanel(DS,labels,W,H,sep){
   s+='<line class="gcur" x1="0" x2="0" y1="'+y0+'" y2="'+y1+'" stroke="'+mu+'" stroke-dasharray="3 3" visibility="hidden"/></svg>';
   return{s,x0,x1,band}}
 // Zoom im Verlauf: a = alles, y = Jahr, m = Monat, w = Woche
-let gZ='a',gZa=null,gPick=null,gWin=null;
+let runAll=false,gZ='a',gZa=null,gPick=null,gWin=null;
 const kwOf=k=>{const d=dOf(k);d.setDate(d.getDate()+3-((d.getDay()+6)%7));const w1=new Date(d.getFullYear(),0,4);return 1+Math.round(((d-w1)/864e5-3+((w1.getDay()+6)%7))/7)};
 function zRange(z,a){const t=dOf(a);if(z==='y')return[t.getFullYear()+'-01-01',(t.getFullYear()+1)+'-01-01'];if(z==='m'){const e=new Date(t.getFullYear(),t.getMonth()+1,1,12);return[a.slice(0,7)+'-01',dS(e)]}
   const m=monOf(a),e=dOf(m);e.setDate(e.getDate()+7);return[m,dS(e)]}
@@ -1222,7 +1236,8 @@ function zShift(z,a,n){const t=dOf(a);if(z==='y')t.setFullYear(t.getFullYear()+n
 function zSet(z){const td=today(),inW=k=>!gWin||(k>=gWin[0]&&k<gWin[1]);let a;
   if(gPick&&inW(gPick))a=gPick;else if(inW(td))a=td;else a=(gWin&&gWin[2])||(gWin?gWin[0]:td);gZ=z;gZa=a;draw()}
 // Fortschritt einer Übung: erstes Training → letztes Training, dazu Bestwert
-function fxHTML(ex){const ks=Object.keys(days).filter(k=>{const d=days[k];return d&&isK(d)&&(d.sets||[]).some(s=>s&&s.ex===ex)}).sort();if(!ks.length)return'';
+const fxOpen=new Map();
+function fxHTML(ex,isFirst){const ks=Object.keys(days).filter(k=>{const d=days[k];return d&&isK(d)&&(d.sets||[]).some(s=>s&&s.ex===ex)}).sort();if(!ks.length)return'';
   const per=ks.map(k=>{const d=days[k],ss=d.sets.filter(s=>s&&s.ex===ex),rp=ss.filter(s=>!(s.secs>0)&&s.reps>0),hs=ss.filter(s=>s.secs>0);
     return{k,r:rp.length?Math.max(...rp.map(s=>W(d,s)*(1+s.reps/30))):null,w:rp.length?Math.max(...rp.map(s=>W(d,s))):null,x:rp.length?Math.max(...rp.map(s=>+s.reps||0)):null,v:rp.length?sum(rp.map(s=>W(d,s)*s.reps)):null,h:hs.length?Math.max(...hs.map(s=>+s.secs)):null,n:ss.length,reps:sum(rp.map(s=>+s.reps||0))}});
   const bw=isBW(ex),f1k=v=>f1(v)+' kg',nu=v=>Math.round(v).toLocaleString('de-DE');
@@ -1233,12 +1248,13 @@ function fxHTML(ex){const ks=Object.keys(days).filter(k=>{const d=days[k];return
     const dtxt=L.length<2?'<span class="fxb">erst ein Training</span>':'<span class="fxb"><span class="'+(dv>0?'up':dv<0?'dn':'')+'">'+(dv>0?'+':dv<0?'−':'±')+(u==='kg'&&m!=='v'?f1(Math.abs(dv)):Math.round(Math.abs(dv)).toLocaleString('de-DE'))+' '+u+(pc!=null&&dv?' ('+(dv>0?'+':'−')+Math.abs(pc)+' %)':'')+'</span>'+'</span>'+(m==='r'&&mo>=1&&dv?'<span class="fxb">Ø '+(dv>0?'+':'−')+f1(Math.abs(dv)/mo)+' kg pro Monat</span>':'');
     rows+='<div class="kv"><span>'+l+(best!==b?'<span class="fxb">Bestwert '+f(best[m])+' am '+dd(best.k.slice(0,10)).slice(0,6)+'</span>':'')+'</span><span class="fxv">'+f(a[m])+' → <b>'+f(b[m])+'</b>'+dtxt+'</span></div>'});
   const tn=per.length,ts=sum(per.map(o=>o.n)),tr=sum(per.map(o=>o.reps)),tv=sum(per.map(o=>o.v||0));
-  return'<div class="card fx"><b>Fortschritt: '+esc(ex)+'</b><p class="mut sm" style="margin:2px 0 6px">Erstes Training '+dd(ks[0].slice(0,10))+' → letztes '+dd(ks[ks.length-1].slice(0,10))+(sp>=7?' ('+(sp<60?Math.round(sp/7)+' Wochen':Math.round(mo)+' Monate')+')':'')+'</p>'+rows
+  const r1=per.filter(o=>o.r!=null),hd=r1.length>1&&r1[0].r>0?Math.round((r1[r1.length-1].r-r1[0].r)/r1[0].r*100):null,op=fxOpen.has(ex)?fxOpen.get(ex):isFirst;
+  return'<details class="card fx dsec" data-fx="'+esc(ex)+'"'+(op?' open':'')+'><summary><b>Fortschritt: '+esc(ex)+'</b><span class="mut sm">'+(hd!=null?'1RM <span class="'+(hd>0?'up':hd<0?'dn':'')+'">'+(hd>0?'+':hd<0?'−':'±')+Math.abs(hd)+' %</span>':tn+' Training'+(tn===1?'':'s'))+'</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p class="mut sm" style="margin:2px 0 6px">Erstes Training '+dd(ks[0].slice(0,10))+' → letztes '+dd(ks[ks.length-1].slice(0,10))+(sp>=7?' ('+(sp<60?Math.round(sp/7)+' Wochen':Math.round(mo)+' Monate')+')':'')+'</p>'+rows
     +'<div class="sub4">Insgesamt</div><div class="kv"><span>Trainings · Sätze</span><span><b>'+tn+'</b> · <b>'+ts+'</b></span></div>'+(tr?'<div class="kv"><span>Wiederholungen</span><span><b>'+nu(tr)+'</b></span></div>':'')+(tv?'<div class="kv"><span>Bewegtes Gewicht</span><span><b>'+nu(tv)+' kg</b></span></div>':'')
-    +'<p class="mut sm" style="margin:8px 0 0">Links dein erstes Training, rechts dein letztes. Grün = besser geworden.'+(bw?' Körpergewicht ist eingerechnet.':'')+'</p></div>'}
-function renderFx(){const el=$('#gfx');if(!el)return;el.innerHTML=[...selE].filter(e=>e!=='__run'&&e!=='__bw').map(fxHTML).join('')}
+    +'<p class="mut sm hint" style="margin:8px 0 0">Links dein erstes Training, rechts dein letztes. Grün = besser geworden.'+(bw?' Körpergewicht ist eingerechnet.':'')+'</p></details>'}
+function renderFx(){const el=$('#gfx');if(!el)return;el.innerHTML=[...selE].filter(e=>e!=='__run'&&e!=='__bw').map((e,i)=>fxHTML(e,i===0)).join('')}
 function draw(){try{renderFx()}catch(e){console.error(e)}
-  const box=$('.cw');$('#nochart').hidden=true;
+  const box=$('.cw');
   const E=[...selE].filter(e=>e==='__run'?Object.values(days).some(d=>isRun(d)&&d.ended):Object.values(days).some(d=>(d.sets||[]).some(s=>s.ex===e))),M=Object.keys(MET).filter(m=>selM.has(m));
   const bwOn=selE.has('__bw')&&(cfg.bwLog||[]).length>0,BW={};if(bwOn)cfg.bwLog.forEach(x=>{BW[x.d]=x.kg});
   const st=E.map(stats),all=[...new Set([...st.flatMap(o=>Object.keys(o)),...Object.keys(BW)])].sort(),DS=[];
@@ -1271,12 +1287,12 @@ function gTip(ev){
 // ---------- Rendern / Tabs ----------
 function setCount(n){let c=0;Object.values(days).forEach(d=>{if(isK(d))(d.sets||[]).forEach(s=>{if(s.ex===n)c++})});return c}
 function renderMain(){
-  $('#alll').innerHTML=exs(true).filter(e=>!(cfg.main||[]).includes(e)).map(e=>'<option value="'+esc(e)+'">').join('');
+  $('#alll').innerHTML=patSort(exs(true).filter(e=>!(cfg.main||[]).includes(e))).map(e=>'<option value="'+esc(e)+'">').join('');
   {const mo=cfg.ownT==='m',L=(mo?cfg.ownM:cfg.own)||[];$$('[data-ot]').forEach(b=>b.classList.toggle('on',b.dataset.ot===(mo?'m':'k')));$('#ownn').placeholder=mo?'z. B. Hüftkreisen':'z. B. Hollow Hold';
-    $('#ownc').innerHTML=L.map((m,i)=>!mo?exLi('own',m,'','data-orm="'+i+'"'):'<div class="exr" style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span>'+esc(m)+'</span><button class="btn" data-orm="'+i+'" style="margin:0;width:auto" aria-label="Entfernen">✕</button></div>').join('')||'<p class="mut sm" style="margin:6px 0 0">Noch keine eigenen '+(mo?'Mobility-':'Kraft-')+'Übungen.</p>';
+    $('#ownc').innerHTML=!mo&&hasPat(L)?listG(L.map((n,i)=>({n,i})),o=>exLi('own',o.n,'','data-orm="'+o.i+'"')):L.map((m,i)=>!mo?exLi('own',m,'','data-orm="'+i+'"'):'<div class="exr" style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span>'+esc(m)+'</span><button class="btn" data-orm="'+i+'" style="margin:0;width:auto" aria-label="Entfernen">✕</button></div>').join('')||'<p class="mut sm" style="margin:6px 0 0">Noch keine eigenen '+(mo?'Mobility-':'Kraft-')+'Übungen.</p>';
     const a=(cfg.own||[]).length,b=(cfg.ownM||[]).length;$('#dsO').textContent=a+b?[a?a+' Kraft':'',b?b+' Mobility':''].filter(Boolean).join(' · '):'keine';
     const mw=$('#mown');if(mw){const O=cfg.ownM||[];mw.hidden=!O.length;mw.innerHTML=O.length?'<option value="">Meine Übung</option>'+O.map(m=>'<option value="'+esc(m)+'">'+esc(m)+'</option>').join(''):''}}
-  $('#mainc').innerHTML=(cfg.main||[]).map((m,i)=>{const c=setCount(m);return exLi('main',m,(c?c+' Sätze':'noch keine Daten'),'data-mrm="'+i+'"')}).join('')||'<p class="mut sm" style="margin:6px 0 0">Noch keine Hauptübungen. Solange die Liste leer ist, zeigt der Tab „Daten“ alle Kraftübungen.</p>';
+  $('#mainc').innerHTML=listG((cfg.main||[]).map((n,i)=>({n,i})),o=>{const c=setCount(o.n);return exLi('main',o.n,(c?c+' Sätze':'noch keine Daten'),'data-mrm="'+o.i+'"')})||'<p class="mut sm" style="margin:6px 0 0">Noch keine Hauptübungen. Solange die Liste leer ist, zeigt der Tab „Daten“ alle Kraftübungen.</p>';
   renderMgDrafts();
 }
 function renderData(){status();
@@ -1284,7 +1300,7 @@ function renderData(){status();
   {const n=FEATS.filter(f=>cfg[f]).length;$('#dsX').textContent=n+' von '+FEATS.length+' an'}
   if(!$('#bwd').value)$('#bwd').value=today();
   {const L=(cfg.bwLog||[]).slice().reverse();$('#bwlist').innerHTML=L.slice(0,8).map(x=>'<div class="bwr"><span>'+dd(x.d)+' · <b>'+x.kg+' kg</b></span><button data-bwx="'+x.d+'" aria-label="Eintrag löschen">✕</button></div>').join('')+(L.length>8?'<p class="mut sm" style="margin:4px 0 0">… und '+(L.length-8)+' ältere Einträge (im Tab „Daten“ sichtbar)</p>':'')}try{renderDel()}catch(e){console.error(e)}try{renderRn()}catch(e){console.error(e)}
-  try{$('#dsT').textContent={system:'System',light:'Hell',dark:'Dunkel'}[cfg.theme||'system'];$('#dsB').textContent=cfg.bw?cfg.bw+' kg':'nicht eingetragen';{const G=cfg.goal||{},un=q=>gUnit(q)==='n'?'×':' Min.',t=[G.n?G.n+' Trainings':'',...['mk','mm','ms'].map(q=>G[q]?GL[q]+' '+G[q]+un(q):''),G.km?fkm(G.km)+' km':''].filter(Boolean);$('#dsG').textContent=t.length?t.join(' · '):'aus';
+  try{$('#dsT').textContent={system:'System',light:'Hell',dark:'Dunkel'}[cfg.theme||'system'];$('#dsB').textContent=cfg.bw?cfg.bw+' kg':'nicht eingetragen';$('#fNoHint').checked=cfg.noHint;$('#dsI').textContent=cfg.noHint?'ausgeblendet':'sichtbar';document.body.classList.toggle('nohint',cfg.noHint);{const G=cfg.goal||{},un=q=>gUnit(q)==='n'?'×':' Min.',t=[G.n?G.n+' Trainings':'',...['mk','mm','ms'].map(q=>G[q]?GL[q]+' '+G[q]+un(q):''),G.km?fkm(G.km)+' km':''].filter(Boolean);$('#dsG').textContent=t.length?t.join(' · '):'aus';
     GK.forEach(q=>{const i=$('#gv_'+q);if(document.activeElement!==i)i.value=G[q]?(q==='km'?fkm(G[q]):G[q]):'';$('#gc_'+q).value=gCol(q)});$$('[data-gu]').forEach(b=>{const[q,u]=b.dataset.gu.split(':');b.classList.toggle('on',gUnit(q)===u)})}
     const n=(cfg.main||[]).length;$('#dsM').textContent=n?n+(n===1?' Übung':' Übungen'):'keine';$('#dsS').textContent=cfg.lastBk?(x=>'zuletzt '+x.slice(8,10)+'.'+x.slice(5,7)+'.')(fmt(new Date(cfg.lastBk))):'noch kein Backup'}catch(e){}$$('[data-th]').forEach(b=>b.classList.toggle('on',b.dataset.th===(cfg.theme||'system')));setVal('#bw',cfg.bw||'');try{renderMain()}catch(e){console.error(e)}$('#bwc').innerHTML=(cfg.bwEx.length?cfg.bwEx.map((n,i)=>'<div class="exr xrow"><span>'+esc(n)+'</span><button class="btn" data-bwrm="'+i+'" style="margin:0;width:auto" aria-label="Entfernen">✕</button></div>').join(''):'<p class="mut sm" style="margin:0">Noch keine Übungen.</p>')}
 let recOpen=new Set();
@@ -1297,7 +1313,7 @@ function renderRec(){const M=cfg.main||[],el=$('#recs');
     const rows=rk.map(w=>'<div class="rrow"><b>'+kgT(w)+'</b><span>'+R[w].v+' Wdh</span><span class="mut sm">'+dd(R[w].k)+'</span></div>').join('')
       +hk.map(w=>'<div class="rrow"><b>'+kgT(w)+'</b><span>'+H[w].v+' s</span><span class="mut sm">'+dd(H[w].k)+'</span></div>').join('');
     return '<details class="card dsec" data-rec="'+ix+'"'+(recOpen.has(n)?' open':'')+'><summary><b>'+esc(n)+'</b><span class="mut sm" title="Schwerstes Gewicht, das du geschafft hast">'+(rk.length?'1RM ':'')+right+'</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>'
-      +recExtra(n)+(rows?'<p class="mut sm" style="margin:0 0 4px">Je Gewicht deine meisten '+(rk.length?'Wiederholungen':'Sekunden')+(rk.length&&hk.length?' bzw. Sekunden':'')+' und wann</p>'+rows:'<p class="mut sm" style="margin:0">Noch keine Sätze mit dieser Übung.</p>')+'</details>'}).join('');
+      +recExtra(n)+(rows?'<p class="mut sm hint" style="margin:0 0 4px">Je Gewicht deine meisten '+(rk.length?'Wiederholungen':'Sekunden')+(rk.length&&hk.length?' bzw. Sekunden':'')+' und wann</p>'+rows:'<p class="mut sm" style="margin:0">Noch keine Sätze mit dieser Übung.</p>')+'</details>'}).join('');
 }
 const PLATES=[25,20,15,10,5,2.5,2,1.25,1,0.5],fN=v=>String(Math.round(v*100)/100).replace('.',',');
 function plSolve(T,av,cnt){// T und Scheiben in 0,25-kg-Einheiten; cnt: Anzahl je Größe (pro Seite) oder null = beliebig viele; wenigste Scheiben
@@ -1424,31 +1440,44 @@ function deload(pls){const W=weekLoads(12);if(W.filter(x=>x.n).length<4)return n
   if(streak>=4)R.push(streak+' Wochen in Folge trainierst du überdurchschnittlich hart.');
   if(pls.filter(p=>p.plat).length>=2&&(!ratio||ratio>=.9))R.push('Bei mehreren Hauptübungen geht es gerade nicht voran, obwohl du normal oder viel trainierst.');
   return{ratio,streak,R}}
+function warnState(){const M=cfg.main||[],pls=M.map(plateau).filter(Boolean),pl=pls.filter(p=>p.plat),dl=deload([]),ft=formTrend();
+  const many=pl.length>=2&&pl.length/pls.length>=.4,ln=dl?dl.R:[],hiLoad=dl&&dl.ratio&&dl.ratio>1.3,fl=ft&&ft.low&&hiLoad,wk=monOf(today());
+  pl.forEach(p=>{p.key='pl:'+p.ex+':'+p.bk.slice(0,10)});return{M,pls,pl,dl,ft,many,ln,fl,kEr:'er:'+wk,kFt:'ft:'+wk}}
+const wSeen=k=>!!(cfg.wSeen||{})[k];
+const seenBox=k=>'<label class="seen"><input type="checkbox" data-ws="'+esc(k)+'"'+(wSeen(k)?' checked':'')+'> Gesehen – im Tab „Training“ nicht mehr anzeigen</label>';
 function renderOv(){const el=$('#gu'),W=weekLoads(12);
   if(!W.some(x=>x.n)){el.innerHTML='<div class="card"><p class="mut sm" style="margin:0">Sobald du Trainings abgeschlossen hast, siehst du hier deine Wochenbelastung sowie Plateau- und Erholungs-Hinweise.</p></div>';return}
   const cur=W[11],av=Math.round(avg(W.slice(7,11).map(x=>x.l))||0),est=W.reduce((a,x)=>a+x.est,0),xl=W.map(x=>x.w.slice(8,10)+'.'+x.w.slice(5,7)+'.');
-  let h='<div class="card"><b>Belastungs-Score pro Woche</b><p class="mut sm" style="margin:2px 0 6px">Je Training: Minuten × Anstrengung (1–10), angepasst an die Tagesform (schlechte Tagesform zählt bis zu 20 % mehr, sehr gute 10 % weniger). Die orange Linie ist dein Schnitt der letzten 4 Wochen.</p>'+svgBars(W.map(x=>x.l),W.map(x=>'Woche ab '+dd(x.w)),{xl,line:av,al:'Belastungs-Score der letzten 12 Wochen',vl:true,tips:W.map(x=>'Woche ab '+dd(x.w)+'\nScore '+x.l.toLocaleString('de-DE')+' · '+x.n+' Training'+(x.n===1?'':'s')+(x.est?'\n'+x.est+' davon ohne Bewertung (geschätzt)':'')+(av?'\nØ 4 Wochen davor: '+av.toLocaleString('de-DE'):''))})
+  let h='<div class="card"><b>Belastungs-Score pro Woche</b><p class="mut sm hint" style="margin:2px 0 6px">Je Training: Minuten × Anstrengung (1–10), angepasst an die Tagesform (schlechte Tagesform zählt bis zu 20 % mehr, sehr gute 10 % weniger). Die orange Linie ist dein Schnitt der letzten 4 Wochen.</p>'+svgBars(W.map(x=>x.l),W.map(x=>'Woche ab '+dd(x.w)),{xl,line:av,al:'Belastungs-Score der letzten 12 Wochen',vl:true,tips:W.map(x=>'Woche ab '+dd(x.w)+'\nScore '+x.l.toLocaleString('de-DE')+' · '+x.n+' Training'+(x.n===1?'':'s')+(x.est?'\n'+x.est+' davon ohne Bewertung (geschätzt)':'')+(av?'\nØ 4 Wochen davor: '+av.toLocaleString('de-DE'):''))})
     +'<div class="kv"><span>Diese Woche</span><span>'+cur.l+' ('+cur.n+' Training'+(cur.n===1?'':'s')+')</span></div><div class="kv"><span>Ø der 4 Wochen davor</span><span>'+av+'</span></div>'
     +(est?'<p class="mut sm" style="margin:8px 0 0">'+est+' Training'+(est===1?'':'s')+' ohne Bewertung sind geschätzt. Tippe nach dem Training 1–10 an, dann wird es genauer.</p>':'')+'</div>';
-  const M=cfg.main||[],pls=M.map(plateau).filter(Boolean),pl=pls.filter(p=>p.plat),dl=deload([]),ft=formTrend();
+  const{M,pls,pl,ft,many,ln,fl,kEr,kFt}=warnState();
   const tip=(t,w)=>'<div style="margin-top:8px">💡 '+esc(t)+'<br><span class="mut sm">Warum: '+esc(w)+'</span></div>';
-  h+='<div class="card"><b>Plateau und Erholung</b>';
+  h+='<div class="card" id="ovPl"><b>Plateau und Erholung</b>';
   if(!M.length)h+='<p class="mut sm" style="margin:6px 0 0">Lege im Tab „Einstellungen“ unter „Hauptübungen“ fest, welche Übungen beobachtet werden.</p>';
   else if(!pls.length)h+='<p class="mut sm" style="margin:6px 0 0">Für Plateau-Hinweise braucht eine Hauptübung mindestens 5 Trainings mit Wiederholungssätzen.</p>';
   else if(!pl.length)h+='<p style="margin:6px 0 0">✓ Dein Training sieht gerade gut aus.</p><p class="mut sm" style="margin:2px 0 0">Warum: Bei keiner deiner '+pls.length+' beobachteten Hauptübungen liegt der letzte Bestwert länger als 4 Wochen und 3 Trainings zurück.</p>';
   else h+='<p class="mut sm" style="margin:6px 0 0">Hier könntest du etwas verbessern:</p>'+pl.map(p=>'<div class="last" style="margin-top:8px"><b>'+esc(p.ex)+'</b> · seit '+Math.round(p.tD/7)+' Wochen kein neuer Bestwert ('+p.since+' Trainings, letzter am '+dd(p.bk)+')'
-    +(p.cmp.length?'<div class="mut sm" style="margin:8px 0 2px">Vorher (4 Wochen bis zum Bestwert) → seitdem</div>'+p.cmp.map(r=>'<div class="kv"><span>'+r[0]+'</span><span>'+r[1]+' → '+r[2]+'</span></div>').join(''):'')+p.tips.map(x=>tip(x[0],x[1])).join('')+'</div>').join('');
+    +(p.cmp.length?'<div class="mut sm" style="margin:8px 0 2px">Vorher (4 Wochen bis zum Bestwert) → seitdem</div>'+p.cmp.map(r=>'<div class="kv"><span>'+r[0]+'</span><span>'+r[1]+' → '+r[2]+'</span></div>').join(''):'')+p.tips.map(x=>tip(x[0],x[1])).join('')+seenBox(p.key)+'</div>').join('');
   h+='<div class="sub4">Tagesform und Anstrengung</div>';
   if(!ft)h+='<p class="mut sm" style="margin:0">Noch zu wenige Bewertungen. Bewerte deine Trainings nach dem Beenden, dann siehst du hier den Verlauf.</p>';
   else{const kv=(l,a,b,mx)=>b?'<div class="kv"><span>'+l+'</span><span>'+(a?f1(a.v)+' → ':'')+f1(b.v)+' von '+mx+'</span></div>':'';
     h+='<p class="mut sm" style="margin:0 0 2px">Schnitt der 4 Wochen davor → letzte 4 Wochen</p>'+kv('Tagesform',ft.fPrev,ft.fNow,5)+kv('Anstrengung',ft.rPrev,ft.rNow,10);
     if(ft.F.length>=3)h+='<div class="mut sm" style="margin:8px 0 0">Tagesform der letzten 8 Wochen</div>'+svgLine(ft.F.map(o=>({x:dOf(o.k).getTime(),y:o.v,k:o.k})),{f:v=>f1(v),al:'Tagesform',col:'#16a34a',tip:p=>{const d=days[p.k]||{};return dd(p.k)+'\nTagesform '+p.y+'/5'+(d.srpe?' · Anstrengung '+d.srpe+'/10':'')+'\n'+(d.title||tname(d))}});
-    if(ft.low)h+='<div class="last" style="margin-top:8px">'+tip('Erholungstipp: Plane ein paar leichtere Tage ein, achte auf Schlaf und baue Stress ab, bevor du wieder voll trainierst.',ft.why)+'</div>'}
-  const many=pl.length>=2&&pl.length/pls.length>=.4,ln=dl?dl.R:[],hiLoad=dl&&dl.ratio&&dl.ratio>1.3,fl=ft&&ft.low&&hiLoad;
+    if(ft.low)h+='<div class="last" id="ovFt" style="margin-top:8px">'+tip('Erholungstipp: Plane ein paar leichtere Tage ein, achte auf Schlaf und baue Stress ab, bevor du wieder voll trainierst.',ft.why)+seenBox(kFt)+'</div>'}
   if(many||fl){const R=[];if(many)R.push('Bei '+pl.length+' von '+pls.length+' Hauptübungen geht es gerade nicht voran.');if(fl)R.push(ft.why+' Gleichzeitig ist deine Belastung hoch.');ln.forEach(x=>R.push(x));
-    h+='<div class="sub4">Erholung</div><div class="last"><b>Eine Deload-Woche wäre sinnvoll.</b>'+tip('Eine Woche locker: etwa halb so viele Sätze, Gewichte ca. 10 % leichter, Anstrengung höchstens 7.',R.join(' '))+'<div class="mut sm" style="margin-top:6px">Nur ein Hinweis, du entscheidest.</div></div>'}
-  else if(ln.length)h+='<div class="sub4">Erholung</div>'+tip('Achte in den nächsten Tagen besonders auf Schlaf und Erholung.',ln.join(' '));
+    h+='<div class="sub4" id="ovEr">Erholung</div><div class="last"><b>Eine Deload-Woche wäre sinnvoll.</b>'+tip('Eine Woche locker: etwa halb so viele Sätze, Gewichte ca. 10 % leichter, Anstrengung höchstens 7.',R.join(' '))+'<div class="mut sm" style="margin-top:6px">Nur ein Hinweis, du entscheidest.</div>'+seenBox(kEr)+'</div>'}
+  else if(ln.length)h+='<div class="sub4" id="ovEr">Erholung</div>'+tip('Achte in den nächsten Tagen besonders auf Schlaf und Erholung.',ln.join(' '))+seenBox(kEr);
   el.innerHTML=h+'</div>'}
+// Bewegungsmuster aus den eingetragenen Muskelgruppen (Hauptmuskeln zählen, sonst Nebenmuskeln)
+const MP={'Brust':'Push','Schultern':'Push','Trizeps':'Push','Bizeps':'Pull','Oberer Rücken':'Pull','Latissimus':'Pull','Unterarme':'Pull','Gesäß':'Beine','Oberschenkel vorne':'Beine','Oberschenkel hinten':'Beine','Waden':'Beine','Bauch / Rumpf':'Core','Unterer Rücken':'Core'},PATS=['Push','Pull','Beine','Core'];
+function patOf(n){const m=mgOf(n);if(!m)return'';const src=(m.p||[]).length?m.p:(m.s||[]),c={};src.forEach(g=>{if(MP[g])c[MP[g]]=(c[MP[g]]||0)+1});let b='',v=0;src.forEach(g=>{const q=MP[g];if(q&&c[q]>v){b=q;v=c[q]}});return b}
+const pName=x=>typeof x==='string'?x:x.n;
+const hasPat=L=>L.some(x=>patOf(pName(x)));
+function patGroups(L){const G={};L.forEach(x=>{const q=patOf(pName(x));(G[q]=G[q]||[]).push(x)});return[...PATS,''].filter(q=>G[q]).map(q=>[q||'Ohne Muskelgruppe',G[q]])}
+const patSort=L=>hasPat(L)?patGroups(L).flatMap(g=>g[1]):L;
+const optG=(L,f)=>hasPat(L)?patGroups(L).map(([l,a])=>'<optgroup label="'+l+'">'+a.map(f).join('')+'</optgroup>').join(''):L.map(f).join('');
+const listG=(L,f,cls)=>hasPat(L)?patGroups(L).map(([l,a])=>'<div class="pgh'+(cls?' '+cls:'')+'">'+l+'</div>'+a.map(f).join('')).join(''):L.map(f).join('');
 // Muskelgruppen
 function mgOf(n){const v=cfg.mg&&cfg.mg[n];return v?{p:v.p,s:v.s}:null}
 function mgScore(nd){const a=dS(new Date(dOf(today()).getTime()-(nd-1)*864e5)),g={},unk={};let n=0;MG.forEach(x=>g[x]=0);
@@ -1467,10 +1496,10 @@ function renderMu(){const el=$('#gm'),sc=mgScore(mgP),mx=Math.max(0,...Object.va
   let h='<div class="card"><b>Muskeln und Balance</b><div class="seg" id="mgd" style="margin-top:8px"><button data-mgd="7"'+(mgP===7?' class="on"':'')+'>7 Tage</button><button data-mgd="28"'+(mgP===28?' class="on"':'')+'>4 Wochen</button><button data-mgd="84"'+(mgP===84?' class="on"':'')+'>12 Wochen</button></div>';
   if(!sc.n){h+='<p class="mut sm" style="margin:0">In diesem Zeitraum gibt es keine Krafttrainings mit zugeordneten Übungen.</p></div>'}
   else{h+='<div id="hmc" class="hmc">'+hmSvg(sc.g,mx)+'</div><div id="hmt" class="mut sm" style="text-align:center;min-height:18px;margin-top:4px">Tippe auf einen Muskel für die Sätze.</div><div class="hmx">wenig '+HC.map(c=>'<i style="background:'+c+'"></i>').join('')+' viel</div>'
-    +'<p class="mut sm" style="margin:8px 0 6px">Gezählt werden Sätze: primär ganz, sekundär halb.</p>'
+    +'<p class="mut sm hint" style="margin:8px 0 6px">Gezählt werden Sätze: primär ganz, sekundär halb.</p>'
     +MG.slice().sort((a,b)=>sc.g[b]-sc.g[a]).map(q=>'<div class="mgb"><span>'+esc(q)+'</span><i><u style="width:'+(mx?Math.round(sc.g[q]/mx*100):0)+'%"></u></i><span>'+f1(sc.g[q])+'</span></div>').join('')+'</div>';
     const g=sc.g,T={push:g['Brust']+g['Schultern']+g['Trizeps'],pull:g['Oberer Rücken']+g['Latissimus']+g['Bizeps'],legs:g['Oberschenkel vorne']+g['Oberschenkel hinten']+g['Gesäß']+g['Waden'],core:g['Bauch / Rumpf']+g['Unterer Rücken']},tot=T.push+T.pull+T.legs+T.core||1,NM={push:'Drücken',pull:'Ziehen',legs:'Beine',core:'Rumpf'};
-    h+='<div class="card"><b>Bewegungsmuster</b><p class="mut sm" style="margin:2px 0 6px">Anteil an deinem Training im gewählten Zeitraum.</p>'+Object.keys(T).map(k=>'<div class="mgb"><span>'+NM[k]+'</span><i><u style="width:'+Math.round(T[k]/tot*100)+'%"></u></i><span>'+Math.round(T[k]/tot*100)+' %</span></div>').join('');
+    h+='<div class="card"><b>Bewegungsmuster</b><p class="mut sm hint" style="margin:2px 0 6px">Anteil an deinem Training im gewählten Zeitraum.</p>'+Object.keys(T).map(k=>'<div class="mgb"><span>'+NM[k]+'</span><i><u style="width:'+Math.round(T[k]/tot*100)+'%"></u></i><span>'+Math.round(T[k]/tot*100)+' %</span></div>').join('');
     const tips=[];if(T.push>0&&T.pull>0){const q=T.push/T.pull;if(q>1.6)tips.push('Du drückst deutlich mehr, als du ziehst. Etwas mehr Rudern oder Klimmzüge hält die Schultern im Gleichgewicht.');else if(q<.6)tips.push('Du ziehst deutlich mehr, als du drückst. Etwas mehr Liegestütze oder Dips würde ausgleichen.')}else if(T.push>0&&!T.pull)tips.push('Ziehende Übungen kommen im Zeitraum nicht vor.');else if(T.pull>0&&!T.push)tips.push('Drückende Übungen kommen im Zeitraum nicht vor.');
     if(T.legs/tot<.12)tips.push('Die Beine kommen kaum vor. Falls das Absicht ist, passt alles.');
     h+=tips.length?'<div class="last" style="margin-top:8px">'+tips.map(esc).join('<br>')+'<br><span class="mut sm">Nur ein Hinweis, kein Muss.</span></div>':'<p class="mut sm" style="margin:8px 0 0">Ausgewogen, nichts Auffälliges.</p>';h+='</div>'}
@@ -1527,19 +1556,19 @@ function renderLauf(){const el=$('#gl'),ks=Object.keys(days).sort().filter(k=>is
   const W=weekLoads(12),xl=W.map(x=>x.w.slice(8,10)+'.'+x.w.slice(5,7)+'.'),kmv=W.map(x=>Math.round(x.km*10)/10),av=avg(kmv.slice(7,11));
   let h='<div class="card"><b>Kilometer pro Woche</b>'+svgBars(kmv,W.map(x=>'Woche ab '+dd(x.w)),{xl,line:av,al:'Wochenkilometer',vl:true,tips:W.map((x,i)=>'Woche ab '+dd(x.w)+'\n'+f1(kmv[i])+' km'+(av?'\nØ 4 Wochen davor: '+f1(av)+' km':''))})+'<div class="kv"><span>Diese Woche</span><span>'+f1(kmv[11])+' km</span></div><div class="kv"><span>Ø der 4 Wochen davor</span><span>'+f1(av||0)+' km</span></div><div class="kv"><span>Läufe insgesamt</span><span>'+ks.length+' · '+f1(sum(ks.map(k=>RS[k].lk||0)))+' km</span></div></div>';
   const pp=ks.filter(k=>RS[k].lp).map(k=>({x:dOf(k).getTime(),y:RS[k].lp,k}));
-  if(pp.length>1)h+='<div class="card"><b>Pace-Verlauf</b><p class="mut sm" style="margin:2px 0 6px">Min pro km, kleiner ist schneller.</p>'+svgLine(pp,{f:pf,al:'Pace-Verlauf',tip:p=>{const r=RS[p.k];return dd(p.k)+'\nPace '+pf(p.y)+' /km'+(r.lk?' · '+f1(r.lk)+' km':'')+(r.lh?'\nØ Puls '+Math.round(r.lh):'')}})+'</div>';
+  if(pp.length>1)h+='<div class="card"><b>Pace-Verlauf</b><p class="mut sm hint" style="margin:2px 0 6px">Min pro km, kleiner ist schneller.</p>'+svgLine(pp,{f:pf,al:'Pace-Verlauf',tip:p=>{const r=RS[p.k];return dd(p.k)+'\nPace '+pf(p.y)+' /km'+(r.lk?' · '+f1(r.lk)+' km':'')+(r.lh?'\nØ Puls '+Math.round(r.lh):'')}})+'</div>';
   const ef=ks.filter(k=>RS[k].lp&&RS[k].lh).map(k=>({x:dOf(k).getTime(),y:Math.round(60/RS[k].lp*150/RS[k].lh*100)/100,k}));
-  if(ef.length>2)h+='<div class="card"><b>Effizienz</b><p class="mut sm" style="margin:2px 0 6px">Geschätztes Tempo bei 150 Puls (km/h). Steigt der Wert, läufst du mit gleichem Puls schneller.<br>Berechnung: Tempo (km/h) × 150 ÷ Ø-Puls. Beispiel: 10 km/h bei Ø-Puls 160 → 9,4. Am aussagekräftigsten bei ähnlichen Läufen (Strecke, Gelände).</p>'+svgLine(ef,{f:v=>f1(v),al:'Effizienz',tip:p=>{const r=RS[p.k];return dd(p.k)+'\n'+f1(p.y)+' km/h bei 150 Puls'+'\nPace '+pf(r.lp)+' /km · Ø Puls '+Math.round(r.lh)}})+'</div>';
+  if(ef.length>2)h+='<div class="card"><b>Effizienz</b><p class="mut sm hint" style="margin:2px 0 6px">Geschätztes Tempo bei 150 Puls (km/h). Steigt der Wert, läufst du mit gleichem Puls schneller.<br>Berechnung: Tempo (km/h) × 150 ÷ Ø-Puls. Beispiel: 10 km/h bei Ø-Puls 160 → 9,4. Am aussagekräftigsten bei ähnlichen Läufen (Strecke, Gelände).</p>'+svgLine(ef,{f:v=>f1(v),al:'Effizienz',tip:p=>{const r=RS[p.k];return dd(p.k)+'\n'+f1(p.y)+' km/h bei 150 Puls'+'\nPace '+pf(r.lp)+' /km · Ø Puls '+Math.round(r.lh)}})+'</div>';
   {const BD=[[1,'1 km'],[3,'3 km'],[5,'5 km'],[10,'10 km'],[15,'15 km'],[21.0975,'Halbmarathon'],[42.195,'Marathon']],L=ks.filter(k=>RS[k].lk&&RS[k].lp),c28=dS(new Date(dOf(today()).getTime()-27*864e5));
     const BB=[];BD.forEach(([D,l])=>{const c=L.filter(k=>RS[k].lk>=D-.05);if(!c.length)return;const b=c.reduce((x,y)=>RS[y].lp<RS[x].lp?y:x),o=BB[BB.length-1];if(o&&o.b===b)o.l2=l;else BB.push({b,l})});
     const rows=BB.map(({b,l,l2})=>{l=l2?(/ km$/.test(l)&&/ km$/.test(l2)?l.replace(' km','')+'–'+l2:l+' – '+l2):l;const r=RS[b],t=Math.round(r.lp*r.lk*60),tt=(t>=3600?Math.floor(t/3600)+':'+pad(Math.floor(t%3600/60)):Math.floor(t/60))+':'+pad(t%60);
       return'<div class="kv"><span><b>'+(l2?'':'ab ')+l+'</b><span class="fxb">'+dd(b.slice(0,10))+(b.slice(0,10)>=c28?' · <span class="up">neu</span>':'')+'</span></span><span style="text-align:right"><b>'+pf(r.lp)+' /km</b><span class="fxb">'+f1(r.lk)+' km in '+tt+(r.lh?' · Ø '+Math.round(r.lh)+' bpm':'')+'</span></span></div>'}).join('');
     const lg=L.length?L.reduce((x,y)=>RS[y].lk>RS[x].lk?y:x):null;
-    if(rows)h+='<div class="card fx"><b>Beste Läufe</b><p class="mut sm" style="margin:2px 0 6px">Deine schnellste Pace bei Läufen mit mindestens dieser Strecke. Gewertet wird die Pace des ganzen Laufs, weil die App keine Zwischenzeiten kennt.</p>'+rows
+    if(rows)h+='<div class="card fx"><b>Beste Läufe</b><p class="mut sm hint" style="margin:2px 0 6px">Deine schnellste Pace bei Läufen mit mindestens dieser Strecke. Gewertet wird die Pace des ganzen Laufs, weil die App keine Zwischenzeiten kennt.</p>'+rows
       +(lg?'<div class="kv"><span><b>Längster Lauf</b><span class="fxb">'+dd(lg.slice(0,10))+'</span></span><span style="text-align:right"><b>'+f1(RS[lg].lk)+' km</b><span class="fxb">'+pf(RS[lg].lp)+' /km</span></span></div>':'')+'</div>'}
   const mo={};ks.forEach(k=>{const m=k.slice(0,7),v=RS[k].lk||0;if(!mo[m]||v>mo[m].v)mo[m]={v,k}});
   h+='<div class="card"><b>Längster Lauf je Monat</b>'+Object.keys(mo).sort().reverse().slice(0,6).map(m=>'<div class="kv"><span>'+MON[+m.slice(5)-1]+' '+m.slice(0,4)+'</span><span>'+f1(mo[m].v)+' km · '+dd(mo[m].k)+'</span></div>').join('')+'</div>';
-  h+='<div class="card"><b>Letzte Läufe</b>'+ks.slice().reverse().slice(0,12).map(k=>{const r=RS[k];return '<div class="kv"><span>'+dd(k)+'</span><span>'+(r.lk?f1(r.lk)+' km':'–')+(r.lp?' · '+pf(r.lp)+'/km':'')+(r.lh?' · '+Math.round(r.lh)+' bpm':'')+(r.lt?' · '+r.lt+' min':'')+'</span></div>'}).join('')+'</div>';
+  const rv=ks.slice().reverse();h+='<div class="card"><b>Letzte Läufe</b>'+rv.slice(0,runAll?rv.length:5).map(k=>{const r=RS[k];return '<div class="kv"><span>'+dd(k)+'</span><span>'+(r.lk?f1(r.lk)+' km':'–')+(r.lp?' · '+pf(r.lp)+'/km':'')+(r.lh?' · '+Math.round(r.lh)+' bpm':'')+(r.lt?' · '+r.lt+' min':'')+'</span></div>'}).join('')+(rv.length>5?'<button class="lnk" data-rall="1">'+(runAll?'Weniger anzeigen':'Alle '+rv.length+' anzeigen')+'</button>':'')+'</div>';
   el.innerHTML=h}
 function renderG(){const S=['u','v','m','r','l'];if(!S.includes(gsub))gsub='u';$$('[data-gs]').forEach(b=>b.classList.toggle('on',b.dataset.gs===gsub));S.forEach(x=>{const e=$('#g'+x);if(e)e.hidden=x!==gsub});
   try{if(gsub==='u')renderOv();else if(gsub==='v'){renderChips();draw()}else if(gsub==='m')renderMu();else if(gsub==='r')renderRec();else renderLauf()}catch(e){console.error(e)}}
@@ -1555,7 +1584,7 @@ document.addEventListener('click',e=>{const h=e.target.closest&&e.target.closest
 document.addEventListener('toggle',e=>{if(e.target&&e.target.id==='rvd'){rvOpen=e.target.open;if(rvOpen)renderRv()}},true);
 document.addEventListener('click',e=>{const td=e.target.closest&&e.target.closest('details.trd[data-tk]');if(td&&!e.target.closest('summary'))trOpen.add(td.dataset.tk)},true);
 let rtSel=null,rtForm=null,rtKey=null;
-function renderRtc(){const el=$('#rtc');let pk=null;if(!curK()){let lk=null;Object.keys(days).forEach(k=>{const d=days[k];if(d.ended&&(!lk||d.ended>days[lk].ended))lk=k});if(lk){const d=days[lk];if(!d.srq&&(!d.srpe||!d.form)&&dAgo(lk)<=3)pk=lk}}
+function renderRtc(){const el=$('#rtc');let pk=null;if(!curK()){let lk=null;Object.keys(days).forEach(k=>{const d=days[k];if(d.ended&&(!lk||d.ended>days[lk].ended))lk=k});if(lk){const d=days[lk];if(!d.srq&&(!d.srpe||!d.form)&&(typeof d.ended==='number'&&d.ended>1e12?Date.now()-d.ended<=12*3600e3:dAgo(lk)===0))pk=lk}}
   el.hidden=!pk;if(!pk)return;if(rtKey!==pk){rtKey=pk;rtSel=days[pk].srpe||null;rtForm=days[pk].form||null}el.dataset.k=pk;const d=days[pk];$('#rtn').textContent=(d.title||'Training')+' · '+dd(pk);
   $('#rtch').innerHTML=[1,2,3,4,5,6,7,8,9,10].map(n=>'<button class="chip'+(rtSel===n?' on':'')+'" data-sr="'+n+'">'+n+'</button>').join('');
   $('#rtfc').innerHTML=[1,2,3,4,5].map(n=>'<button class="chip'+(rtForm===n?' on':'')+'" data-sf="'+n+'">'+n+'</button>').join('');$('#rts').disabled=!(rtSel||rtForm)}
@@ -1588,10 +1617,14 @@ function renderGoal(show){const el=$('#wgc');if(!el)return;const G=cfg.goal||{},
   const left=7-((dOf(td).getDay()+6)%7),miss=R.filter(r=>r.miss>1e-9).map(r=>r.mt);
   const msg=all?'<div class="wgm ok">Wochenziel erreicht 🎉'+(st.n>1?' Das ist Woche '+st.n+' in Folge.':'')+'</div>'
     :'<div class="wgm">Noch <b>'+miss.join(' · ')+'</b> '+(left===1?'– heute ist der letzte Tag der Woche':'bis Sonntag')+(st.n?'. Dann sind es '+(st.n+1)+' Wochen in Folge.':'.')+'</div>';
-  el.innerHTML='<div class="wgh"><div><b>Diese Woche</b><small>'+dd(cw).slice(0,6)+' – '+dd(dS(new Date(dOf(cw).getTime()+6*864e5))).slice(0,6)+'</small></div><span class="stk'+(st.n?'':' z')+'" title="Wochen in Folge mit erreichtem Ziel">'+(st.n?'🔥 '+st.n+' Woche'+(st.n===1?'':'n'):'Serie: 0')+'</span></div>'
+  let ws=null;try{ws=warnState()}catch(e){}const WN=[];if(ws){const pu=ws.pl.filter(p=>!wSeen(p.key));if(pu.length)WN.push(['ovPl','Plateau bei '+pu.map(p=>esc(p.ex)).join(', ')]);if(!wSeen(ws.kEr)){if(ws.many||ws.fl)WN.push(['ovEr','Eine Deload-Woche wäre sinnvoll']);else if(ws.ln.length)WN.push(['ovEr','Achte gerade besonders auf Erholung'])}if(ws.ft&&ws.ft.low&&!(ws.many||ws.fl)&&!wSeen(ws.kFt))WN.push(['ovFt','Deine Tagesform ist gesunken'])}
+  const stk='<span class="stk'+(st.n?'':' z')+'" title="Wochen in Folge mit erreichtem Ziel">'+(st.n?'🔥 '+st.n+(cfg.wgO?' Woche'+(st.n===1?'':'n'):''):'Serie: 0')+'</span>',chev='<svg class="wgv" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+  if(!cfg.wgO){const r0=R[0];el.classList.remove('op');el.innerHTML='<button class="wgk" id="wgt" aria-expanded="false">'+svg.replace('<svg ','<svg class="wgmini" ')+'<span class="wgks"><b>Diese Woche</b><small>'+(all?'Ziel erreicht 🎉':pc+' % · '+r0.l+' '+r0.t.replace(/<[^>]+>/g,''))+'</small></span>'+(WN.length?'<span class="wgw" title="Hinweis">!</span>':'')+stk+chev+'</button>';return}
+  el.classList.add('op');
+  const pd=planned(td),hp=pd.length?pd.map(i=>(pDone(td,i)?'✓ ':'')+esc(tpl[i].name)).join(' & '):'nichts geplant';
+  el.innerHTML='<button class="wgk wgh" id="wgt" aria-expanded="true"><span class="wgks"><b>Diese Woche</b><small>'+dd(cw).slice(0,6)+' – '+dd(dS(new Date(dOf(cw).getTime()+6*864e5))).slice(0,6)+'</small></span>'+stk+chev+'</button>'
     +'<div class="wg">'+svg+'<div class="wgl">'+R.map(r=>'<div class="wgr" data-gq="'+r.q+'"><i style="background:linear-gradient(135deg,'+r.c[0]+','+r.c[1]+')"></i><span>'+r.l+'</span><b>'+r.t+'</b></div>').join('')+(st.best>st.n?'<div class="mut sm" style="margin-top:4px">Beste Serie: '+st.best+' Wochen</div>':'')+'</div></div>'
-    +'<div class="wgd" style="--wgc:'+gCol('n')+'">'+dh+'</div>'+msg}
-// Rückblick
+    +'<div class="wgd" style="--wgc:'+gCol('n')+'">'+dh+'</div>'+msg+'<div class="wgtd"><b>Heute:</b> '+hp+'</div>'+WN.map(w=>'<button class="wgwr" data-gw="'+w[0]+'"><span>⚠️ '+w[1]+'</span><span class="mut sm">Daten ›</span></button>').join('')}
 // Rückblick
 function rvR(P,O){const t=dOf(today());let a,b,l;
   if(P==='m'){a=new Date(t.getFullYear(),t.getMonth()+O,1);b=new Date(a.getFullYear(),a.getMonth()+1,1);l=MON[a.getMonth()]+' '+a.getFullYear()}
@@ -1704,6 +1737,9 @@ document.addEventListener('click',e=>{
   if(D.mc!=null){const k=curK(),d=days[k],it=d&&mobItems(d)[+D.mc];if(it){if(ms&&ms.key!==it.key)ms=null;if((d.dn||[]).includes(it.key)){d.dn=d.dn.filter(x=>x!==it.key);save(k)}mSel=it.key;if(cd&&cd.key!==it.key){cd=null}render()}}
   if(D.mx!=null){const k=curK(),d=days[k],it=mobItems(d)[+D.mx],has=(d.dn||[]).includes(it.key);d.dn=has?d.dn.filter(x=>x!==it.key):[...(d.dn||[]),it.key];if(!has&&ms&&ms.key===it.key){(d.mdu=d.mdu||{})[it.key]=Math.max(1,Math.round((Date.now()-ms.start)/1000))}if(!has)ms=null;if(!has&&mmode==='man'){startMp();cd=null}save(k);render()}
   if(D.i!=null&&b.closest('#list'))arm(b,'Löschen',()=>{const k=curK();days[k].sets.splice(+D.i,1);selSet=null;save(k);render()});
+  if(b.id==='wgt'){cfg.wgO=!cfg.wgO;saveC();renderGoal(true);return}
+  if(D.gw){const id=D.gw;gsub='u';tab('g');requestAnimationFrame(()=>{const t=$('#'+id)||$('#ovPl');if(t){t.scrollIntoView({behavior:'smooth',block:'start'});t.classList.add('flash');setTimeout(()=>t.classList.remove('flash'),1600)}});return}
+  if(D.rall){runAll=!runAll;renderLauf();return}
   if(D.gz){zSet(D.gz);return}
   if(D.gzm){gZa=zShift(gZ,gZa||today(),+D.gzm);draw();return}
   if(D.cv){setCV('c',D.cv);return}
@@ -1758,6 +1794,7 @@ document.addEventListener('change',e=>{const s=e.target;if(s&&(s.id==='mdm'||(s.
   if(s&&s.id==='mown'&&s.value){$('#mn').value=s.value;s.value='';return}
   if(s&&s.classList&&s.classList.contains('rsel')&&s.value){const r=s.closest('.exr');if(r)r.querySelector('.rn').value=s.value;s.value=''}});
 $('.cw').addEventListener('click',gTip);
+$('#gfx').addEventListener('toggle',e=>{const d=e.target;if(d.dataset&&d.dataset.fx!=null)fxOpen.set(d.dataset.fx,d.open)},true);
 // Auswahl im Verlauf aufheben: Tipp außerhalb des Diagramms (Zoom-Knöpfe ausgenommen) oder Tab-/Reiterwechsel
 document.addEventListener('click',e=>{if(!gPick||!e.target.closest||e.target.closest('.cw,#gz,#gsep'))return;gPick=null;$$('.cw .gtip').forEach(t=>{t.hidden=true});$$('.cw .gcur').forEach(c=>c.setAttribute('visibility','hidden'))});
 window.addEventListener('resize',()=>{if(curTab==='g')draw()});
@@ -1790,6 +1827,9 @@ GK.forEach(q=>{$('#gv_'+q).addEventListener('change',()=>{const v=num($('#gv_'+q
   $('#gc_'+q).addEventListener('input',()=>{const G=cfg.goal;G.c=G.c||{};G.c[q]=$('#gc_'+q).value.toLowerCase();saveC();render()});$('#gc_'+q).addEventListener('change',()=>{render()})});
 $$('[data-gu]').forEach(b=>b.addEventListener('click',()=>{const[q,u]=b.dataset.gu.split(':'),G=cfg.goal;G.u=G.u||{};if(gUnit(q)===u)return;G.u[q]=u;G[q]=0;saveC();render();const i=$('#gv_'+q);i.focus()}));
 $('#gcr').addEventListener('click',()=>{cfg.goal.c={};saveC();render()});
+document.addEventListener('change',e=>{const c=e.target;if(!c.dataset||c.dataset.ws==null)return;cfg.wSeen=cfg.wSeen||{};if(c.checked)cfg.wSeen[c.dataset.ws]=Date.now();else delete cfg.wSeen[c.dataset.ws];
+  const old=Date.now()-120*864e5;Object.keys(cfg.wSeen).forEach(k=>{if(cfg.wSeen[k]<old)delete cfg.wSeen[k]});saveC()});
+$('#fNoHint').addEventListener('change',()=>{cfg.noHint=$('#fNoHint').checked;saveC();render()});
 $('#bwsave').onclick=()=>{const kg=num($('#bw').value);if(!(kg>0)){$('#bwmsg').textContent='Bitte ein Gewicht eingeben.';return}const dt=$('#bwd').value||today();cfg.bwLog=(cfg.bwLog||[]).filter(x=>x.d!==dt).concat([{d:dt,kg}]).sort((a,b)=>a.d.localeCompare(b.d));cfg.bw=cfg.bwLog[cfg.bwLog.length-1].kg;saveC();render();$('#bwmsg').textContent='Gespeichert: '+kg+' kg am '+dd(dt)+'.'};
 $('#prog').onclick=()=>{const P=progHint($('#ex').value.trim());if(!P)return;if(P.kg!=null)$('#kg').value=P.kg;else if(P.secs){setUm('t');$('#rp').value=P.secs}updProg()};
 ['#kg','#rp'].forEach(q=>$(q).addEventListener('input',updProg));
@@ -2024,7 +2064,7 @@ function renderDel(){
   const w=$('#dwhat').value;$('#drng').hidden=!(w==='range'||w==='plan');$('#dexw').hidden=w!=='ex';
   if(!$('#dto').value)$('#dto').value=today();if(!$('#dfrom').value)$('#dfrom').value=addD(today(),-30);
   if(w==='ex'){const c={};Object.keys(days).forEach(k=>(days[k].sets||[]).forEach(s=>{c[s.ex]=(c[s.ex]||0)+1}));const cur=$('#dex').value,ks=Object.keys(c).sort((a,b)=>a.localeCompare(b));
-    $('#dex').innerHTML=ks.map(e=>'<option value="'+esc(e)+'">'+esc(e)+' ('+c[e]+')</option>').join('')||'<option value="">Keine Übungen</option>';if(ks.includes(cur))$('#dex').value=cur}
+    $('#dex').innerHTML=optG(ks,e=>'<option value="'+esc(e)+'">'+esc(e)+' ('+c[e]+')</option>')||'<option value="">Keine Übungen</option>';if(ks.includes(cur))$('#dex').value=cur}
   const P=delPlan();$('#dprev').textContent=P.n?'Betrifft: '+P.txt:'Dafür gibt es nichts zu löschen.';$('#dgo').disabled=!P.n;
 }
 ['#dwhat','#dfrom','#dto','#dex'].forEach(s=>$(s).addEventListener('change',()=>{const b=$('#dgo');delete b.dataset.a;b.textContent='Löschen';renderDel()}));
@@ -2071,7 +2111,7 @@ function rnRun(P){
 function renderRn(){
   $$('[data-rk]').forEach(b=>b.classList.toggle('on',b.dataset.rk===rnKind));
   const c=rnNames(),ks=Object.keys(c).sort((a,b)=>a.localeCompare(b)),cur=$('#rnfrom').value,u=rnKind==='k'?' Sätze':' Trainings';
-  $('#rnfrom').innerHTML=ks.length?'<option value="">Bitte wählen</option>'+ks.map(e=>'<option value="'+esc(e)+'">'+esc(e)+' ('+c[e]+u+')</option>').join(''):'<option value="">Noch keine Übungen</option>';
+  $('#rnfrom').innerHTML=ks.length?'<option value="">Bitte wählen</option>'+(rnKind==='k'?optG:(L,f)=>L.map(f).join(''))(ks,e=>'<option value="'+esc(e)+'">'+esc(e)+' ('+c[e]+u+')</option>'):'<option value="">Noch keine Übungen</option>';
   if(ks.includes(cur))$('#rnfrom').value=cur;
   $('#rnl').innerHTML=ks.map(e=>'<option value="'+esc(e)+'">').join('');
   const sg=rnSuggest();
