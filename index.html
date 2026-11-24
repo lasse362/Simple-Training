@@ -194,7 +194,7 @@ details.inf{margin:2px 0}.inf>summary{list-style:none;cursor:pointer;display:fle
 .mged{padding:8px 0 10px;border-bottom:1px solid var(--bd)}.mgt{background:none;border:0;color:var(--fg);font:inherit;font-size:13px;text-align:right;padding:4px 0;max-width:55%}
 #gsub button{font-size:13px;padding:8px 2px}
 #g>div[hidden]{display:none!important}
-.mgb{display:grid;grid-template-columns:150px 1fr 42px;gap:8px;align-items:center;padding:4px 0;font-size:14px}.mgb i{display:block;height:8px;border-radius:4px;background:var(--bd);overflow:hidden}.mgb u{display:block;height:100%;background:#dc2626;border-radius:4px}.mgb span:last-child{text-align:right;color:var(--mut)}
+.mgb{display:grid;grid-template-columns:minmax(0,125px) 1fr 94px;gap:8px;align-items:center;padding:4px 0;font-size:14px}.mgb i{display:block;height:8px;border-radius:4px;background:var(--bd);overflow:hidden}.mgb u{display:block;height:100%;background:#dc2626;border-radius:4px}.mgb span:last-child{text-align:right;color:var(--mut);white-space:nowrap;font-size:12.5px;font-variant-numeric:tabular-nums}.mgb span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .hmc{width:100%;cursor:pointer}.hmc [data-g]{transition:opacity .1s}
 .hmx{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mut);justify-content:center;margin-top:6px}.hmx i{display:inline-block;width:18px;height:10px;border-radius:3px}
 .sub4{margin:10px 0 2px;font-weight:600}
@@ -229,7 +229,7 @@ details.inf{margin:2px 0}.inf>summary{list-style:none;cursor:pointer;display:fle
 /* Kalender: Woche und Jahr */
 .wkv{display:flex;flex-direction:column;gap:6px}
 .wkv .cd{flex-direction:row;align-items:center;gap:10px;min-height:52px;padding:6px 10px;background:var(--bg);color:var(--fg);border:1px solid var(--bd)}
-.wkv .cd.td{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}.wkv .cd.sl{background:var(--sg)}
+.wkv .cd.td{outline-offset:-1px}.wkv .cd.sl{background:var(--sg);border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
 .wrd{flex:0 0 54px;display:flex;flex-direction:column;font-size:13px!important;color:var(--mut)}.wrd b{font-size:15px;color:var(--fg)}
 .wrp{flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:4px}.wrp .pill{display:inline-block;margin:0;font-size:12.5px;padding:3px 9px;border-radius:7px;max-width:100%;overflow:hidden;text-overflow:ellipsis;letter-spacing:0}
 .yrv{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}@media(min-width:620px){.yrv{grid-template-columns:repeat(4,1fr)}}
@@ -549,7 +549,7 @@ details.inf{margin:2px 0}.inf>summary{list-style:none;cursor:pointer;display:fle
   <p class="mut sm hint" style="margin:6px 0 0">Gelöscht wird erst nach zwei Tipps. Direkt danach kannst du es rückgängig machen, solange die App offen bleibt. Ein laufendes Training wird nie gelöscht. Sicherer ist trotzdem vorher ein Backup.</p>
  </details>
  </details>
- <p class="ver" id="ver">Version 102</p>
+ <p class="ver" id="ver">Version 104</p>
 </section>
 </main>
 
@@ -567,7 +567,9 @@ const pz=s=>s>0?(s>=60?Math.floor(s/60)+':'+pad(Math.round(s)%60):Math.round(s)+
 const hm=s=>s>=3600?dur(s*1000):mmss(s)+' min';
 const mmss=s=>{s=Math.max(0,Math.round(s||0));return pad(Math.floor(s/60))+':'+pad(s%60)};
 const dur=ms=>{const m=Math.round(ms/60000);return m>=60?Math.floor(m/60)+' h '+pad(m%60)+' min':m+' min'};
-const dd=k=>k.slice(8,10)+'.'+k.slice(5,7)+'.'+k.slice(0,4),N0=n=>Math.round(n).toLocaleString('de-DE');
+const dd=k=>k.slice(8,10)+'.'+k.slice(5,7)+'.'+k.slice(0,4),N0=n=>Math.round(n).toLocaleString('de-DE'),
+// kg-Werte: immer auf 0,1 genau (72,5 kg; ganze Zahlen ohne ,0), mit Tausenderpunkt
+F1=n=>(Math.round((+n||0)*10)/10).toLocaleString('de-DE',{maximumFractionDigits:1});
 const sum=a=>a.reduce((x,y)=>x+y,0),avg=a=>a.length?sum(a)/a.length:null;
 const addD=(v,o)=>{const a=v.slice(0,10).split('-').map(Number);return fmt(new Date(a[0],a[1]-1,a[2]+o))};
 const SK={days:'ktr_days',tpl:'ktr_tpl',plan:'ktr_plan',cfg:'ktr_cfg'},OLD={days:'kt',tpl:'ktp',plan:'kpl',cfg:'kcfg'};
@@ -999,7 +1001,7 @@ function monthStats(ym,rg){
   sets.forEach(s=>{ev[s.ex]=ev[s.ex]||{v:0,b:0};if(s.secs)hold[s.ex]=Math.max(hold[s.ex]||0,s.secs);else{ev[s.ex].v+=s.w*s.reps;if(s.reps===1&&s.w>ev[s.ex].b){ev[s.ex].b=s.w;ev[s.ex].bk=+s.kg||0}}});
   const before={};Object.keys(days).filter(k=>k.slice(0,10)<rg.a).forEach(k=>(days[k].sets||[]).forEach(s=>{if(s.reps===1&&!s.secs)before[s.ex]=Math.max(before[s.ex]||0,W(days[k],s))}));
   const pr=Object.keys(ev).filter(e=>ev[e].b>0&&ev[e].b>(before[e]||0)).map(e=>e+' '+(isBW(e)?kgS(e,ev[e].bk):ev[e].b+' kg'));
-  const top=Object.keys(ev).filter(e=>ev[e].v>0).sort((a,b)=>ev[b].v-ev[a].v).slice(0,3).map(e=>e+' '+N0(ev[e].v)+' kg');
+  const top=Object.keys(ev).filter(e=>ev[e].v>0).sort((a,b)=>ev[b].v-ev[a].v).slice(0,3).map(e=>e+' '+F1(ev[e].v)+' kg');
   const hl=Object.keys(hold).sort((a,b)=>hold[b]-hold[a]).slice(0,3).map(e=>e+' '+hold[e]+' s');
   const dash=v=>v==null?'–':v;
   const R=[
@@ -1014,8 +1016,8 @@ function monthStats(ym,rg){
     ['Arbeitszeit gesamt (nach Warm-up)',aw.length?dur(sum(aw)):'–'],
     ['Echte Arbeitszeit (Summe Satzzeiten)',sets.some(s=>s.dur>0)?hm(sum(sets.map(s=>s.dur||0))):'–'],
     ['Pausen gesamt',sets.some(s=>s.rest>0)?hm(sum(sets.map(s=>s.rest||0))):'–'],
-    ['Gesamtvolumen',rsets.length?N0(sum(kr.map(vol)))+' kg':'–'],
-    ['Ø Volumen pro Krafttraining',av!=null&&rsets.length?N0(av)+' kg'+(pav?' ('+(av>=pav?'+':'')+Math.round((av/pav-1)*100)+' % zum '+PL+')':''):'–'],
+    ['Gesamtvolumen',rsets.length?F1(sum(kr.map(vol)))+' kg':'–'],
+    ['Ø Volumen pro Krafttraining',av!=null&&rsets.length?F1(av)+' kg'+(pav?' ('+(av>=pav?'+':'')+Math.round((av/pav-1)*100)+' % zum '+PL+')':''):'–'],
     ['Sätze',sets.length?sets.length+' · Ø '+(sets.length/kr.length).toFixed(1)+' pro Training':'–'],
     ['Ø Wiederholungen pro Satz',rsets.length?avg(rsets.map(s=>s.reps)).toFixed(1):'–'],
     ['Ø Pause',dash(sets.some(s=>s.rest>0)?mmss(avg(sets.filter(s=>s.rest>0).map(s=>s.rest))):null)],
@@ -1035,7 +1037,7 @@ function monthStats(ym,rg){
   const tr=(a,b)=>a!=null&&b&&rsets.length?' <i class="'+(a>=b?'up':'dn')+'" title="Ø pro Krafttraining zum '+PL+'">'+(a>=b?'▲ ':'▼ ')+Math.abs(Math.round((a/b-1)*100))+' %</i>':'';
   const MT={n:[String(ds.length),'Trainings · Ø '+(dates.length/(nd/7)).toFixed(1).replace('.',',')+'/Woche'],days:[String(dates.length),'Trainingstage'],
     tt:[tt.length?dur(sum(tt)):'–','Trainingszeit gesamt'],kn:[String(kr.length),'Krafttrainings'],kt:[kt.length?dur(avg(kt)):'–','Ø Dauer Krafttraining'],wu:[wu.length?dur(avg(wu)):'–','Ø Warm-up'],
-    vol:[rsets.length?N0(sum(kr.map(vol)))+' kg':'–','Volumen'+tr(av,pav)],avol:[av!=null&&rsets.length?N0(av)+' kg':'–','Ø Volumen pro Training'+tr(av,pav)],
+    vol:[rsets.length?F1(sum(kr.map(vol)))+' kg':'–','Volumen'+tr(av,pav)],avol:[av!=null&&rsets.length?F1(av)+' kg':'–','Ø Volumen pro Training'+tr(av,pav)],
     sets:[String(sets.length),'Sätze'],reps:[rsets.length?avg(rsets.map(s=>s.reps)).toFixed(1).replace('.',','):'–','Ø Wdh pro Satz'],
     rest:[rr.length?mmss(avg(rr)):'–','Ø Pause'],sdur:[sd2.length?mmss(avg(sd2)):'–','Ø Satzdauer'],work:[sd2.length?hm(sum(sd2)):'–','Echte Arbeitszeit'],pauses:[rr.length?hm(sum(rr)):'–','Pausen gesamt'],
     mob:[mt.length?dur(sum(mt)):'–','Mobility-Zeit'],man:[String(ds.filter(d=>d.man).length),'Nachgetragene Trainings'],pr:[String(pr.length),'Neue 1RM-Bestwerte'],km:[ru.length&&rkm>0?fkm(rkm)+' km':'–','Laufstrecke'],rp:[rkmT>0?paceTxt(rsc,rkmT):'–','Ø Pace Laufen'],gap:[kd.length>1?gap+' Tage':'–','Längste Trainingspause']};
@@ -1073,7 +1075,7 @@ function trHTML(k,d){
   // Bearbeiten: Zahlen werden direkt antippbare Felder
   const IN=(id,v,w,im)=>'<input class="ei" id="'+id+'" inputmode="'+(im||'numeric')+'" value="'+esc(v==null?'':String(v))+'" style="--w:'+(w||3)+'">';
   const mn=tot?Math.round(tot/6e4):'',wm=d.w0&&d.w1?Math.round((d.w1-d.w0)/6e4):'';
-  const tiles=[mvT?T(fK(mvT),hasBW?'bewegt inkl. Körpergewicht':'bewegt',hasBW&&vol?'davon Zusatzgewicht '+N0(vol)+' kg':'','w2'):'',
+  const tiles=[mvT?T(fK(mvT),hasBW?'bewegt inkl. Körpergewicht':'bewegt',hasBW&&vol?'davon Zusatzgewicht '+F1(vol)+' kg':'','w2'):'',
     ED?T(IN('edm',mn,3)+'<i class="tu">min</i>','Dauer',isK(d)&&d.w0?'Warm-up '+IN('ewm',wm,2)+' min':''):tot?T(tot>=36e5?fm(tot/1000):Math.round(tot/6e4)+' min','Dauer'):'',
     ss.length?T(ss.length,'Sätze',reps?reps+' Wdh.':''):'',
     rs.length?T(fm(avg(rs.map(s=>s.rest))),'Ø Pause'):'',du.length?T(fm(avg(du.map(s=>s.dur))),'Ø Satz'):'',
@@ -1101,7 +1103,7 @@ function trHTML(k,d){
         best=rp.map(s=>e1(d,s)).filter(x=>x>0),anyP=G.some(s=>s.rest>0),pc=mvT?Math.round(m/mvT*100):0,
         val=s=>{const w=+s.kg>0||bw?kgH(e,s.kg,false):'';return s.secs?(w?w+' × ':'')+s.secs+' s':(w?w+' × '+s.reps:s.reps)};
       return '<div class="exr'+(ED?' ecd':'')+'"><div class="exh">'+(ED?'<input class="ei exn" list="exl" value="'+esc(e)+'" aria-label="Übung">':'<b>'+esc(e)+'</b>')+(K!==e?' <span class="mut sm">('+gn[K]+'.)</span>':'')+(m?'<em>'+fK(m)+'</em>':hs.length?'<em>'+sum(hs.map(s=>s.secs))+' s</em>':'')+'</div>'
-        +'<div class="exs">'+[G.length+(G.length===1?' Satz':' Sätze'),rw?rw+' Wdh.':'',best.length?'Bester 1RM ≈ '+Math.round(Math.max(...best))+' kg':'',hs.length?'Längster Halt '+Math.max(...hs.map(s=>s.secs))+' s':''].filter(Boolean).join(' · ')+'</div>'
+        +'<div class="exs">'+[G.length+(G.length===1?' Satz':' Sätze'),rw?rw+' Wdh.':'',best.length?'Bester 1RM ≈ '+F1(Math.max(...best))+' kg':'',hs.length?'Längster Halt '+Math.max(...hs.map(s=>s.secs))+' s':''].filter(Boolean).join(' · ')+'</div>'
         +(m&&nG>1?'<div class="exbw" title="Anteil am bewegten Gewicht des Trainings"><i class="exb"><u style="width:'+Math.max(2,pc)+'%"></u></i><small>'+pc+' %</small></div>':'')
         +'<div class="sts"><span class="sth">#</span><span class="sth">'+(ED?'kg × Wdh. / s':rp.length?(bw||rp.some(s=>+s.kg>0)?'kg × Wdh.':'Wdh.'):'Halten')+'</span><span class="sth">'+(ED&&rpeOn?'RPE':'')+'</span>'+(ED?'<span class="sth"></span>':'<span class="sth">'+(anyP?'Pause davor':'')+'</span>')
         +G.map((s,n)=>ED?edRow(s,d.sets.indexOf(s),n+1,bw,rpeOn,anyP):'<span class="st"><i class="sn">'+(n+1)+'</i><span class="sv"><span>'+sdT(s)+val(s)+'</span>'+pbTag(pf,sn,d.sets.indexOf(s))+'</span><small class="srp">'+(s.rpe?'RPE '+s.rpe:'')+'</small><small title="Pause vor dem Satz">'+(anyP?pz(s.rest):'')+'</small></span>').join('')+'</div>'
@@ -1339,19 +1341,19 @@ function fxHTML(ex,isFirst){const ks=Object.keys(days).filter(k=>{const d=days[k
   const bw=isBW(ex),per=ks.map(k=>{const d=days[k],ss=d.sets.filter(s=>s&&s.ex===ex),rp=ss.filter(s=>!(s.secs>0)&&s.reps>0),hs=ss.filter(s=>s.secs>0),rq=rp.filter(s=>e1(d,s)!=null);
     const bs=rq.length?rq.reduce((a,s)=>e1(d,s)>e1(d,a)?s:a):null,k0=bw?rp.filter(s=>!(+s.kg>0)):[];
     return{k,r:bs?e1(d,bs):null,rs:bs?bs.reps+' × '+wTx(ex,+bs.kg||0):'',w:rp.some(s=>+s.kg>0)?Math.max(...rp.map(s=>+s.kg||0)):null,kx:k0.length?Math.max(...k0.map(s=>+s.reps)):null,v:rp.some(s=>+s.kg>0)?sum(rp.map(s=>W(d,s)*s.reps)):null,h:hs.length?Math.max(...hs.map(s=>+s.secs)):null,n:ss.length,reps:sum(rp.map(s=>+s.reps||0))}});
-  const f1k=v=>f1(v)+' kg',nu=v=>Math.round(v).toLocaleString('de-DE');
-  const M=[['r','Geschätztes 1RM',f1k,'kg'],['w',bw?'Schwerstes Zusatzgewicht':'Schwerstes Gewicht',bw?v=>wTx(ex,v):f1k,'kg'],['kx','Meiste Wdh. ohne Zusatzgewicht',v=>v+' Wdh.','Wdh.'],['h','Längste Haltezeit',v=>v+' s','s'],['v','Volumen pro Training',v=>nu(v)+' kg','kg']];
+  const f1k=v=>F1(v)+' kg',nu=v=>Math.round(v).toLocaleString('de-DE');
+  const M=[['r','Geschätztes 1RM',f1k,'kg'],['w',bw?'Schwerstes Zusatzgewicht':'Schwerstes Gewicht',bw?v=>wTx(ex,v):f1k,'kg'],['kx','Meiste Wdh. ohne Zusatzgewicht',v=>v+' Wdh.','Wdh.'],['h','Längste Haltezeit',v=>v+' s','s'],['v','Volumen pro Training',v=>F1(v)+' kg','kg']];
   const sp=(new Date(ks[ks.length-1].slice(0,10))-new Date(ks[0].slice(0,10)))/864e5,mo=sp/30.44,ln=(l,r)=>'<div class="fxl fxs"><span>'+l+'</span><span>'+(r||'')+'</span></div>';
   let rows='';M.forEach(([m,l,f,u])=>{const L=per.filter(o=>o[m]!=null);if(!L.length)return;
-    const a=L[0],b=L[L.length-1],best=L.reduce((x,y)=>y[m]>=x[m]?y:x),dv=b[m]-a[m],pc=a[m]>0&&Math.abs(dv/a[m])<=3?Math.round(dv/a[m]*100):null;
-    const dl=L.length<2?'erst ein Training':'<span class="'+(dv>0?'up':dv<0?'dn':'')+'">'+(dv>0?'+':dv<0?'−':'±')+(u==='kg'&&m!=='v'?f1(Math.abs(dv)):Math.round(Math.abs(dv)).toLocaleString('de-DE'))+' '+u+(pc!=null&&dv?' ('+(dv>0?'+':'−')+Math.abs(pc)+' %)':'')+'</span>';
+    const a=L[0],b=L[L.length-1],best=L.reduce((x,y)=>y[m]>=x[m]?y:x),rq=v=>u==='kg'?Math.round(v*10)/10:Math.round(v),dv=Math.round((rq(b[m])-rq(a[m]))*10)/10,pc=a[m]>0&&Math.abs(dv/a[m])<=3?Math.round(dv/a[m]*100):null;
+    const dl=L.length<2?'erst ein Training':'<span class="'+(dv>0?'up':dv<0?'dn':'')+'">'+(dv>0?'+':dv<0?'−':'±')+(u==='kg'?F1(Math.abs(dv)):Math.round(Math.abs(dv)).toLocaleString('de-DE'))+' '+u+(pc!=null&&dv?' ('+(dv>0?'+':'−')+Math.abs(pc)+' %)':'')+'</span>';
     rows+='<div class="fxr"><div class="fxl"><span>'+l+'</span><span class="fxv">'+f(a[m])+' → <b>'+f(b[m])+'</b></span></div>'
       +ln(m==='r'&&a.rs&&L.length>1?a.rs+' → '+b.rs:m==='r'&&b.rs?b.rs:'',dl)
       +(L.length>1?ln(best!==b?'Bestwert '+f(best[m])+' am '+dd(best.k.slice(0,10)).slice(0,6)+(m==='r'&&best.rs?' · '+best.rs:''):'Bestwert = letztes Training',m==='r'&&mo>=1&&dv?'Ø '+(dv>0?'+':'−')+f1(Math.abs(dv)/mo)+' kg/Monat':''):'')+'</div>'});
   const tn=per.length,ts=sum(per.map(o=>o.n)),tr=sum(per.map(o=>o.reps)),tv=sum(per.map(o=>o.v||0));
   const r1=per.filter(o=>o.r!=null),hd0=r1.length>1?r1[r1.length-1].r-r1[0].r:null,hd=hd0!=null&&r1[0].r>0&&Math.abs(hd0/r1[0].r)<=3?Math.round(hd0/r1[0].r*100):null,op=fxOpen.has(ex)?fxOpen.get(ex):isFirst;
-  return'<details class="card fx dsec" data-fx="'+esc(ex)+'"'+(op?' open':'')+'><summary><b>Fortschritt: '+esc(ex)+'</b><span class="mut sm">'+(hd!=null?'1RM <span class="'+(hd>0?'up':hd<0?'dn':'')+'">'+(hd>0?'+':hd<0?'−':'±')+Math.abs(hd)+' %</span>':hd0!=null?'1RM <span class="'+(hd0>0?'up':hd0<0?'dn':'')+'">'+(hd0>0?'+':hd0<0?'−':'±')+f1(Math.abs(hd0))+' kg</span>':tn+' Training'+(tn===1?'':'s'))+'</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p class="mut sm" style="margin:2px 0 6px">Erstes Training '+dd(ks[0].slice(0,10))+' → letztes '+dd(ks[ks.length-1].slice(0,10))+(sp>=7?' ('+(sp<60?Math.round(sp/7)+' Wochen':Math.round(mo)+' Monate')+')':'')+'</p>'+rows
-    +'<div class="sub4">Insgesamt</div><div class="kv"><span>Trainings · Sätze</span><span><b>'+tn+'</b> · <b>'+ts+'</b></span></div>'+(tr?'<div class="kv"><span>Wiederholungen</span><span><b>'+nu(tr)+'</b></span></div>':'')+(tv?'<div class="kv"><span>Bewegtes Gewicht</span><span><b>'+nu(tv)+' kg</b></span></div>':'')
+  return'<details class="card fx dsec" data-fx="'+esc(ex)+'"'+(op?' open':'')+'><summary><b>Fortschritt: '+esc(ex)+'</b><span class="mut sm">'+(hd!=null?'1RM <span class="'+(hd>0?'up':hd<0?'dn':'')+'">'+(hd>0?'+':hd<0?'−':'±')+Math.abs(hd)+' %</span>':hd0!=null?'1RM <span class="'+(hd0>0?'up':hd0<0?'dn':'')+'">'+(hd0>0?'+':hd0<0?'−':'±')+F1(Math.abs(hd0))+' kg</span>':tn+' Training'+(tn===1?'':'s'))+'</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p class="mut sm" style="margin:2px 0 6px">Erstes Training '+dd(ks[0].slice(0,10))+' → letztes '+dd(ks[ks.length-1].slice(0,10))+(sp>=7?' ('+(sp<60?Math.round(sp/7)+' Wochen':Math.round(mo)+' Monate')+')':'')+'</p>'+rows
+    +'<div class="sub4">Insgesamt</div><div class="kv"><span>Trainings · Sätze</span><span><b>'+tn+'</b> · <b>'+ts+'</b></span></div>'+(tr?'<div class="kv"><span>Wiederholungen</span><span><b>'+nu(tr)+'</b></span></div>':'')+(tv?'<div class="kv"><span>Bewegtes Gewicht</span><span><b>'+F1(tv)+' kg</b></span></div>':'')
     +'<p class="mut sm hint" style="margin:8px 0 0">Links dein erstes Training, rechts dein letztes. Grün = besser geworden. Beim 1RM steht der Satz dabei, aus dem es berechnet ist (Wdh. × Gewicht).'+(bw?' Gerechnet wird nur mit dem Zusatzgewicht.':'')+'</p></details>'}
 function renderFx(){const el=$('#gfx');if(!el)return;el.innerHTML=[...selE].filter(e=>e!=='__run'&&e!=='__bw').map((e,i)=>fxHTML(e,i===0)).join('')}
 function draw(){try{renderFx()}catch(e){console.error(e)}
@@ -1383,7 +1385,7 @@ function gTip(ev){
   const i=Math.max(0,Math.min(gst.n-1,Math.floor((x-gst.x0)/gst.band))),k=gst.labels[i];gPick=k.slice(0,10);const cp=gst.x0+gst.band*(i+.5),note=(days[k]||{}).note,fm=(days[k]||{}).form,sr=(days[k]||{}).srpe;
   cl.forEach(c=>{c.setAttribute('x1',cp);c.setAttribute('x2',cp);c.setAttribute('visibility','visible')});
   $$('.cw .gpw').forEach(w=>{const pi=+w.dataset.pi,g=gst.G[pi]||[],P=gst.P[pi],dt=w.querySelector('.gdot');if(!dt||!P)return;dt.innerHTML='';g.filter(d=>!d.bar&&d.v[i]!=null).forEach(d=>{const y=P.yOf(d.m,d.v[i]);if(y!=null)dt.insertAdjacentHTML('beforeend','<circle cx="'+cp+'" cy="'+y.toFixed(1)+'" r="5" fill="'+d.col+'" stroke="var(--card)" stroke-width="2"/>')})});
-  let first=true;WP.forEach(w=>{const g=gst.G[+w.dataset.pi]||[],tip=w.querySelector('.gtip'),rows=g.filter(d=>d.v[i]!=null).map(d=>'<div><i style="background:'+d.col+'"></i>'+esc(d.label)+': <b>'+(d.m==='lp'?pcf(d.v[i])+' /km':String(Math.round(d.v[i]*10)/10).replace('.',','))+'</b></div>').join('');
+  let first=true;WP.forEach(w=>{const g=gst.G[+w.dataset.pi]||[],tip=w.querySelector('.gtip'),rows=g.filter(d=>d.v[i]!=null).map(d=>'<div><i style="background:'+d.col+'"></i>'+esc(d.label)+': <b>'+(d.m==='lp'?pcf(d.v[i])+' /km':F1(d.v[i]))+'</b></div>').join('');
     if(!rows){tip.innerHTML='<b>'+dd(k.slice(0,10))+'</b><div class="mut">Kein Wert an diesem Tag</div>';tip.hidden=false;return}
     tip.innerHTML='<b>'+dd(k.slice(0,10))+'</b>'+rows+(first&&(fm||sr)?'<div class="mut">'+[fm?'Tagesform: '+fm+'/5':'',sr?'Anstrengung: '+sr+'/10':''].filter(Boolean).join(' · ')+'</div>':'')+(first&&note?'<div class="mut">Notiz: '+esc(note)+'</div>':'');first=false;tip.hidden=false});
 }
@@ -1516,7 +1518,7 @@ function pst(ex,a,b){const ks=Object.keys(days).filter(k=>{const t=k.slice(0,10)
   return{n:ks.length,fw:ks.length/wk,sets:ss.length/ks.length,vol:vol>0?vol:null,rest:rs.length?avg(rs):null,rpe:rr.length?avg(rr):null,form:fm.length?avg(fm):null}}
 function plateau(ex){const st=stats(ex),ks=Object.keys(st).filter(k=>st[k].r!=null);if(ks.length<5)return null;let bk=ks[0],bv=st[bk].r;ks.forEach(k=>{if(st[k].r>bv+1e-9){bv=st[k].r;bk=k}});
   const since=ks.filter(k=>k>bk).length,tD=dAgo(bk),plat=tD>=28&&since>=3,tips=[],cmp=[];
-  if(plat){const bd=bk.slice(0,10),A=pst(ex,dS(new Date(dOf(bd).getTime()-28*864e5)),bd),B=pst(ex,dS(new Date(dOf(bd).getTime()+864e5)),today()),kg=v=>Math.round(v).toLocaleString('de-DE')+' kg';
+  if(plat){const bd=bk.slice(0,10),A=pst(ex,dS(new Date(dOf(bd).getTime()-28*864e5)),bd),B=pst(ex,dS(new Date(dOf(bd).getTime()+864e5)),today()),kg=v=>F1(v)+' kg';
     if(A&&B){const row=(l,a,b,f)=>{if(a!=null&&b!=null)cmp.push([l,f(a),f(b)])};
       row('Trainings pro Woche',A.fw,B.fw,f1);row('Sätze pro Training',A.sets,B.sets,f1);row('Volumen pro Training',A.vol,B.vol,kg);row('Ø Pause',A.rest,B.rest,v=>Math.round(v)+' s');row('Ø Anstrengung (Sätze)',A.rpe,B.rpe,f1);row('Ø Tagesform',A.form,B.form,f1);
       if(B.fw<A.fw*.75)tips.push(['Plane die Übung wieder so oft ein wie vorher.','Vorher '+f1(A.fw)+'× pro Woche, seitdem '+f1(B.fw)+'×.']);
@@ -1610,7 +1612,7 @@ function mgOf(n){const v=cfg.mg&&cfg.mg[n];return v?{p:v.p,s:v.s}:null}
 // Belastung eines Satzes: Gewicht × Wdh.; bei Körpergewicht inkl. Körpergewicht (Liegestütz/Plank & Co. ca. 65 %), Halten: 3 s ≈ 1 Wdh.
 const BWPART=/liegest|push.?up|plank|unterarm|hollow|crunch|sit.?up|knie|brücke|bridge/i;
 function setLoad(d,s){const bw=(d&&d.bw!=null?+d.bw||0:0)||+cfg.bw||75;let w=+s.kg||0;if(isBW(s.ex)||!w)w+=bw*(BWPART.test(s.ex)?.65:1);const r=s.secs?s.secs/3:(+s.reps||0);return Math.max(0,w*r)}
-const fLoad=v=>v>=1000?String(Math.round(v/100)/10).replace('.',',')+' t':Math.round(v)+' kg';
+const fLoad=v=>F1(v)+' kg';
 function mgScore(nd){const a=dS(new Date(dOf(today()).getTime()-(nd-1)*864e5)),g={},c={},unk={};let n=0;MG.forEach(x=>{g[x]=0;c[x]=0});
   Object.keys(days).forEach(k=>{const d=days[k];if(!isK(d)||k.slice(0,10)<a||!d.ended&&!(d.sets||[]).length)return;(d.sets||[]).forEach(x=>{if(!x||!x.ex)return;const m=mgOf(x.ex);if(!m||!(m.p.length+m.s.length)){unk[x.ex]=(unk[x.ex]||0)+1;return}n++;const L=setLoad(d,x);m.p.forEach(q=>{g[q]+=L;c[q]+=1});m.s.forEach(q=>{g[q]+=L/2;c[q]+=.5})})});
   return{g,c,unk,n}}
@@ -1804,7 +1806,7 @@ function renderRv(){const el=$('#rvc');if(!el||!rvOpen)return;const R=rvR(rvP,rv
   if(!A.n){return void(el.innerHTML=h+'<p class="mut sm" style="margin:6px 0 0">In diesem Zeitraum gibt es keine abgeschlossenen Trainings.</p>')}
   const kv=(l,v,x)=>'<div class="kv"><span>'+l+'</span><span>'+v+(x||'')+'</span></div>',nu=v=>Math.round(v).toLocaleString('de-DE'),hm=m=>Math.floor(m/60)+' h '+pad(m%60)+' min',hh=m=>pad(Math.floor(m/60))+':'+pad(m%60)+' Uhr';
   const tile=(v,l,a,b,ic)=>'<div class="wtl"><span class="wic">'+ic+'</span><b>'+v+'</b><span>'+l+'</span>'+(B&&b>0?'<small>'+rvD(a,b).replace(/^ /,'')+'</small>':'')+'</div>';
-  const vt=A.vol>=10000?f1(A.vol/1000)+' t':nu(A.vol)+' kg';
+  const vt=F1(A.vol)+' kg';
   h+='<div class="wrh"><div class="wrt">Dein '+(rvP==='g'?'Training insgesamt':esc(R.l))+'</div><div class="wrg"><div><b>'+A.n+'</b><span>Trainings'+(B&&B.n>0?' '+rvD(A.n,B.n).replace(/color:[^"]*/,'color:#fff'):'')+'</span></div><div><b>'+Math.round(A.min/60)+'</b><span>Stunden'+(B&&B.min>0?' '+rvD(A.min,B.min).replace(/color:[^"]*/,'color:#fff'):'')+'</span></div><div><b>'+A.days+'</b><span>Trainingstage</span></div></div></div>';
   h+='<div class="wtg">'+(A.sets?tile(nu(A.sets),'Sätze',A.sets,B&&B.sets,'🔁')+tile(nu(A.reps),'Wiederholungen',A.reps,B&&B.reps,'💪')+tile(vt,'Bewegtes Gewicht',A.vol,B&&B.vol,'🏗️'):'')
     +(A.km?tile(f1(A.km)+' km','Gelaufen ('+A.runs+' Läufe)',A.km,B&&B.km,'🏃'):'')+(A.rd?tile(A.rd,'Boxrunden',A.rd,B&&B.rd,'🥊'):'')+tile(nu(A.load),'Belastungs-Score',A.load,B&&B.load,'🔥')+'</div>';
@@ -1827,8 +1829,8 @@ function renderRv(){const el=$('#rvc');if(!el||!rvOpen)return;const R=rvR(rvP,rv
   if(A.early&&A.late&&A.early.k!==A.late.k)L('🌅','Früh- und Spätstart',hh(A.early.v)+' / '+hh(A.late.v));
   const bl=(cfg.bwLog||[]).filter(x=>x.d>=R.a&&x.d<R.b);if(bl.length>1){const dv=num(bl[bl.length-1].kg)-num(bl[0].kg);L('⚖️','Körpergewicht',f1(num(bl[0].kg))+' → '+f1(num(bl[bl.length-1].kg))+' kg ('+(dv>=0?'+':'')+f1(dv)+')')}
   if(hl.length)h+='<div class="msc">Highlights</div>'+hl.join('');
-  if(imp.length>1)h+='<div class="msc">Größte Fortschritte (geschätztes 1RM)</div>'+imp.slice(0,3).map(x=>kv(esc(x.n),'+'+f1(x.g)+' kg',' <span class="mut sm">auf '+Math.round(x.pe)+' kg</span>')).join('');
-  if(top.length)h+='<div class="msc">Meiste Sätze</div>'+top.slice(0,3).map(n=>{const e=A.ex[n];return'<div class="fxr"><div class="fxl"><span>'+esc(n)+'</span><span><b>'+e.s+' Sätze</b></span></div>'+(e.r?'<div class="fxl fxs"><span></span><span>'+nu(e.r)+' Wdh.'+(e.v?' · '+(e.v>=10000?f1(e.v/1000)+' t':nu(e.v)+' kg'):'')+'</span></div>':'')+'</div>'}).join('');
+  if(imp.length>1)h+='<div class="msc">Größte Fortschritte (geschätztes 1RM)</div>'+imp.slice(0,3).map(x=>kv(esc(x.n),'+'+F1(x.g)+' kg',' <span class="mut sm">auf '+F1(x.pe)+' kg</span>')).join('');
+  if(top.length)h+='<div class="msc">Meiste Sätze</div>'+top.slice(0,3).map(n=>{const e=A.ex[n];return'<div class="fxr"><div class="fxl"><span>'+esc(n)+'</span><span><b>'+e.s+' Sätze</b></span></div>'+(e.r?'<div class="fxl fxs"><span></span><span>'+nu(e.r)+' Wdh.'+(e.v?' · '+F1(e.v)+' kg':'')+'</span></div>':'')+'</div>'}).join('');
   el.innerHTML=h}
 document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const D=b.dataset;
   if(D.gsep!=null){gSep=D.gsep==='1';draw();return}
@@ -2016,6 +2018,9 @@ zoomGest($('.cw'),{win:gWinNow,all:()=>gAll.length?[gT(gAll[0].slice(0,10)),gT(g
   frac:gFrac,px:gPxW,canPan:()=>gZ!=='a',quiet:()=>{gNoClick=Date.now()+400}});
 $('#gfx').addEventListener('toggle',e=>{const d=e.target;if(d.dataset&&d.dataset.fx!=null)fxOpen.set(d.dataset.fx,d.open)},true);
 // Auswahl im Verlauf aufheben: Tipp außerhalb des Diagramms (Zoom-Knöpfe ausgenommen) oder Tab-/Reiterwechsel
+document.addEventListener('click',e=>{const t=e.target;if(!t||!t.closest||t.closest('button,a,input,select,textarea,label,summary,[data-k],.ch,.cw,dialog,.sheet'))return;
+  if(curTab==='k'&&selDay&&!editK&&!t.closest('#detc')&&!(t.closest('.card')&&t.closest('.card').querySelector('#cal'))){selDay=null;trOpen.clear();renderCal()}
+  else if(curTab==='n'&&psel&&!t.closest('#pday')&&!(t.closest('.card')&&t.closest('.card').querySelector('#pcal'))){psel=null;pdMsg='';pdUndo=null;renderPlan()}});
 document.addEventListener('click',e=>{if(!gPick||!e.target.closest||e.target.closest('.cw,#gz,#gsep,#gzn,#gzf'))return;gPick=null;$$('.cw .gcur').forEach(c=>c.setAttribute('visibility','hidden'));gDef()});
 // Graf: Gesten sollen die Seite nicht verschieben
 window.addEventListener('resize',()=>{if(curTab==='g')draw()});
@@ -2117,7 +2122,7 @@ $('#sb').onclick=()=>{
   d.sets.push(s);d.le=now-cut*1000;d.sw=null;if(man){d.ls=null;d.pr=null;d.lp=null}
   // Supersatz/Zirkel: zur nächsten Übung der Gruppe wechseln; Pausenton erst nach der Runde
   if(man&&cfg.fSup&&d.tp&&tpl[d.tp]){const T=tpl[d.tp].ex||[],x=T.find(e=>e.n===ex);if(x&&x.g){const G=T.map((e,i)=>[e,i]).filter(([e])=>e.g===x.g);if(G.length>1){const pos=G.findIndex(([e])=>e.n===ex),nx=G[(pos+1)%G.length];if(pos<G.length-1)d.sw=nx[0].n;pickPlan(nx[1])}}}
-  let pm='';try{const f=pbFlags(k,d),g=snFlags(k,d),L=f.length-1,P=[];if(f[L])P.push('Neuer Bestwert '+ex+': '+kgS(ex,s.kg)+' × '+(s.secs?s.secs+' s':s.reps+' Wdh')+' – so viel wie noch nie');if(g[L])P.push('Bester '+g[L]+'. Satz '+ex+' bisher'+(s.secs?': '+s.secs+' s gehalten':e1(d,s)!=null?': geschätztes 1RM '+Math.round(e1(d,s))+' kg':': '+s.reps+' Wdh.'));pm=P.join(' · ')}catch(e){}
+  let pm='';try{const f=pbFlags(k,d),g=snFlags(k,d),L=f.length-1,P=[];if(f[L])P.push('Neuer Bestwert '+ex+': '+kgS(ex,s.kg)+' × '+(s.secs?s.secs+' s':s.reps+' Wdh')+' – so viel wie noch nie');if(g[L])P.push('Bester '+g[L]+'. Satz '+ex+' bisher'+(s.secs?': '+s.secs+' s gehalten':e1(d,s)!=null?': geschätztes 1RM '+F1(e1(d,s))+' kg':': '+s.reps+' Wdh.'));pm=P.join(' · ')}catch(e){}
   selSet=null;save(k);render();setKG($('#emsg'),pm);
 };
 $('#sx').onclick=()=>{const k=curK(),d=days[k];if(!d)return;d.ls=null;d.pr=null;d.lp=null;d.ht=0;save(k);render()};
