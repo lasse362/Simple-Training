@@ -333,12 +333,12 @@ body.srt-body,body.srt-body *{-webkit-user-select:none;user-select:none;-webkit-
 
 
 /* Kleine graue Texte bei „Infotexte aus“: hinter einem i, das beim Auf- und Zuklappen an seiner Stelle bleibt */
-.nohint .xi{position:relative;padding-left:24px!important;min-height:20px;cursor:pointer}
-.nohint span.xi{display:inline-block;vertical-align:top}
-.nohint .xi::before{content:'i';position:absolute;left:0;top:0;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--mut);color:var(--mut);font:italic 700 11px/15px Georgia,"Times New Roman",serif;text-align:center;box-sizing:border-box;visibility:visible;text-transform:none;letter-spacing:0}
-.nohint .xi.xo::before{background:var(--mut);color:var(--card)}
-.nohint .xi:not(.xo){color:transparent!important;height:20px;overflow:hidden;user-select:none;-webkit-user-select:none}
-.nohint .xi:not(.xo) *{visibility:hidden}
+.nohint .xi,.nohint .hint,.nohint label.tgl>span>small,.nohint .hint2{display:none!important}
+
+
+
+
+
 /* ===== Design „Fließend“ (v119): ohne Rahmen und Schatten, weiche Flächen, eine Akzentfarbe ===== */
 /* Fließend: clean, ohne Rahmen und Schatten. Weiche Flächen gehen ineinander über, eine Akzentfarbe. */
 :root{--accR:37,99,235;--bg:#ffffff;--fg:#15171b;--card:#f4f5f7;--mut:#6b717c;--acc:#2563eb;--bd:#e7e9ed;--on:#fff;--sg:#ffffff;--ck:#2563eb;--cm:#16a34a;--cs:#ea580c;--ok:#15803d;
@@ -347,7 +347,7 @@ body.srt-body,body.srt-body *{-webkit-user-select:none;user-select:none;-webkit-
   --fill:rgba(160,166,178,.12);--top0:#000;--top:#111a2b;--pk:rgba(110,168,255,.18);--pkt:#a9c8ff;--pm:rgba(74,222,128,.16);--pmt:#86efac;--ps:rgba(251,146,60,.18);--pst:#fdba74;--navbg:rgba(13,15,18,.86);--hm0:#262a31;--hm1:#1d2b47;--hm2:#24427a;--hm3:#2f5fb3;--hm4:#4f86e8;--hm5:#8cb6ff;--hmS:#4a515c}}
 :root[data-theme="dark"]{--bg:#0d0f12;--fg:#eef0f3;--card:#16191e;--mut:#9aa1ad;--acc:#6ea8ff;--bd:#23272e;--accR:110,168,255;--on:#0b1220;--sg:#2b3038;--ck:#6ea8ff;--cm:#4ade80;--cs:#fb923c;--ok:#4ade80;
   --fill:rgba(160,166,178,.12);--top0:#000;--top:#111a2b;--pk:rgba(110,168,255,.18);--pkt:#a9c8ff;--pm:rgba(74,222,128,.16);--pmt:#86efac;--ps:rgba(251,146,60,.18);--pst:#fdba74;--navbg:rgba(13,15,18,.86);--hm0:#262a31;--hm1:#1d2b47;--hm2:#24427a;--hm3:#2f5fb3;--hm4:#4f86e8;--hm5:#8cb6ff;--hmS:#4a515c}
-body{background:linear-gradient(180deg,var(--top0) 0,var(--top) 120px,var(--bg) 400px) no-repeat,var(--bg);font-feature-settings:"tnum" 1}
+body{background:var(--bg);font-feature-settings:"tnum" 1}
 section::before{display:block;font-size:30px;font-weight:700;letter-spacing:-.025em;line-height:1.1;margin:10px 4px 16px;color:var(--fg)}
 .card{border:0;border-radius:24px;padding:16px;margin-bottom:14px;box-shadow:none}
 .trd,.tst>div,.cd,.btn,.end,.cm button,.step button,input,textarea,select{border:0!important}
@@ -402,6 +402,14 @@ section#t::before{content:'Training'}section#k::before{content:'Kalender'}sectio
 #maddw .mbtn{display:flex;gap:8px;margin-top:10px}#maddw .mbtn>button{flex:1}
 #mlist li{display:block}#mcur .mact,#mcur .mact2{margin-top:12px}#mcur .mgm{margin-top:2px}.mdone{margin:12px 0 0;font-weight:600;color:var(--ok)}
 #maddw.isfs .rlrw{display:none!important}
+/* Nichts darf die Seite breiter machen (seitliches Wischen) */
+html{overflow-x:hidden}body{overflow-x:clip;overscroll-behavior-x:none}
+.g,.zg,.ymg,.wgd{grid-template-columns:repeat(7,minmax(0,1fr))}.yrv,.zhd,.wrg,.hz-mx,.hz-fins{grid-template-columns:repeat(3,minmax(0,1fr))}.wtg,.kpi,.gzf,.hz-eff{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:620px){.yrv{grid-template-columns:repeat(4,minmax(0,1fr))}.wtg{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.g>*,.zg>*,.ymg>*,.wgd>*,.yrv>*,.kpi>*,.wtg>*{min-width:0}.pill{overflow:hidden;text-overflow:clip}
+.etag{font-size:12px;font-weight:600;color:var(--mut);background:var(--fill);border-radius:999px;padding:2px 8px;margin-left:4px;white-space:nowrap}
+.ssd{min-width:28px;min-height:0;margin:0 6px 0 0;padding:3px 6px;border:0;border-radius:8px;background:rgba(var(--accR),.14);color:var(--acc);font-weight:700;font-size:13px}
+#eaxw .eaxb{display:flex;gap:8px;margin-top:10px}#eaxw .eaxb>button{flex:1}
 </style>
 </head>
 <body>
@@ -414,7 +422,7 @@ section#t::before{content:'Training'}section#k::before{content:'Kalender'}sectio
 <section id="h"></section>
 
 <section id="t" class="on">
- <div class="card" id="rtc" hidden><b>Wie war dein letztes Training?</b><p class="mut sm" id="rtn" style="margin:2px 0 0"></p><label>Anstrengung des Trainings (1 = sehr leicht · 10 = Maximum)</label><div class="chips" id="rtch"></div><label style="margin-top:0">Tagesform <small class="mut" style="font-weight:400">(Schlaf, Wohlbefinden, Stress · 1 = schlecht · 5 = sehr gut)</small></label><div class="chips" id="rtfc"></div><label for="rtnote" style="margin-top:0">Notiz zum Training <small class="mut" style="font-weight:400">(optional)</small></label><textarea id="rtnote" rows="2" placeholder="z. B. wenig geschlafen, Schulter gezwickt"></textarea><div style="display:flex;gap:8px;margin:8px 0 8px"><button class="big" id="rts" disabled style="margin:0;flex:1">Speichern</button><button class="btn" id="rtx" style="margin:0;flex:1">Nicht bewerten</button></div><p class="mut sm hint" style="margin:0">Ändern geht durch anderes Antippen. Daraus berechnet die App deine Wochenbelastung im Tab „Daten“.</p></div>
+ <div class="card" id="rtc" hidden><b>Wie war dein letztes Training?</b><p class="mut sm" id="rtn" style="margin:2px 0 0"></p><label>Anstrengung des Trainings (1 = sehr leicht · 10 = Maximum)</label><div class="chips" id="rtch"></div><label style="margin-top:0">Tagesform <small class="mut hint" style="font-weight:400">(Schlaf, Wohlbefinden, Stress · 1 = schlecht · 5 = sehr gut)</small></label><div class="chips" id="rtfc"></div><label for="rtnote" style="margin-top:0">Notiz zum Training <small class="mut" style="font-weight:400">(optional)</small></label><textarea id="rtnote" rows="2" placeholder="z. B. wenig geschlafen, Schulter gezwickt"></textarea><div style="display:flex;gap:8px;margin:8px 0 8px"><button class="big" id="rts" disabled style="margin:0;flex:1">Speichern</button><button class="btn" id="rtx" style="margin:0;flex:1">Nicht bewerten</button></div><p class="mut sm hint" style="margin:0">Ändern geht durch anderes Antippen. Daraus berechnet die App deine Wochenbelastung im Tab „Daten“.</p></div>
  <div class="card" id="wgc" hidden></div>
  <div class="card" id="hc">
   <div id="today" style="font-weight:600"></div>
@@ -523,7 +531,7 @@ section#t::before{content:'Training'}section#k::before{content:'Kalender'}sectio
   <label>Art</label><div class="chips" id="ety"><button class="chip on" data-et="kraft">Krafttraining</button><button class="chip" data-et="mob">Mobility</button><button class="chip" data-et="sonst">Sonstiges</button></div>
   <div id="exw"><label>Übungen mit Zielwerten (Wiederholungen oder Zeit)</label><div id="exr"></div><button class="btn" id="addr" style="margin-top:8px">+ Übung hinzufügen</button></div>
   <div id="mxw"><label>Mobility-Übungen mit Sätzen, Wiederholungen, Haltedauer und Art</label><p class="mut sm hint" style="margin:0 0 4px">Bei „links und rechts“ gelten die Sätze pro Seite, abwechselnd links und rechts.</p><div id="mxr"></div><button class="btn" id="addm" style="margin-top:8px">+ Übung hinzufügen</button></div>
-  <p id="sow" class="mut sm">Bei Sonstigem wird nur die Gesamtzeit gemessen, es gibt keine Übungen.</p>
+  <p id="sow" class="mut sm hint">Bei Sonstigem wird nur die Gesamtzeit gemessen, es gibt keine Übungen.</p>
   <label class="tgl" id="erunw"><span><b>Laufen</b><small>Beim Training erfasst du Strecke, Pace, Puls und Höhenmeter.</small></span><input type="checkbox" id="erun"></label>
   <button class="big" id="esv">Training speichern</button><button class="end" id="ecn">Abbrechen</button>
   <div id="emsg2" class="mut" style="margin-top:6px"></div>
@@ -565,7 +573,7 @@ section#t::before{content:'Training'}section#k::before{content:'Kalender'}sectio
  <details class="dsec dgrp" id="dgD"><summary><b>Profil und Rechner</b><span class="mut sm">Ziele, Gewicht, Übungen &amp; Rechner</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
 <details class="card dsec" id="wgsec"><summary><b>Wochenziele</b><span class="mut sm" id="dsG"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p class="mut sm hint" style="margin:0 0 8px">Die Ringe im Tab „Training“ zeigen, wie weit du in dieser Woche bist (Montag bis Sonntag). Die Serie zählt die Wochen hintereinander, in denen du alle Ziele erreicht hast. Leer = Ziel aus. Tippe auf den Farbkreis, um die Farbe des Rings zu ändern.</p><div class="gzr"><input type="color" id="gc_n" aria-label="Farbe Trainings"><b>Trainings</b><input id="gv_n" inputmode="numeric" placeholder="aus" aria-label="Ziel Trainings"><span class="mut sm gzt">Anzahl, alle Arten</span></div><div class="gzr"><input type="color" id="gc_mk" aria-label="Farbe Kraft"><b>Kraft</b><input id="gv_mk" inputmode="numeric" placeholder="aus" aria-label="Ziel Kraft"><div class="seg gzu"><button data-gu="mk:m">Min.</button><button data-gu="mk:n">Anzahl</button></div></div><div class="gzr"><input type="color" id="gc_mm" aria-label="Farbe Mobility"><b>Mobility</b><input id="gv_mm" inputmode="numeric" placeholder="aus" aria-label="Ziel Mobility"><div class="seg gzu"><button data-gu="mm:m">Min.</button><button data-gu="mm:n">Anzahl</button></div></div><div class="gzr"><input type="color" id="gc_ms" aria-label="Farbe Sonstiges"><b>Sonstiges</b><input id="gv_ms" inputmode="numeric" placeholder="aus" aria-label="Ziel Sonstiges"><div class="seg gzu"><button data-gu="ms:m">Min.</button><button data-gu="ms:n">Anzahl</button></div></div><div class="gzr"><input type="color" id="gc_km" aria-label="Farbe Laufen"><b>Laufen</b><input id="gv_km" inputmode="decimal" placeholder="aus" aria-label="Ziel Laufen"><span class="mut sm gzt">km</span></div><p id="gfree" class="mut sm" style="margin:10px 0 0" hidden>✓ In dieser Woche zählt noch kein Training: Deine Änderungen gelten sofort.</p><div id="gpend" class="gpend" hidden><span id="gpt"></span><button class="btn" id="gpx">Änderung verwerfen</button></div><p class="mut sm hint" style="margin:8px 0 0">Änderungen an den Zielen gelten ab dem nächsten Montag, damit die Serie fair bleibt (Farben sofort). Ausnahme: Startet die Woche ohne Ziel oder bist du neu, gelten Änderungen sofort, bis das erste passende Training dieser Woche zählt. Kraft, Mobility und Sonstiges misst du wahlweise in Minuten oder in Anzahl Trainings. „Trainings“ zählt jedes beendete Training. Läufe zählen nur bei den Kilometern.</p><button class="btn" id="gcr" style="margin-top:10px">Standardfarben</button></details>
 <details class="card dsec"><summary><b>Körpergewicht</b><span class="mut sm" id="dsB"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><label for="bw" style="margin-top:0">Körpergewicht (kg)</label><input id="bw" inputmode="decimal" placeholder="z. B. 82"><label for="bwd">Datum</label><input type="date" id="bwd"><button class="btn" id="bwsave" style="width:100%;margin:10px 0 0">Gewicht speichern</button><p id="bwmsg" class="mut sm" style="margin:6px 0 0"></p><p class="mut sm hint" style="margin:4px 0 0">Jeder Eintrag landet im Verlauf. Im Tab „Daten“ › Verlauf findest du ihn unter „Körpergewicht“.</p><div id="bwlist" style="margin-top:6px"></div>
-  <label>Bei diesen Übungen gibst du nur das Zusatzgewicht ein. Dein Körpergewicht zählt zum bewegten Gewicht (Training, Monat, Verlauf) mit dem Anteil, den du hier einstellst: 100 % = ganzes Körpergewicht, oder z. B. 40 % bzw. feste kg. Rekorde (1RM, schwerstes Gewicht) zählen nur das Zusatzgewicht. Übungen, die nicht hier stehen, zählen nur mit dem eingegebenen Gewicht:</label><div style="display:flex;gap:6px;margin-top:4px"><input id="bwn" placeholder="Übung eintippen, z. B. Klimmzüge" autocomplete="off"><button class="btn" id="bwadd" style="margin:0;width:auto;white-space:nowrap">Hinzufügen</button></div><div class="sug" id="sugB"></div><div id="bwc" style="margin-top:8px"></div>
+  <label>Übungen mit Körpergewicht</label><p class="mut sm hint" style="margin:0 0 4px">Bei diesen Übungen gibst du nur das Zusatzgewicht ein. Dein Körpergewicht zählt zum bewegten Gewicht (Training, Monat, Verlauf) mit dem Anteil, den du hier einstellst: 100 % = ganzes Körpergewicht, oder z. B. 40 % bzw. feste kg. Rekorde (1RM, schwerstes Gewicht) zählen nur das Zusatzgewicht. Übungen, die nicht hier stehen, zählen nur mit dem eingegebenen Gewicht.</p><div style="display:flex;gap:6px;margin-top:4px"><input id="bwn" placeholder="Übung eintippen, z. B. Klimmzüge" autocomplete="off"><button class="btn" id="bwadd" style="margin:0;width:auto;white-space:nowrap">Hinzufügen</button></div><div class="sug" id="sugB"></div><div id="bwc" style="margin-top:8px"></div>
   <p class="mut sm hint" style="margin:0">Das Körpergewicht wird bei jedem neuen Training mitgespeichert. Änderst du es später, bleiben ältere Trainings unverändert.</p></details>
  <details class="card dsec"><summary><b>Hauptübungen</b><span class="mut sm" id="dsM"></span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
   <p class="mut sm hint" style="margin:4px 0 0">Nur diese Übungen stehen im Tab „Daten“ zur Auswahl und werden beim Planen im Auswahlmenü vorgeschlagen. Frei eintippen kannst du weiterhin jede Übung. Frühere Trainings zählen automatisch mit, wenn der Name genau gleich ist.</p>
@@ -619,7 +627,7 @@ section#t::before{content:'Training'}section#k::before{content:'Kalender'}sectio
   <div id="progw" style="display:flex;align-items:center;gap:10px;margin:0 0 10px"><span class="sm mut" style="flex:1">Steigerung pro Schritt (kg)</span><input id="progKg" inputmode="decimal" style="width:90px"></div>
   <label class="tgl"><span><b>Anstrengung pro Satz</b><small>Vor dem Speichern 1–10 antippen (10 = Maximum). Steht bei den Sätzen und ist im Tab „Daten“ wählbar.</small></span><input type="checkbox" id="fRpe"></label>
   <label class="tgl"><span><b>Supersätze und Zirkel</b><small>In der Vorlage Übungen einer Gruppe (A–D) zuordnen. Nach jedem Satz wechselt die App zur nächsten Übung der Gruppe, der Pausenton kommt erst nach der Runde.</small></span><input type="checkbox" id="fSup"></label>
-  <label class="tgl"><span><b>Infotexte ganz ausblenden</b><small>Blendet die grauen Erklärtexte in der ganzen App aus. Hinweise wie „Noch keine Daten“, Legenden und die Begründungen bei Plateau und Erholung bleiben stehen.</small></span><input type="checkbox" id="fNoHint"></label>
+  <label class="tgl"><span><b>Infotexte ganz ausblenden</b><small>Blendet alle erklärenden Texte in der ganzen App aus, auch Legenden und diese Beschreibungen. Hinweise, die du im Training brauchst (z. B. „Wähle eine Übung“), bleiben.</small></span><input type="checkbox" id="fNoHint"></label>
  </details>
  <details class="card dsec" id="about"><summary><b>Über die App</b><span class="mut sm">Quick-Start &amp; Anleitung</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
   <div class="about">
@@ -666,7 +674,7 @@ section#t::before{content:'Training'}section#k::before{content:'Kalender'}sectio
   <p class="mut sm hint" style="margin:6px 0 0">Gelöscht wird erst nach zwei Tipps. Direkt danach kannst du es rückgängig machen, solange die App offen bleibt. Ein laufendes Training wird nie gelöscht. Sicherer ist trotzdem vorher ein Backup.</p>
  </details>
  </details>
- <p class="ver" id="ver">Version 123</p>
+ <p class="ver" id="ver">Version 124</p>
 </section>
 </main>
 
@@ -1310,36 +1318,47 @@ function trHTML(k,d){
     +Object.keys(g).map(K=>{const e=K.split('\u0001')[0],G=g[K],rp=G.filter(s=>!s.secs),hs=G.filter(s=>s.secs>0),m=sum(G.map(mv)),rw=sum(rp.map(s=>+s.reps||0)),bw=isBW(e),
         best=rp.map(s=>e1(d,s)).filter(x=>x>0),anyP=G.some(s=>s.rest>0),pc=mvT?Math.round(m/mvT*100):0,
         val=s=>{const w=+s.kg>0||bw?kgH(e,s.kg,false):'';return s.secs?(w?w+' × ':'')+s.secs+' s':(w?w+' × '+s.reps:s.reps)};
-      return '<div class="exr'+(ED?' ecd':'')+'"><div class="exh">'+(ED?'<input class="ei exn" list="exl" value="'+esc(e)+'" aria-label="Übung">':'<b>'+esc(e)+'</b>')+(K!==e?' <span class="mut sm">('+gn[K]+'.)</span>':'')+(m?'<em>'+fK(m)+'</em>':hs.length?'<em>'+sum(hs.map(s=>s.secs))+' s</em>':'')+'</div>'
+      const lrC=ED&&(isLR(d,e)||G.some(s=>s.sd));
+      return '<div class="exr'+(ED?' ecd':'')+'"'+(lrC?' data-lr="1"':'')+'><div class="exh">'+(ED?'<input class="ei exn" list="exl" value="'+esc(e)+'" aria-label="Übung">'+(lrC?' <span class="etag">rechts + links</span>':''):'<b>'+esc(e)+'</b>')+(K!==e?' <span class="mut sm">('+gn[K]+'.)</span>':'')+(m?'<em>'+fK(m)+'</em>':hs.length?'<em>'+sum(hs.map(s=>s.secs))+' s</em>':'')+'</div>'
         +'<div class="exs">'+[G.length+(G.length===1?' Satz':' Sätze'),rw?rw+' Wdh.':'',best.length?'Bester 1RM ≈ '+F1(Math.max(...best))+' kg':'',hs.length?'Längster Halt '+Math.max(...hs.map(s=>s.secs))+' s':''].filter(Boolean).join(' · ')+'</div>'
         +(m&&nG>1?'<div class="exbw" title="Anteil am bewegten Gewicht des Trainings"><i class="exb"><u style="width:'+Math.max(2,pc)+'%"></u></i><small>'+pc+' %</small></div>':'')
         +'<div class="sts"><span class="sth">#</span><span class="sth">'+(ED?'kg × Wdh. / s':rp.length?(bw||rp.some(s=>+s.kg>0)?'kg × Wdh.':'Wdh.'):'Halten')+'</span><span class="sth">'+(ED&&rpeOn?'RPE':'')+'</span>'+(ED?'<span class="sth"></span>':'<span class="sth">'+(anyP?'Pause davor':'')+'</span>')
-        +G.map((s,n)=>ED?edRow(s,d.sets.indexOf(s),n+1,bw,rpeOn,anyP):'<span class="st"><i class="sn">'+(n+1)+'</i><span class="sv"><span>'+sdT(s)+val(s)+'</span>'+pbTag(pf,sn,d.sets.indexOf(s))+'</span><small class="srp">'+(s.rpe?'RPE '+s.rpe:'')+'</small><small title="Pause vor dem Satz">'+(anyP?pz(s.rest):'')+'</small></span>').join('')+'</div>'
+        +G.map((s,n)=>ED?edRow(s,d.sets.indexOf(s),n+1,bw,rpeOn,anyP,lrC):'<span class="st"><i class="sn">'+(n+1)+'</i><span class="sv"><span>'+sdT(s)+val(s)+'</span>'+pbTag(pf,sn,d.sets.indexOf(s))+'</span><small class="srp">'+(s.rpe?'RPE '+s.rpe:'')+'</small><small title="Pause vor dem Satz">'+(anyP?pz(s.rest):'')+'</small></span>').join('')+'</div>'
         +(ED?'<button class="btn eadd" data-eadd="1">+ Satz</button>':'')+'</div>'}).join('')
-    +(ED&&isK(d)?'</div><button class="btn" id="eadd">+ Übung</button>':'')
-    +(ED&&d.type!=='sonst'?'<div class="exr" id="efz"><div class="exh"><b>Freestyle</b><em>Minuten</em></div>'+(d.fz||[]).map((z,i)=>fzERow(z.n,Math.round(z.s/6)/10,i)).join('')+'</div><button class="btn" id="efza" type="button">+ Freestyle</button>'
-      :(d.fz||[]).length?'<div class="exr"><div class="exh"><b>Freestyle</b><em>'+fm(fzT)+'</em></div>'+d.fz.map(z=>'<div class="mxl"><span>'+esc(z.n)+'</span><small>'+fm(z.s)+(z.t?' · Ziel '+fm(z.t):'')+'</small></div>').join('')+'<p class="mut sm xi" style="margin:4px 0 0">Zählt zur Hälfte als Arbeitszeit, zur Hälfte als Pause.</p></div>':'')
+    +(ED&&isK(d)?fzCards(d)+'</div><button class="btn" id="eadd">+ Übung</button><div id="eaxw" class="axw" hidden><b>Übung hinzufügen</b><div id="eaxbox" style="margin-top:6px"></div><div class="eaxb"><button class="btn" id="eaxc" type="button" style="margin:0">Abbrechen</button><button class="btn" id="eaxok" type="button" style="margin:0;background:var(--acc);border-color:var(--acc);color:var(--on)">Hinzufügen</button></div><div id="eaxmsg" class="mut sm"></div></div>':'')
+    +(!ED&&(d.fz||[]).length?[...new Set(d.fz.map(z=>z.n))].map(n=>{const Z=d.fz.filter(z=>z.n===n);return '<div class="exr"><div class="exh"><b>'+esc(n)+'</b><em>'+fm(sum(Z.map(z=>z.s)))+'</em></div><div class="exs">Freestyle · '+Z.length+(Z.length===1?' Block':' Blöcke')+'</div><div class="sts"><span class="sth">#</span><span class="sth">Zeit</span><span class="sth"></span><span class="sth"></span>'+Z.map((z,i)=>'<span class="st"><i class="sn">'+(i+1)+'</i><span class="sv"><span>'+fm(z.s)+'</span></span><small class="srp">'+(z.t?'Ziel '+fm(z.t):'')+'</small><small></small></span>').join('')+'</div></div>'}).join('')+'<p class="mut sm hint" style="margin:4px 0 0">Freestyle zählt zur Hälfte als Arbeitszeit, zur Hälfte als Pause.</p>':'')
     +(rd.length?'<div class="exr"><div class="exh"><b>Runden</b><em>'+fm(rdw)+'</em></div><div class="sts"><span class="sth">#</span><span class="sth">Zeit</span><span class="sth"></span><span class="sth">'+(rd.some(r=>r.rest>0)?'Pause davor':'')+'</span>'+rd.map((r,i)=>'<span class="st"><i class="sn">R'+(i+1)+'</i><span class="sv">'+fm(r.dur)+'</span><small></small><small title="Pause vor der Runde">'+pz(r.rest)+'</small></span>').join('')+'</div></div>':'')
     +((d.mx||[]).length?(()=>{const its=mobItems(d),dnA=its.filter(t=>(d.dn||[]).includes(t.key)).length;
-        if(ED)return '<div class="exr"><div class="exh"><b>Mobility-Übungen</b><em>antippen = erledigt</em></div><div class="chips" id="edn" style="margin:8px 0 0">'+its.map(it=>'<button class="chip'+(edDn.includes(it.key)?' on':'')+'" data-edk="'+esc(it.key)+'">'+esc(itemPlain(it))+'</button>').join('')+'</div></div>';
+        if(ED)return '<div class="exr"><div class="exh"><b>Mobility-Übungen</b><em>antippen = erledigt</em></div><div class="chips" id="edn" style="margin:8px 0 0">'+its.map(it=>'<button class="chip'+(edDn.includes(it.key)?' on':'')+'" data-edk="'+esc(it.key)+'">'+esc(itemPlain(it))+'</button>').join('')+'</div></div><div id="efs">'+fzCards(d,true)+'</div>';
         return '<div class="exr"><div class="exh"><b>Mobility-Übungen</b><em>'+dnA+'/'+its.length+'</em></div>'+d.mx.map((x,xi)=>{const it=its.filter(t=>t.i===xi),dn=it.filter(t=>(d.dn||[]).includes(t.key)).length;return '<div class="mxl"><span>'+exTxt(x)+'</span><small'+(dn===it.length&&it.length?' class="ok"':'')+'>'+dn+'/'+it.length+' erledigt</small></div>'}).join('')+'</div>'})():'')
     +(ED?'<div class="tra"><button class="big" id="esv2">Speichern</button><button class="btn" id="ecn2">Abbrechen</button></div><div id="emsg3" class="mut" style="margin-top:6px"></div></div></div>'
       :'<div class="tra"><button class="btn" data-ed="'+k+'">Bearbeiten</button>'+spHTML(k,d,'b')+'<button class="btn" data-del="'+k+'">Training löschen</button></div>'+spHTML(k,d,'x')+'</div></details>');
 }
 // Eine Satz-Zeile im Bearbeiten-Modus (sieht aus wie die Ansicht, Zahlen sind Felder)
-function edRow(s,si,n,bw,rpeOn,anyP){
+function edRow(s,si,n,bw,rpeOn,anyP,lr){
   const t=s&&s.secs>0,f=(c,v,w,im)=>'<input class="ei '+c+'" inputmode="'+(im||'numeric')+'" value="'+esc(v==null?'':String(v))+'" style="--w:'+w+'">';
-  return '<span class="st erow" data-si="'+(si==null?'':si)+'"><i class="sn">'+n+'</i><span class="sv"><span>'+sdT(s)+(bw?'<b class="kgb" title="Körpergewicht">KG</b>+':'')+f('sk',s?s.kg:'',3,'decimal')+' × '+f('svl',s?(t?s.secs:s.reps):'',2)+' <button class="su" data-u="'+(t?'t':'r')+'" title="Wiederholungen oder Sekunden">'+(t?'s':'Wdh.')+'</button></span></span>'
+  return '<span class="st erow" data-si="'+(si==null?'':si)+'"><i class="sn">'+n+'</i><span class="sv"><span>'+(lr?'<button class="ssd" type="button" data-sd="'+(s&&s.sd==='L'?'L':'R')+'" title="Seite wechseln">'+(s&&s.sd==='L'?'L':'R')+'</button>':sdT(s))+(bw?'<b class="kgb" title="Körpergewicht">KG</b>+':'')+f('sk',s?s.kg:'',3,'decimal')+' × '+f('svl',s?(t?s.secs:s.reps):'',2)+' <button class="su" data-u="'+(t?'t':'r')+'" title="Wiederholungen oder Sekunden">'+(t?'s':'Wdh.')+'</button></span></span>'
     +'<small class="srp">'+(rpeOn?f('srpi',s&&s.rpe||'',2):'')+'</small><button class="erm" aria-label="Satz entfernen">✕</button></span>';
 }
+// Freestyle im Bearbeiten: eine eigene Übung, jede Zeile ist ein Zeitblock in Minuten
+function fzRow(m,fi,n){return '<span class="st erow fzr2" data-fi="'+(fi==null?'':fi)+'"><i class="sn">'+n+'</i><span class="sv"><span><input class="ei fzm" inputmode="decimal" placeholder="Min." value="'+(m>0?String(m).replace('.',','):'')+'" style="--w:4"> min</span></span><small class="srp"></small><button class="erm" aria-label="Block entfernen">✕</button></span>'}
+function fzCard(name,rows,ro){return '<div class="exr ecd" data-fs="1"><div class="exh">'+(ro?'<b class="exn" data-n="'+esc(name)+'">'+esc(name)+'</b>':'<input class="ei exn" list="exl" placeholder="Übung" aria-label="Übung" value="'+esc(name||'')+'">')+' <span class="etag">Freestyle</span></div><div class="sts"><span class="sth">#</span><span class="sth">Zeit</span><span class="sth"></span><span class="sth"></span>'+rows.map((r,i)=>fzRow(r[0],r[1],i+1)).join('')+'</div><button class="btn eadd" data-eadd="1">+ Zeitblock</button></div>'}
+function fzCards(d,ro){const Z=d.fz||[],N=[...new Set([...(d.type==='mob'?(d.mx||[]).filter(x=>x.fs).map(x=>x.n):[]),...Z.map(z=>z.n)])];
+  return N.map(n=>fzCard(n,Z.map((z,i)=>[z,i]).filter(([z])=>z.n===n).map(([z,i])=>[Math.round(z.s/6)/10,i]),ro)).join('')}
+// Neue Übung im Bearbeiten: wie „+ Übung“ im Training (Ablauf, Seiten, Gruppe), danach Sätze mit „+ Satz“
+function edCard(x){if(x.fs)return fzCard(x.n,[[x.fm>0?x.fm:'',null]]);
+  const n=Math.max(1,Math.round(+x.s||1)),secs=x.u==='t';let kg=+x.kg||0;if(!kg){let L=null;Object.keys(days).sort().forEach(k=>(days[k].sets||[]).forEach(s=>{if(s&&s.ex===x.n)L=s}));kg=L?+L.kg||0:0}
+  const st={ex:x.n,kg,reps:secs?0:(+x.r||''),secs:secs?(+x.r||0):0};let rows='',c=0;for(let i=0;i<n;i++)(x.lr?['R','L']:[null]).forEach(sd=>{rows+=edRow({...st,...(sd?{sd}:{})},null,++c,isBW(x.n),cfg.fRpe,false,!!x.lr)});
+  return'<div class="exr ecd"'+(x.lr?' data-lr="1"':'')+(x.g&&cfg.fSup?' data-g="'+x.g+'"':'')+'><div class="exh"><input class="ei exn" list="exl" placeholder="Übung" aria-label="Übung" value="'+esc(x.n)+'">'+(x.lr?' <span class="etag">rechts + links</span>':'')+(x.g&&cfg.fSup?' <span class="etag">Gruppe '+x.g+'</span>':'')+'</div><div class="sts"><span class="sth">#</span><span class="sth">kg × Wdh. / s</span><span class="sth">'+(cfg.fRpe?'RPE':'')+'</span><span class="sth"></span>'+rows+'</div><button class="btn eadd" data-eadd="1">+ Satz</button></div>'}
 function fzERow(n,m,i){return '<div class="fzr" data-i="'+(i==null?'':i)+'" style="display:flex;gap:6px;align-items:center;margin-top:6px"><input class="ei fzn" list="exl" placeholder="Übung" value="'+esc(n||'')+'" style="flex:1;min-width:0"><input class="ei fzm" inputmode="decimal" placeholder="Min." value="'+(m>0?String(m).replace('.',','):'')+'" style="--w:4"><i class="tu">min</i><button class="btn fzrm" type="button" style="margin:0;width:auto" aria-label="Entfernen">✕</button></div>'}
 function saveEdit(){
   const k=editK,d=days[k];if(!d)return;
   let sets=d.sets||[];
   if(isK(d)){
     const old=d.sets||[],keep=new Map();let bad=false,lastTs=0;sets=[];
+    const lrN=new Set(d.lr||[]),axN=[];
     $$('#esets .ecd').forEach(c=>{
-      const ex=c.querySelector('.exn').value.trim();if(!ex)return;
+      if(c.dataset.fs)return;const ex=c.querySelector('.exn').value.trim();if(!ex)return;if(c.dataset.lr)lrN.add(ex);if(c.dataset.g||c.dataset.lr)axN.push({n:ex,g:c.dataset.g||'',lr:!!c.dataset.lr});
       c.querySelectorAll('.erow').forEach(r=>{
         const kg=num(r.querySelector('.sk').value),v=Math.round(num(r.querySelector('.svl').value)),t=r.querySelector('.su').dataset.u==='t';
         if(!(v>0)){bad=true;return}
@@ -1348,6 +1367,7 @@ function saveEdit(){
         if(!o)n.ts=(lastTs||d.t1||d.ended||Date.now())+1;
         if(t){n.reps=0;n.secs=v}else{n.reps=v;delete n.secs}
         const rp=r.querySelector('.srpi');if(rp){const x=Math.round(num(rp.value));if(x>=1&&x<=10)n.rpe=x;else delete n.rpe}
+        const sb=r.querySelector('.ssd');if(sb)n.sd=sb.dataset.sd==='L'?'L':'R';
         lastTs=n.ts||lastTs;if(o)keep.set(+si,n);sets.push(n);
       });
     });
@@ -1355,10 +1375,13 @@ function saveEdit(){
     // Entfernte Sätze: ihre Zeit wird zur Pause des nächsten Satzes (wie beim Löschen im Training)
     let acc=0,seen=false;old.forEach((o,i)=>{const n=keep.get(i);if(!n){if(seen)acc+=(o.rest||0)+(o.dur||0);return}
       if(!seen&&i>0)n.rest=null;else if(acc)n.rest=((n.rest||0)+acc)||null;acc=0;seen=true});
+    d.lr=[...lrN];{const have=new Set(pItems(d).map(e=>e.x.n));axN.forEach(a=>{if(have.has(a.n))return;have.add(a.n);(d.ax=d.ax||[]).push({n:a.n,s:0,r:0,u:'r',kg:0,...(a.lr?{lr:1}:{}),...(a.g?{g:a.g}:{})})})}
     sets=sets.map((s,i)=>[s,i]).sort((a,b)=>((a[0].ts||0)-(b[0].ts||0))||a[1]-b[1]).map(x=>x[0]);
   }
-  if($('#efz')){const old=d.fz||[],Z=[];let bad=false;$$('#efz .fzr').forEach(r=>{const n=r.querySelector('.fzn').value.trim(),m=num(r.querySelector('.fzm').value);if(!n&&!(m>0))return;if(!n||!(m>0)){bad=true;return}const o=r.dataset.i===''?null:old[+r.dataset.i],sec=Math.round(m*60);Z.push({...(o||{ts:d.t1||d.ended||Date.now()}),n,s:sec,...(o&&o.n!==n?{pi:undefined}:{})})});
-    if(bad){$('#emsg3').textContent='Bitte bei Freestyle Übung und Minuten eintragen.';return}Z.forEach(z=>{if(z.pi===undefined)delete z.pi});if(Z.length)d.fz=Z;else delete d.fz}
+  if(d.type!=='sonst'&&$('.ted')){const old=d.fz||[],Z=[];$$('.ted .ecd[data-fs]').forEach(c=>{const x=c.querySelector('.exn'),n=((x.value!=null?x.value:x.dataset.n)||'').trim();if(!n)return;
+      c.querySelectorAll('.fzr2').forEach(r=>{const m=num(r.querySelector('.fzm').value);if(!(m>0))return;const o=r.dataset.fi===''?null:old[+r.dataset.fi],z={...(o||{ts:d.t1||d.ended||Date.now()}),n,s:Math.round(m*60)};if(o&&o.n!==n)delete z.pi;Z.push(z)})});
+    if(d.type==='mob'){const N=new Set(Z.map(z=>z.n));(d.mx||[]).forEach(x=>{if(x.fs&&!N.has(x.n)&&edDn.includes(x.n))edDn=edDn.filter(q=>q!==x.n);if(x.fs&&N.has(x.n)&&!edDn.includes(x.n))edDn=[...edDn,x.n]})}
+    if(Z.length)d.fz=Z;else delete d.fz}
   d.sets=sets;d.title=$('#etl').value.trim();d.note=$('#ent').value.trim();
   if(isRun(d))[['#erk','km',1],['#eru','up',0],['#erh','hr',0],['#erx','hrx',0]].forEach(([sl,f,dec])=>{const v=num($(sl).value);if(v>0)d[f]=dec?Math.round(v*100)/100:Math.round(v);else delete d[f]});
   const nd=$('#edd').value||k.slice(0,10);let nk=k;
@@ -1406,10 +1429,7 @@ document.addEventListener('change',e=>{const s=e.target;
   if(s&&s.dataset&&s.dataset.tile!=null){const t=[...(cfg.tiles||['n','tt','vol','rest'])];t[+s.dataset.tile]=s.value;cfg.tiles=t;saveC();renderMs()}});
 document.addEventListener('toggle',e=>{const t=e.target;if(t&&t.dataset&&t.dataset.ms)msOpen[t.dataset.ms]=t.open;if(t&&t.classList&&t.classList.contains('bwld'))bwlO=t.open},true);
 function renderCal(){renderMs();try{renderCalBody()}catch(e){console.error(e)}}
-// i-Texte: Zustand merken (bleibt auch nach Neuzeichnen offen)
-const XIO=new Set(),xiKey=el=>el.id||(el.textContent||'').trim().slice(0,40);
-document.addEventListener('click',e=>{if(!document.body.classList.contains('nohint'))return;const x=e.target.closest&&e.target.closest('.xi');if(!x||e.target.closest('button,a,input,select'))return;e.stopPropagation();e.preventDefault();const k=xiKey(x);if(x.classList.toggle('xo'))XIO.add(k);else XIO.delete(k)},true);
-new MutationObserver(()=>{if(!XIO.size)return;document.querySelectorAll('.xi:not(.xo)').forEach(el=>{if(XIO.has(xiKey(el)))el.classList.add('xo')})}).observe(document.body,{childList:true,subtree:true});
+// (Infotexte: werden komplett über den Schalter „Infotexte ganz ausblenden“ gesteuert)
 // Heute-Knopf: Kalender und Plan springen zum heutigen Tag
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-tdy]');if(!b)return;e.stopPropagation();const T=today(),n=new Date(),m0=new Date(n.getFullYear(),n.getMonth(),1),w=b.dataset.tdy;
   if(w==='c'){if(cfg.cmv==='z'){zY=n.getFullYear();zSel=null}else{if(ntNew)ntDrop();editK=null;abEd=null;ntOpen=null;trOpen.clear();cmo=m0;cwk=monOf(T);selDay=T}renderCal();const c=$('#detc');if(c&&!c.hidden)try{c.scrollIntoView({behavior:'smooth',block:'nearest'})}catch(x){}}
@@ -1428,7 +1448,7 @@ function zHTML(y){const W=goalWeeks(),S=goalSeries(W),cw=monOf(today());
   let dt='<div class="zdt"><b>KW '+kwOf(sel)+' · '+dd(sel).slice(0,6)+' – '+dd(dPlus(sel,6)).slice(0,6)+'</b><span class="zs s-'+o.st+'">'+(o.st==='ok'?'✓ Ziel erreicht · Serie '+o.run:o.st==='open'?'läuft noch'+(o.run?' · Serie '+o.run:''):o.st==='prot'?'🤒 krank / verletzt · Serie bleibt erhalten':o.st==='miss'?'✗ Ziel verfehlt · Serie beendet':ZWST[o.st][1]||'kommt noch')+'</span>';
   if(['ok','miss','prot','open'].includes(o.st))dt+=GK.filter(q=>G[q]).map(q=>{const un=gUnit(q,G),v=gVal(x,q,G),g=G[q],f=v>=g-1e-9,fv=z=>un==='km'?fkm(Math.round(z*10)/10)+' km':un==='n'?String(z):z+' Min.';return'<div class="kv"><span>'+GL[q]+(un==='n'&&q!=='n'?' (Anzahl)':'')+'</span><span'+(f?' class="zok"':'')+'>'+fv(v)+' / '+fv(g)+(f?' ✓':'')+'</span></div>'}).join('')+(o.off?'<div class="mut sm" style="margin-top:4px">🤒 '+o.off+' Tag'+(o.off===1?'':'e')+' krank / verletzt</div>':'');
   dt+='</div>';
-  return'<div class="zhd"><div><b>🔥 '+S.n+'</b><span>aktuelle Serie</span></div><div><b>🏆 '+S.best+'</b><span>beste Serie</span></div><div><b>'+nOk+'<small> / '+nG+'</small></b><span>Wochen erreicht '+y+'</span></div></div><div class="zg">'+h+'</div><p class="mut sm" style="margin:6px 0 0">Zahl = Serie in dieser Woche · ✗ verfehlt · 🤒 krank / verletzt, Serie bleibt · leer = kein Ziel oder noch keine Trainings. Tippe auf eine Woche.</p>'+dt}
+  return'<div class="zhd"><div><b>🔥 '+S.n+'</b><span>aktuelle Serie</span></div><div><b>🏆 '+S.best+'</b><span>beste Serie</span></div><div><b>'+nOk+'<small> / '+nG+'</small></b><span>Wochen erreicht '+y+'</span></div></div><div class="zg">'+h+'</div><p class="mut sm hint" style="margin:6px 0 0">Zahl = Serie in dieser Woche · ✗ verfehlt · 🤒 krank / verletzt, Serie bleibt · leer = kein Ziel oder noch keine Trainings. Tippe auf eine Woche.</p>'+dt}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-cmv],[data-zw]');if(!b)return;if(b.dataset.cmv){cfg.cmv=b.dataset.cmv==='z'?'z':'t';saveC();if(cfg.cmv==='z'){zY=new Date().getFullYear();zSel=null}renderCal();return}zSel=b.dataset.zw;renderCal()});
 // Kalender: Abwesenheiten anzeigen und eintragen
 const abCls=k=>{const x=abD(k);return!x?'':x.o?' ab-o ab-'+x.o.t:x.r?' ab-r':x.u?' ab-u':''};
@@ -1444,7 +1464,8 @@ function ntHTML(k){if(ntOpen!==k)return'<button class="btn ntad" data-ntn="1">+ 
     +'<p class="mut sm hint" style="margin:8px 0 0">Danach trägst du Uhrzeit, Dauer, Sätze, Tagesform usw. direkt ein. Bei einem Krafttraining aus deinen Trainings stehen die Übungen schon da – prüfe Gewicht und Wiederholungen vor dem Speichern.</p>'
     +'<button class="big" id="ntgo">Nachtragen</button><button class="end" id="ntc">Abbrechen</button></div>'}
 function ntDrop(){const k=ntNew;ntNew=null;if(k&&days[k]&&days[k].man){delete days[k];save(k)}}
-function ntDraft(t){return(t.ex||[]).map(x=>{const n=Math.max(1,Math.round(+x.s||1)),secs=x.u==='t';let kg=+x.kg||0;if(!kg){let L=null;Object.keys(days).sort().forEach(k=>(days[k].sets||[]).forEach(s=>{if(s&&s.ex===x.n)L=s}));kg=L?+L.kg||0:0}
+function ntDraft(t){return(t.ex||[]).map(x=>edCard(x)).join('')}
+function ntDraftAlt(t){return(t.ex||[]).map(x=>{const n=Math.max(1,Math.round(+x.s||1)),secs=x.u==='t';let kg=+x.kg||0;if(!kg){let L=null;Object.keys(days).sort().forEach(k=>(days[k].sets||[]).forEach(s=>{if(s&&s.ex===x.n)L=s}));kg=L?+L.kg||0:0}
   const st={ex:x.n,kg,reps:secs?0:(+x.r||''),secs:secs?(+x.r||0):0};let rows='';for(let i=0;i<n;i++)rows+=edRow(st,null,i+1,isBW(x.n),cfg.fRpe,false);
   return'<div class="exr ecd"><div class="exh"><input class="ei exn" list="exl" placeholder="Übung" aria-label="Übung" value="'+esc(x.n)+'"></div><div class="sts"><span class="sth">#</span><span class="sth">kg × Wdh. / s</span><span class="sth">'+(cfg.fRpe?'RPE':'')+'</span><span class="sth"></span>'+rows+'</div><button class="btn eadd" data-eadd="1">+ Satz</button></div>'}).join('')}
 document.addEventListener('click',e=>{const b=e.target.closest('#det button');if(!b)return;
@@ -1453,8 +1474,9 @@ document.addEventListener('click',e=>{const b=e.target.closest('#det button');if
   if(b.id==='ntgo'){const v=$('#nts').value,k0=selDay;if(!k0||k0>today())return;const fr=v.startsWith('free:'),ty=fr?v.slice(5):null,t=fr?null:tpl[v];if(!fr&&!t)return;
     const type=fr?(ty==='run'?'sonst':ty):(t.type||'kraft'),k=newKey(k0),d={date:k0,type,title:fr?(ty==='run'?'Laufen':''):t.name,note:'',sets:[],bw:cfg.bw,ended:Date.now(),man:1};
     if(!fr)d.tp=v;if(fr?ty==='run':t.run)d.run=1;
-    if(type==='mob'&&t){d.mx=(t.ex||[]).map(x=>({n:x.n,s:x.s||0,r:x.r||0,h:x.h||0,dm:x.dm||'stat',sd:x.sd?1:0}));d.dn=[]}
-    days[k]=d;if(d.mx){d.dn=mobItems(d).map(i=>i.key)}save(k);ntOpen=null;ntNew=k;editK=k;trOpen.add(k);edDn=[...(d.dn||[])];renderCal();
+    if(type==='mob'&&t){d.mx=(t.ex||[]).map(x=>({n:x.n,s:x.s||0,r:x.r||0,h:x.h||0,dm:x.dm||'stat',sd:x.sd?1:0,...(x.fs?{fs:1,...(x.fm>0?{fm:x.fm}:{})}:{})}));d.dn=[]}
+    days[k]=d;if(d.mx){d.dn=mobItems(d).filter(i=>!i.x.fs).map(i=>i.key)}save(k);ntOpen=null;ntNew=k;editK=k;trOpen.add(k);edDn=[...(d.dn||[])];renderCal();
+    if(type==='mob'&&d.mx&&$('#efs'))$$('#efs .ecd[data-fs]').forEach(c=>{const x=d.mx.find(q=>q.fs&&q.n===c.querySelector('.exn').dataset.n);if(x&&!c.querySelector('.fzr2'))c.querySelector('.sts').insertAdjacentHTML('beforeend',fzRow(x.fm>0?x.fm:'',null,1))});
     if(type==='kraft'&&t&&(t.ex||[]).length){const es=$('#esets');if(es)es.insertAdjacentHTML('beforeend',ntDraft(t))}
     const c=document.querySelector('details.trd[data-tk="'+k+'"]');if(c)try{c.scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}
     return}
@@ -1780,7 +1802,7 @@ function renderPl(){
   $('#dsP').textContent=bar?'Stange '+fN(bw)+' kg':'Gürtel'+(gw?' '+fN(gw)+' kg':'');
   setVal('#ptot',cfg.pTot||'');
   const tv=$('#ptot').value.trim(),tot=num(tv),R=$('#pres');
-  if(!tv||!(tot>0)){R.innerHTML='<p class="mut sm" style="margin:0">Gib das Gesamtgewicht ein, dann siehst du, welche Scheiben du brauchst.</p>';return}
+  if(!tv||!(tot>0)){R.innerHTML='<p class="mut sm hint" style="margin:0">Gib das Gesamtgewicht ein, dann siehst du, welche Scheiben du brauchst.</p>';return}
   const side=bar?(tot-bw)/2:tot-gw;
   if(side<0){R.innerHTML='<p class="mut sm" style="margin:0">Das ist leichter als '+(bar?'die Stange':'der Gürtel')+' ('+fN(base)+' kg).</p>';return}
   if(side===0){R.innerHTML='<p style="margin:0"><b>'+(bar?'Nur die Stange':'Nur der Gürtel')+'</b></p>';return}
@@ -1918,7 +1940,7 @@ function renderOv(){const el=$('#gu'),W=weekLoads(12);
   }
   // Ein gemeinsamer Erholungs-Hinweis: Deload > gesunkene Tagesform > hohe Belastung
   {const R=[];if(many)R.push('Bei '+pl.length+' von '+pls.length+' Hauptübungen geht es gerade nicht voran.');if(ft&&ft.low)R.push(ft.why+(fl?' Gleichzeitig ist deine Belastung hoch.':''));ln.forEach(x=>R.push(x));
-    if(many||fl)h+='<div class="last" id="ovEr" style="margin-top:10px"><b>Eine Deload-Woche wäre sinnvoll.</b>'+tip('Eine Woche locker: etwa halb so viele Sätze, Gewichte ca. 10 % leichter, Anstrengung höchstens 7. Achte dazu auf Schlaf und wenig Stress.',R.join(' '))+'<div class="mut sm" style="margin-top:6px">Nur ein Hinweis, du entscheidest.</div>'+seenBox([kEr,ft&&ft.low?kFt:''])+'</div>';
+    if(many||fl)h+='<div class="last" id="ovEr" style="margin-top:10px"><b>Eine Deload-Woche wäre sinnvoll.</b>'+tip('Eine Woche locker: etwa halb so viele Sätze, Gewichte ca. 10 % leichter, Anstrengung höchstens 7. Achte dazu auf Schlaf und wenig Stress.',R.join(' '))+'<div class="mut sm hint" style="margin-top:6px">Nur ein Hinweis, du entscheidest.</div>'+seenBox([kEr,ft&&ft.low?kFt:''])+'</div>';
     else if((ft&&ft.low)||ln.length)h+='<div class="last" id="ovEr" style="margin-top:10px"><b>Erholung</b>'+tip(ft&&ft.low?'Plane ein paar leichtere Tage ein, achte auf Schlaf und baue Stress ab, bevor du wieder voll trainierst.':'Achte in den nächsten Tagen besonders auf Schlaf und Erholung.',R.join(' '))+seenBox([ln.length?kEr:'',ft&&ft.low?kFt:''])+'</div>'}
   el.innerHTML=h+'</div>';try{tfInit();tfDraw()}catch(e){console.error(e)}}
 // Bewegungsmuster aus den eingetragenen Muskelgruppen (Hauptmuskeln zählen, sonst Nebenmuskeln)
@@ -1953,14 +1975,14 @@ const HC=['var(--hm1)','var(--hm2)','var(--hm3)','var(--hm4)','var(--hm5)'];
 function renderMu(){const el=$('#gm'),sc=mgScore(mgP),mx=Math.max(0,...Object.values(sc.g));
   let h='<div class="card"><b>Muskeln und Balance</b><div class="seg" id="mgd" style="margin-top:8px"><button data-mgd="7"'+(mgP===7?' class="on"':'')+'>7 Tage</button><button data-mgd="28"'+(mgP===28?' class="on"':'')+'>4 Wochen</button><button data-mgd="84"'+(mgP===84?' class="on"':'')+'>12 Wochen</button></div>';
   if(!sc.n){h+='<p class="mut sm" style="margin:0">In diesem Zeitraum gibt es keine Krafttrainings mit zugeordneten Übungen.</p></div>'}
-  else{h+='<div id="hmc" class="hmc">'+hmSvg(sc.g,mx)+'</div><div id="hmt" class="mut sm" style="text-align:center;min-height:18px;margin-top:4px">Tippe auf einen Muskel für Details.</div><div class="hmx">wenig '+HC.map(c=>'<i style="background:'+c+'"></i>').join('')+' viel</div>'
+  else{h+='<div id="hmc" class="hmc">'+hmSvg(sc.g,mx)+'</div><div id="hmt" class="mut sm" style="text-align:center;min-height:18px;margin-top:4px"><span class="hint">Tippe auf einen Muskel für Details.</span></div><div class="hmx">wenig '+HC.map(c=>'<i style="background:'+c+'"></i>').join('')+' viel</div>'
     +'<p class="mut sm hint" style="margin:8px 0 6px">Nach Belastung: Gewicht × Wiederholungen. Bei Körpergewichtsübungen zählt dein Körpergewicht mit, beim Halten gelten 3 s als 1 Wiederholung. Primär ganz, sekundär halb.</p>'
     +MG.slice().sort((a,b)=>sc.g[b]-sc.g[a]).map(q=>'<div class="mgb"><span>'+esc(q)+'</span><i><u style="width:'+(mx?Math.round(sc.g[q]/mx*100):0)+'%"></u></i><span>'+fLoad(sc.g[q])+'</span></div>').join('')+'</div>';
     const g=sc.g,T={push:g['Brust']+g['Schultern']+g['Trizeps'],pull:g['Oberer Rücken']+g['Latissimus']+g['Bizeps'],legs:g['Oberschenkel vorne']+g['Oberschenkel hinten']+g['Gesäß']+g['Waden'],core:g['Bauch / Rumpf']+g['Unterer Rücken']},tot=T.push+T.pull+T.legs+T.core||1,NM={push:'Drücken',pull:'Ziehen',legs:'Beine',core:'Rumpf'};
     h+='<div class="card"><b>Bewegungsmuster</b><p class="mut sm hint" style="margin:2px 0 6px">Anteil an deinem Training im gewählten Zeitraum.</p>'+Object.keys(T).map(k=>'<div class="mgb"><span>'+NM[k]+'</span><i><u style="width:'+Math.round(T[k]/tot*100)+'%"></u></i><span>'+Math.round(T[k]/tot*100)+' %</span></div>').join('');
     const tips=[];if(T.push>0&&T.pull>0){const q=T.push/T.pull;if(q>1.6)tips.push('Du drückst deutlich mehr, als du ziehst. Etwas mehr Rudern oder Klimmzüge hält die Schultern im Gleichgewicht.');else if(q<.6)tips.push('Du ziehst deutlich mehr, als du drückst. Etwas mehr Liegestütze oder Dips würde ausgleichen.')}else if(T.push>0&&!T.pull)tips.push('Ziehende Übungen kommen im Zeitraum nicht vor.');else if(T.pull>0&&!T.push)tips.push('Drückende Übungen kommen im Zeitraum nicht vor.');
     if(T.legs/tot<.12)tips.push('Die Beine kommen kaum vor. Falls das Absicht ist, passt alles.');
-    h+=tips.length?'<div class="last" style="margin-top:8px">'+tips.map(esc).join('<br>')+'<br><span class="mut sm">Nur ein Hinweis, kein Muss.</span></div>':'<p class="mut sm" style="margin:8px 0 0">Ausgewogen, nichts Auffälliges.</p>';h+='</div>'}
+    h+=tips.length?'<div class="last" style="margin-top:8px">'+tips.map(esc).join('<br>')+'<span class="mut sm hint" style="display:block">Nur ein Hinweis, kein Muss.</span></div>':'<p class="mut sm" style="margin:8px 0 0">Ausgewogen, nichts Auffälliges.</p>';h+='</div>'}
   const uk=Object.keys(sc.unk).sort((a,b)=>sc.unk[b]-sc.unk[a]);
   const edB=(n,t)=>'<button class="btn" data-xedit="mu" data-xn="'+esc(n)+'" style="margin:0;width:auto;font-size:13px;padding:6px 10px">'+t+'</button>',edI=n=>mgRow&&mgRow.ctx==='mu'&&mgRow.name===n?mgEdHTML():'';
   if(uk.length)h+='<div class="card"><b>Noch ohne Muskelgruppe</b><p class="mut sm" style="margin:2px 0 6px">Diese Übungen zählen erst, wenn du ihnen Muskelgruppen gibst. Tippe auf „Zuordnen“.</p>'+uk.slice(0,8).map(n=>'<div class="exr" style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span>'+esc(n)+'</span>'+edB(n,'Zuordnen')+'</div>'+edI(n)).join('')+'</div>';
@@ -2230,7 +2252,7 @@ function draw(){const svg=$('#hzs');if(!svg||!C)return;const W=400,H=210,L=30,Rp
   for(let n=n0;n<=n1;n++){const t=dOf(kOf(n)),ok=rng<=42?t.getDay()===1:rng<=91?(t.getDate()===1||t.getDate()===15):(t.getDate()===1&&t.getMonth()%2===0);if(ok)s+='<text x="'+xs(n).toFixed(1)+'" y="'+(H-12)+'" text-anchor="middle" font-size="10" fill="var(--mut)">'+(rng>91?MS[t.getMonth()]+(t.getMonth()===0?' '+String(t.getFullYear()).slice(2):''):ds(kOf(n)))+'</text>'}
   const lp=pf[pf.length-1];s+='<circle cx="'+lp[0].toFixed(1)+'" cy="'+lp[1].toFixed(1)+'" r="4.5" fill="var(--acc)" stroke="var(--card)" stroke-width="2"/><line id="hzcur" x1="0" x2="0" y1="'+top+'" y2="'+(sy+sh)+'" stroke="var(--fg)" stroke-opacity=".35" visibility="hidden"/>';
   svg.innerHTML=s;svg._g={xs,n0,n1,L,W,Rp};
-  $('#hzlg').innerHTML='<span><i style="--c:var(--acc)"></i>Fitness</span><span><i style="--c:#d97706"></i>Ermüdung</span>'+['k','v','u'].filter(t=>used.has(t)).map(t=>'<span><i class="hz-bx" style="--c:'+ABC[t]+'"></i>'+ABN[t]+'</span>').join('')+(used.has('r')?'<span><i class="hz-bx" style="--c:'+RE+'"></i>Wiedereinstieg</span>':'')+'<span>Streifen unten: Form an jedem Tag</span>'}
+  $('#hzlg').innerHTML='<span><i style="--c:var(--acc)"></i>Fitness</span><span><i style="--c:#d97706"></i>Ermüdung</span>'+['k','v','u'].filter(t=>used.has(t)).map(t=>'<span><i class="hz-bx" style="--c:'+ABC[t]+'"></i>'+ABN[t]+'</span>').join('')+(used.has('r')?'<span><i class="hz-bx" style="--c:'+RE+'"></i>Wiedereinstieg</span>':'')+'<span class="hint">Streifen unten: Form an jedem Tag</span>'}
 function tipAt(cx){const svg=$('#hzs'),tip=$('#hztip'),G=svg&&svg._g;if(!G)return;const r=svg.getBoundingClientRect(),vx=(cx-r.left)/r.width*400;let n=Math.round(G.n0+(vx-G.L)/(G.W-G.L-G.Rp)*(G.n1-G.n0));n=Math.max(G.n0,Math.min(G.n1,n));const x=at(n);if(!x)return;const k=kOf(n),px=G.xs(n);
   const c=svg.querySelector('#hzcur');c.setAttribute('x1',px);c.setAttribute('x2',px);c.setAttribute('visibility','visible');
   const ab=(cfg.ab||[]).find(e=>k>=e.a&&k<=e.b),re=!ab&&(cfg.ab||[]).find(e=>e.t!=='u'&&e.re&&n>dn(e.b)&&n<=dn(e.b)+e.re),trs=C.ks.filter(q=>q.slice(0,10)===k).map(q=>days[q].title||tname(days[q])),s0=stOf(FO(x));
@@ -2307,13 +2329,13 @@ function finHTML(){const k=C.ks.filter(q=>isK(days[q])&&(days[q].sets||[]).lengt
    +'<div class="hz-fins"><div><b>'+d.sets.length+'</b><span>Sätze</span></div><div><b>'+sum(d.sets.map(s=>+s.reps||0))+'</b><span>Wiederholungen</span></div><div><b>'+nf(sum(d.sets.map(s=>setLoad(d,s))))+'</b><span>kg bewegt</span></div></div>'
    +pr.map(s=>'<div class="hz-pr">🏆 <span><b>'+st(s)+'</b><br><span class="mut sm">neuer Bestwert</span></span></div>').join('')
    +'<div class="hz-fx">'+EX.map(x=>'<div class="hz-row"><span>'+esc(x[0])+'</span><span class="mut">'+x[1]+' × · bester Satz '+x[2]+'</span></div>').join('')+'</div>'
-   +'<p class="hz-lbl" style="margin:4px 0 0">Was es bewirkt</p><div class="hz-eff"><div><span class="mut sm">Fitness</span><br><b style="color:var(--acc)">+'+nf(L*C.a1/C.mx*100,1)+'</b></div><div><span class="mut sm">Ermüdung</span><br><b style="color:#d97706">+'+nf(L*C.a7/C.mx*100,1)+'</b></div></div><p class="mut sm" style="margin:0">Danach bist du etwas müder, langfristig fitter. Die Ermüdung baut sich in etwa 2 bis 3 Tagen ab.</p>'}
+   +'<p class="hz-lbl" style="margin:4px 0 0">Was es bewirkt</p><div class="hz-eff"><div><span class="mut sm">Fitness</span><br><b style="color:var(--acc)">+'+nf(L*C.a1/C.mx*100,1)+'</b></div><div><span class="mut sm">Ermüdung</span><br><b style="color:#d97706">+'+nf(L*C.a7/C.mx*100,1)+'</b></div></div><p class="mut sm hint" style="margin:0">Danach bist du etwas müder, langfristig fitter. Die Ermüdung baut sich in etwa 2 bis 3 Tagen ab.</p>'}
 const CALC='<p class="hz-lbl">So rechnet der Form-Kompass</p><h2 class="hz-h">Eine Kurve für alles, was du trainierst</h2><ul class="hz-ul">'
  +'<li><b>Last</b> eines Trainings = Anstrengung (1–10) × Dauer in Minuten, angepasst an die Tagesform. Fehlt die Anstrengung, schätzt die App sie aus deinem Monatsschnitt. So zählen Kraft, Calisthenics, Boxen, Laufen und Mobility in einer Größe.</li>'
  +'<li><b>Fitness</b> ist deine Last der letzten etwa 6 Wochen. Sie wächst langsam und sinkt langsam.</li><li><b>Ermüdung</b> ist deine Last der letzten etwa 7 Tage. Sie steigt nach harten Tagen schnell und baut schnell ab.</li>'
  +'<li><b>Form</b> = Fitness − Ermüdung. Positiv heißt ausgeruht, leicht negativ ist normales Training, stark negativ heißt zu viel in kurzer Zeit.</li><li><b>100</b> ist dein höchster Fitnesswert im letzten Jahr. Krankheit, Verletzung und Urlaub zählen als Pause und sind farbig markiert.</li></ul>'
  +'<div class="hz-fx">'+Object.keys(ST).map(k=>'<div class="hz-row"><span class="hz-chip '+ST[k][1]+'"><i></i>'+ST[k][0]+'</span><span class="mut">'+{frisch:'Form ab +10',bereit:'−10 bis +10',aufbau:'−25 bis −10',muede:'unter −25'}[k]+'</span></div>').join('')+'</div>'
- +'<p class="mut sm" style="margin:0">Das Modell kommt aus dem Leistungssport und ist eine Schätzung. Dein Körpergefühl hat Vorrang: Weichen Tagesform und Zahlen deutlich ab, sagt dir die App das.</p>';
+ +'<p class="mut sm hint" style="margin:0">Das Modell kommt aus dem Leistungssport und ist eine Schätzung. Dein Körpergefühl hat Vorrang: Weichen Tagesform und Zahlen deutlich ab, sagt dir die App das.</p>';
 document.addEventListener('click',e=>{const t=e.target;if(!t.closest||!t.closest('#h'))return;const b=t.closest('[data-hzr],[data-hzo],[data-hzx],[data-hzgo],[data-hza]');
   if(t.id==='hzov'||(b&&b.dataset.hzx)){$('#hzov').hidden=true;return}if(!b)return;const D=b.dataset;
   if(D.hzr){rng=+D.hzr;$$('[data-hzr]').forEach(x=>x.classList.toggle('on',x===b));$('#hztip').hidden=true;draw();return}
@@ -2377,11 +2399,16 @@ document.addEventListener('click',e=>{
   if(D.edk!=null){edDn=edDn.includes(D.edk)?edDn.filter(x=>x!==D.edk):[...edDn,D.edk];b.classList.toggle('on')}
   if(b.id==='esv2')saveEdit();
   if(b.id==='ecn2'){if(ntNew&&ntNew===editK)ntDrop();editK=null;renderCal()}
+  if(b.id==='eadd'&&$('#eaxw')){const w=$('#eaxw');w.hidden=!w.hidden;$('#eaxmsg').textContent='';if(!w.hidden){$('#eaxbox').innerHTML='';addRow({s:3,r:8},$('#eaxbox'));const q=$('#eaxbox .rn');if(q)q.focus()}return}
+  if(b.id==='eaxc'){$('#eaxw').hidden=true;return}
+  if(b.id==='eaxok'){const rw=$('#eaxbox .exr'),n=rw?rw.querySelector('.rn').value.trim():'';if(!n){$('#eaxmsg').textContent='Bitte einen Namen eingeben.';return}const q=c=>rw.querySelector(c),f=fsOf(rw),x=f?{n,...f}:{n,s:parseInt(q('.rs').value)||1,r:parseInt(q('.rr').value)||0,u:q('.ru').value==='t'?'t':'r',kg:num(q('.rk').value)||0,lr:q('.rlr').value==='1'?1:0,g:(q('.rg')||{}).value||''};
+    if(cfg.fNote&&q('.rnt')){const v=q('.rnt').value.trim();if(v)cfg.exNote[n]=v;else delete cfg.exNote[n];saveC()}$('#esets').insertAdjacentHTML('beforeend',edCard(x));$('#eaxw').hidden=true;const cs=$$('#esets .ecd');cs[cs.length-1].scrollIntoView({behavior:'smooth',block:'center'});return}
   if(b.id==='eadd'){$('#esets').insertAdjacentHTML('beforeend','<div class="exr ecd"><div class="exh"><input class="ei exn" list="exl" placeholder="Übung" aria-label="Übung"></div><div class="sts"><span class="sth">#</span><span class="sth">kg × Wdh. / s</span><span class="sth">'+(cfg.fRpe?'RPE':'')+'</span><span class="sth"></span>'+edRow(null,null,1,false,cfg.fRpe,false)+'</div><button class="btn eadd" data-eadd="1">+ Satz</button></div>');const c=$$('#esets .ecd'),x=c[c.length-1].querySelector('.exn');x.focus()}
   if(D.eadd){const c=b.closest('.ecd'),R=c.querySelectorAll('.erow'),L=R[R.length-1];
-    if(L){const n=L.cloneNode(true);n.dataset.si='';n.querySelector('.sn').textContent=R.length+1;const m=n.querySelector('.sdm');if(m)m.remove();
+    if(L){const n=L.cloneNode(true);n.dataset.si='';if(n.dataset.fi!=null)n.dataset.fi='';{const sb=n.querySelector('.ssd');if(sb){const v=sb.dataset.sd==='R'?'L':'R';sb.dataset.sd=v;sb.textContent=v}}n.querySelector('.sn').textContent=R.length+1;const m=n.querySelector('.sdm');if(m)m.remove();
       n.querySelectorAll('input').forEach(x=>{const o=L.querySelector('input.'+[...x.classList].find(z=>z!=='ei'));x.value=x.classList.contains('srpi')?'':(o?o.value:'')});L.after(n)}
-    else c.querySelector('.sts').insertAdjacentHTML('beforeend',edRow(null,null,1,false,cfg.fRpe,false))}
+    else c.querySelector('.sts').insertAdjacentHTML('beforeend',c.dataset.fs?fzRow('',null,1):edRow(null,null,1,false,cfg.fRpe,false,!!c.dataset.lr))}
+  if(b.classList.contains('ssd')){const v=b.dataset.sd==='R'?'L':'R';b.dataset.sd=v;b.textContent=v}
   if(b.classList.contains('erm')){const c=b.closest('.ecd');b.closest('.erow').remove();if(c)c.querySelectorAll('.erow .sn').forEach((x,i)=>x.textContent=i+1)}
   if(b.classList.contains('su')&&b.closest('.erow')){const t=b.dataset.u!=='t';b.dataset.u=t?'t':'r';b.textContent=t?'s':'Wdh.'}
   if(D.sm){smode=D.sm;cfg.smode=smode;saveC();iv=null;cancelSched();const k=curK(),d=days[k];if(d&&d.ls){d.ls=null;d.pr=null;d.lp=null;save(k)}render()}
@@ -2454,7 +2481,7 @@ document.addEventListener('click',e=>{
   if(D.orm!=null&&b.closest('#ownc')){const L=cfg.ownT==='m'?cfg.ownM:cfg.own,n=L[+D.orm];L.splice(+D.orm,1);saveC();$('#ownmsg').textContent='„'+n+'“ entfernt.';render()}
   if(D.mrm!=null&&b.closest('#mainc')){const n=cfg.main[+D.mrm];cfg.main.splice(+D.mrm,1);saveC();$('#mainmsg').textContent='„'+n+'“ ist keine Hauptübung mehr. Die Trainingsdaten bleiben erhalten.';render()}
   if(D.bw!=null&&b.closest('#bwc')){cfg.bwEx=cfg.bwEx.includes(D.bw)?cfg.bwEx.filter(x=>x!==D.bw):[...cfg.bwEx,D.bw];saveC();render()}
-  if(b.classList.contains('rm')){if(b.closest('#axw'))$('#axw').hidden=true;else b.closest('.exr').remove()}
+  if(b.classList.contains('rm')){if(b.closest('#eaxw')){$('#eaxw').hidden=true;return}if(b.closest('#axw'))$('#axw').hidden=true;else b.closest('.exr').remove()}
   if(b.closest('#ce')){const id=D.id;selE.has(id)?selE.delete(id):selE.add(id);if(selE.has('__run')&&![...selM].some(m=>RUNM.includes(m)))selM.add('lp');if([...selE].some(e=>e!=='__run')&&![...selM].some(m=>!RUNM.includes(m)))selM.add('r');renderChips();draw()}
   if(b.closest('#cm2')){const id=D.id;if(selM.has(id)){if(visM().some(m=>m!==id&&selM.has(m)))selM.delete(id)}else selM.add(id);renderChips();draw()}
   if(b.id==='pgo'){const id=$('#psl').value,n=+$('#prp').value;for(let i=0;i<n;i++){const k=addD(psel,7*i);plan[k]=[...new Set([...(plan[k]||[]),id])];saveP(k)}render()}
